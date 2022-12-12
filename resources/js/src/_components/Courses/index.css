@@ -1,0 +1,71 @@
+.courses-card {}
+
+.courses-card-image {
+
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+}
+
+.courses-card-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 145%;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+.courses-card-text {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 145%;
+    margin-bottom: 6px;
+
+    /* margin: 0; */
+    /* Убираем внешний отступ */
+    -webkit-line-clamp: 3;
+    /* Число отображаемых строк */
+    display: -webkit-box;
+    /* Включаем флексбоксы */
+    -webkit-box-orient: vertical;
+    /* Вертикальная ориентация */
+    overflow: hidden;
+}
+
+.courses-card-subtitle {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 145%;
+
+}
+.courses-card-progress {
+    margin: 18px 0px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.courses-card-button{
+    padding: 25px;
+}
+
+.finish-course-button{
+    margin-top: 10px;
+}
+
+.courses-card-share-buttons{
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+}
+
+.courses-card-share-buttons .share{
+    opacity: 0;
+    visibility: hidden;
+    transition: all ease-in-out .25s;
+}
+
+.courses-card-share-buttons .share.active{
+    opacity: 1;
+    visibility: visible;
+}

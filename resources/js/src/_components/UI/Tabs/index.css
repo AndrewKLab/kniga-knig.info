@@ -1,0 +1,35 @@
+.tabs_menu {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.tabs_menu_item {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 125%;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 5px solid transparent;
+    transition: all .25s ease-in-out;
+}
+
+.tabs_menu_item.active {
+    color: rgba(var(--primary-color), 1);
+    border-bottom: 5px solid rgba(var(--primary-color), 1);
+}
+
+.tabs_content_item {
+    display: none;
+
+    transition: all .25s ease-in-out;
+    opacity: 0;
+}
+
+.tabs_content_item.active {
+    opacity: 1;
+    display: block;
+
+}

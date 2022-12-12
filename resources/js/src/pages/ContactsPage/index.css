@@ -1,0 +1,137 @@
+.contacts_page {
+    padding: 90px 0px 120px 0px;
+    font-size: 20px;
+    line-height: 145%;
+
+}
+
+.contacts_page p {
+    margin: 0;
+
+}
+
+.contacts_page img {
+    width: 100%;
+}
+
+.contacts_page ul li {
+    font-size: 20px;
+}
+
+.contacts_page_title {
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 115.5%;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 69px;
+    position: relative;
+
+}
+
+.contacts_page_title div:nth-child(2) {
+    margin-left: 515px;
+}
+
+.contacts_page_row {
+    margin-top: -204px;
+
+}
+
+.contacts_page_first_section {
+    padding-right: 84px;
+}
+
+.contacts_page_first_section_text {
+    padding: 45px 0px 28px 0px
+}
+
+.contacts_page_first_section_form :not(:last-child) {
+    margin-bottom: 28px;
+}
+
+.contacts_page_first_section_form_button {
+    padding: 25px;
+}
+
+.contacts_page_section_title {
+    font-weight: 700;
+    font-size: 45px;
+    line-height: 115.5%;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 28px;
+}
+
+.contacts_page_second_section {
+    padding-top: 190px;
+}
+
+.contacts_page_second_section_map {
+    border: 1px solid rgba(var(--border-color), 1);
+    border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+    .contacts_page {
+        padding: 24px 0px 36px 0px;
+        font-size: 14px;
+        line-height: 125%;
+    }
+
+    .contacts_page_title {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 115.5%;
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+
+    .contacts_page_title div:nth-child(2) {
+        margin-left: 0px;
+    }
+
+    .contacts_page_row {
+        margin-top: 0px;
+    }
+
+    .contacts_page_first_section {
+        margin-top: 0;
+        padding-right: .5rem;
+    }
+
+    .contacts_page_first_section_text {
+        padding: 16px 0px;
+    }
+
+    .contacts_page_first_section_form :not(:last-child) {
+        margin-bottom: 12px;
+    }
+
+    .contacts_page_second_section {
+        padding-top: 0;
+    }
+
+    .contacts_page_first_section_form_button {
+        padding: 17px;
+    }
+
+    .contacts_page_section_title {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 115.5%;
+    }
+
+    .contacts_page_second_section {
+        margin-top: 24px;
+    }
+    .contacts_page ul li {
+        font-size: 14px;
+    }
+
+    .contacts_page_section_title{
+        margin-bottom: 16px;
+    }
+}

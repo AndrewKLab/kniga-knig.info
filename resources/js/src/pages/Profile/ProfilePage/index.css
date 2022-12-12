@@ -1,0 +1,166 @@
+.profile_page {
+    padding: 110px 0px 120px 0px;
+}
+
+.profile_page_title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 115.5%;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+    margin-top: 0px;
+}
+
+.profile_page_user_card {
+    padding: 40px;
+    background: rgba(var(--background-color), 1);
+    border: 1px solid rgba(var(--text-color), 1);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 35px;
+    margin-bottom: 65px;
+}
+
+.profile_page_user_card_info {
+    font-size: 20px;
+    line-height: 130%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 27px;
+}
+
+.profile_page_user_card_info b {
+    font-weight: 700;
+}
+
+.profile_page_user_card_image {
+    width: 188px;
+    height: 100%;
+    object-fit: cover;
+}
+.profile_page_user_card_text div{
+    word-wrap: anywhere;
+}
+.profile_page_user_card_text div:not(:last-child) {
+    margin-bottom: 8px;
+}
+
+.profile_page_user_card_actions {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.profile_page_user_card_actions_text {
+    margin-left: 10px;
+    display: inline-block;
+    color: rgba(var(--text-color), 1);
+}
+
+.profile_page_edit_avatar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.profile_page_edit_avatar_button,
+.profile_page_edit_avatar_loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--background-color), 1);
+    border-radius: 10px;
+    opacity: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .25s;
+    margin: 0;
+}
+
+.profile_page_edit_avatar_button:hover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--background-color), 1);
+    border-radius: 10px;
+    opacity: 0.5;
+}
+
+.profile_page_edit_avatar_loading {
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.profile_page_edit_avatar_input {
+    display: none;
+}
+
+.profile-page-course-item:not(:last-child) {
+    margin-bottom: 30px;
+}
+
+.profile_page_mobile_avatar_container{
+    height: 100%;
+}
+.profile_page_user_card_actions_mobile{
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .profile_page {
+        padding: 24px 0px 36px 0px;
+    }
+
+    .profile_page_title {
+        font-size: 24px;
+        line-height: 115.5%;
+        margin-bottom: 16px;
+    }
+
+    .profile_page_user_card,
+    .profile_page_user_card_info {
+        flex-wrap: wrap;
+    }
+
+    .profile_page_user_card_actions {
+        display: none;
+    }
+
+    .profile_page_mobile_avatar_container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+        /* flex-wrap: wrap; */
+        height: auto;
+    }
+
+    .profile_page_user_card_image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile_page_user_card {
+        padding: 20px;
+        margin-bottom: 24px;
+    }
+
+    .profile_page_user_card_actions_mobile{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 15px;
+
+    }
+
+    .profile_page_user_card_actions_text{
+        font-weight: 400;
+font-size: 14px;
+line-height: 145%;
+word-wrap: anywhere;
+    }
+}

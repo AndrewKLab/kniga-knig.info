@@ -1,0 +1,13 @@
+.question_header{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    margin-bottom: 14px;
+}
+.question_title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 145%;
+}

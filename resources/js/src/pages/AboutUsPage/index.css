@@ -1,0 +1,122 @@
+.about_us_page {
+    padding: 90px 0px 120px 0px;
+    font-size: 20px;
+    line-height: 145%;
+}
+
+.about_us_page p {
+    margin: 0;
+
+}
+
+.about_us_page img {
+    width: 100%;
+}
+
+.about_us_title {
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 115.5%;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 69px;
+}
+
+.about_us_title div:nth-child(2) {
+    margin-left: 277px;
+}
+
+.about_us_first_section {
+    padding-right: 75px;
+    margin-bottom: 97px;
+}
+
+.about_us_second_section {
+    padding-right: 127px;
+}
+
+.about_us_second_section img {
+    padding-top: 84px;
+}
+
+.about_us_section_title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 115.5%;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 28px;
+}
+
+.about_us_first_section_img_bible,
+.about_us_first_section_img_girl,
+.about_us_second_section_2_img_boy {
+    display: none;
+}
+
+.about_us_second_section_2_img_boy{
+    padding-bottom: 16px;
+}
+
+@media (max-width: 1200px) {
+    .about_us_page {
+        padding: 24px 0px 36px 0px;
+        font-size: 14px;
+        line-height: 125%;
+    }
+
+    .about_us_title {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 115.5%;
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+
+    .about_us_title div:nth-child(2) {
+        margin-left: 0px;
+    }
+
+    .about_us_section_title {
+        font-size: 16px;
+        line-height: 115.5%;
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+
+    .about_us_first_section {
+        padding-right: 0.5rem;
+        padding-bottom: 24px;
+        margin-bottom: 0;
+    }
+
+    .about_us_first_section_img_bible,
+    .about_us_first_section_img_girl,
+    .about_us_second_section_2_img_boy {
+        display: block;
+    }
+
+    .about_us_first_section_2,
+    .about_us_second_section {
+        display: none;
+    }
+
+    .about_us_first_section_img_bible {
+        height: 301px;
+        object-fit: contain;
+        margin-bottom: 24px;
+    }
+
+    .about_us_first_section_img_girl {
+        padding: 16px 0px 12px 0px;
+    }
+
+    .about_us_second_section_2 {
+        margin-top: 0;
+    }
+
+}

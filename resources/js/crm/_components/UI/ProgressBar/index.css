@@ -1,0 +1,15 @@
+.progres_bar {
+    height: 4px;
+    background: #C0C8BF;
+    border-radius: 30px;
+    width: 100%;
+    flex: 1;
+    transition: all .25s;
+}
+
+.progres_bar_container {
+    height: 100%;
+    width: 0%;
+    border-radius: 30px;
+    background: rgba(var(--primary-color), 1);
+}

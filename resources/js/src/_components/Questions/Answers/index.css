@@ -1,0 +1,17 @@
+.question_answer{
+    margin-bottom: 10px;
+    position: relative;
+    padding: 5px 30px;
+    border: 1px solid transparent;
+}
+
+.question_answer.user_answer{
+    /* border: 1px solid rgba(var(--primary-color));
+    border-radius: 10px; */
+}
+
+.question_answer_icon{
+    position: absolute;
+    left: -3px;
+    top: 2px;
+}

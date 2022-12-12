@@ -1,0 +1,63 @@
+/* Button */
+.button {
+    width: 100%;
+    background: #FF9298;
+    border-radius: 10px;
+    border: none;
+
+    padding: 10px;
+
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 145%;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+    cursor: pointer;
+    position: relative;
+    font-family: 'Montserrat';
+}
+
+.button:disabled, .button:disabled .button-loading {
+    background: #fcbbbe;
+    cursor:auto;
+}
+
+.button-primary{
+    background: rgba(var(--primary-color), 1);
+}
+
+.button-primary:disabled, .button-primary:disabled .button-loading {
+    background: rgb(138, 199, 129);
+}
+
+.button-default{
+    background: rgba(223, 223, 223, 1);
+    color: rgba(var(--text-color), 1)
+}
+
+.button-default:disabled, .button-primary:disabled .button-loading {
+    background: rgba(239, 239, 239, 1);
+}
+
+.button-loading {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #FF9298;
+    border-radius: 10px;
+}
+
+
+
+@media (max-width: 1200px) {
+    .button {
+        font-family: 'Montserrat';
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,11 @@
+.users_page_module:not(:last-child){
+    margin-bottom: 30px;
+}
+.users_page_modules_tabs{
+    margin: 0;
+}
+.users_page_modules_tabs .tabs_menu_item {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 115.5%;
+}

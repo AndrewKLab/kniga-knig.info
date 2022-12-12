@@ -1,0 +1,12 @@
+.technicals_works_page{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.technicals_works_page_information{
+    text-align: center;
+}

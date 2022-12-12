@@ -1,0 +1,253 @@
+/* CoursesPage */
+
+.courses_page {
+    padding-top: 90px;
+    padding-bottom: 120px;
+}
+
+.courses_page_title {
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 115.5%;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 1px;
+    margin-left: -9px;
+}
+
+.courses_page_subtitle {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 145%;
+    text-transform: uppercase;
+    margin-bottom: 62px;
+}
+
+.courses_page_categories_list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 100px;
+    flex-wrap: wrap;
+    margin-bottom: 45px;
+
+}
+
+.courses_page_categories_list_item {
+    margin: 0;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 125%;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 5px solid transparent;
+}
+
+.courses_page_categories_list_item.active {
+    color: rgba(var(--primary-main-color), 1);
+    border-bottom: 5px solid rgba(var(--primary-main-color), 1);
+}
+
+.courses_page_courses_list_item {
+    display: none;
+}
+
+.courses_page_courses_list_item.active {
+    display: block;
+}
+
+@media (max-width: 1200px) {
+    .courses_page {
+        padding-top: 24px;
+        padding-bottom: 36px;
+    }
+
+    .courses_page_title {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 120%;
+
+        margin-top: 0;
+        margin-bottom: 1px;
+        margin-left: 0px;
+    }
+
+    .courses_page_subtitle {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 110%;
+        margin-bottom: 36px;
+    }
+
+    .courses_page_categories_list_item {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 125%;
+        border-bottom: 3px solid transparent;
+    }
+
+    .courses_page_categories_list_item.active {
+        border-bottom: 3px solid rgba(var(--primary-main-color), 1);
+    }
+
+    .courses_page_categories_list {
+        gap: 35px;
+    }
+}
+
+/* CoursePage */
+
+.course_page {
+    padding-top: 110px;
+    padding-bottom: 120px;
+}
+
+.course_page_title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 115.5%;
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 45px;
+}
+
+.course_page_course_card {
+    margin-bottom: 62px;
+}
+
+.course_page_image {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+}
+
+.course_page_course_info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.course_page_course_lessons_count,
+.course_page_course_time {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.course_page_course_lessons_count_text {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 145%;
+}
+
+.course_page_description {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 145%;
+    margin-top: 45px;
+    margin-bottom: 40px;
+}
+
+.course_page_button {
+    padding: 25px;
+}
+.course_page_button.mobile {
+    display: none;
+}
+
+.course_page_second_title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 125%;
+    text-transform: uppercase;
+}
+
+.course_page_lessons_list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.course_page_lessons_list_item {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    gap: 14px;
+}
+
+.course_page_lessons_list_item_spoiler {
+    flex: 1;
+    margin-top: -7px;
+}
+
+.course_page_lessons_list_item_reactangle {
+    border: 2px solid #65B658;
+    border-radius: 5px;
+    min-width: 20px;
+    height: 20px;
+}
+
+.course_page_lessons_list_item_reactangle.active {
+    background: #65B658;
+    border: none;
+}
+
+.course_page_action_buttons_container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@media (max-width: 1200px) {
+    .course_page {
+        padding-top: 24px;
+        padding-bottom: 36px;
+    }
+
+    .course_page_title {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 115.5%;
+        margin-bottom: 16px;
+    }
+
+    .course_page_button {
+        padding: 17px;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 145%;
+        font-family: 'Montserrat';
+    }
+
+    .course_page_course_card {
+        margin-bottom: 36px;
+    }
+
+    .course_page_second_title {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 125%;
+        margin-bottom: 16px;
+    }
+
+    .course_page_lessons_list {
+        gap: 11px;
+    }
+
+    .course_page_lessons_list_item_spoiler .spoiler-header .spoiler-title {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 145%;
+    }
+
+    .course_page_lessons_list_item_spoiler .spoiler-header .spoiler-content {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 125%;
+    }
+    .course_page_button.mobile {
+        display: block;
+        margin-top: 48px;
+    }
+}

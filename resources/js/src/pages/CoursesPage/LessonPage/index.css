@@ -1,0 +1,152 @@
+.lesson_page {
+    padding: 110px 0px 120px 0px;
+}
+
+.lesson_page_title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 115.5%;
+
+    /* or 55px */
+    text-transform: uppercase;
+    margin: 0;
+    margin-bottom: 40px;
+}
+
+.lesson_page_description,
+.lesson_page_sub_info_container {
+    margin-top: 0;
+}
+
+.lesson_page_sub_info {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+.lesson_page_sub_info_item {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+}
+
+.lesson_page_audio_title {
+    display: none;
+}
+
+.lesson_page_audio_text {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 145%;
+    text-transform: uppercase;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.lesson_page_test_container {
+    margin-bottom: 50px;
+}
+
+.lesson_page_test_title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 125%;
+    text-transform: uppercase;
+}
+
+.lesson_page_actions_error_alert {
+    margin-bottom: 15px;
+}
+
+.lesson_page_actions_main_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 65px;
+    flex-wrap: wrap;
+}
+
+.lesson_page_actions_container {
+    display: flex;
+    justify-content: space-between;
+    /* flex: 1; */
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.lesson_page_submit_button_container {
+    flex: 1;
+}
+
+.lesson_page_submit_button {
+    padding: 25px;
+}
+
+.lesson_page_actions_prev_lesson {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.lesson_page_actions_prev_lesson svg {
+    transform: rotate(180deg);
+}
+
+.lesson_page_actions_next_lesson {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.lesson_page_finished_lesson_plane {
+    border: 1px solid rgba(var(--border-color), 1);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(var(--background-color), 1);
+}
+
+.lesson_page_finished_lesson_plane_title {
+    margin: 0;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 145%;
+}
+
+@media (max-width: 1200px) {
+    .lesson_page {
+        padding-top: 24px;
+        padding-bottom: 36px;
+    }
+
+    .lesson_page_title {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 115.5%;
+        margin-bottom: 16px;
+    }
+
+    .lesson_page_audio_title {
+        display: block;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 145%;
+        margin-bottom: 12px;
+    }
+
+    .lesson_page_audio_text {
+        display: none;
+    }
+
+    .lesson_page_submit_button_container, .lesson_page_actions_container {
+        flex: 1 0 auto;
+      }
+}
