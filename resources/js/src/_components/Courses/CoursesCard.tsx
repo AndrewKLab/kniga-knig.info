@@ -28,7 +28,7 @@ const CoursesCard: FunctionComponent<CoursesCardProps> = ({ children, className,
             {coursesCardTitle && <div className={`courses-card-title`}>{coursesCardTitle}</div>}
             {coursesCardText && <div className={`courses-card-text`} dangerouslySetInnerHTML={{ __html: coursesCardText }}></div>}
             {coursesCardSubtitle && <div className={`courses-card-subtitle`}>{coursesCardSubtitle}</div>}
-            {user && <div className={`courses-card-share-buttons`}>
+            {user && <div className={`courses-card-share-buttons`} onClick={(event) => event.stopPropagation()}>
 
                 <Share link={`${config.appUrl}/registration${user?.role?.kk_role_level < 7 ? `?referal_user=${user?.kk_user_id}` : ``}`} className={`${showShare ? `active`: ``}`} whatsapp viber telegram sms copy />
                 <IconButton icon={<ShareOutlineIcon size={32} />} onClick={(event) => {event.stopPropagation(), setShowShare(!showShare)}} />

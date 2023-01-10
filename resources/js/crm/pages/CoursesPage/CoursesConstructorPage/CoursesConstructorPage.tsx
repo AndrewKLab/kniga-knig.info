@@ -128,19 +128,28 @@ const CoursesConstructorPage: FunctionComponent<CoursesConstructorPageProps> = (
     if (loading || get_all_courses_categories_loading || get_one_by_course_id_courses_loading) return <PageLoader />
     return (
         <div className={`courses_constructor_page`}>
-            <Button className="back_button w-auto mb-3" onClick={() => navigate(`/courses`)}><ArrowLeftIcon size={25} color={'rgba(255,255,255,1)'}/> Назад</Button>
             <h1 className={`crm_panel_page_title`}><a className={`cursor-pointer`} onClick={() => navigate(`/courses`)}>Курсы |</a>  <span>{kk_course_id ? `Изменить курс "${get_one_by_course_id_courses?.kk_course_name}"` : 'Добавить'} </span> </h1>
-
             <Row g={3}>
                 <Col lg={9}>
                     <Form id="course_from" onSubmit={handleSubmit(courseActionSubmit)}>
-                        {action === 'edit' && <TextInput
-                            {...register('kk_course_id')}
-                            type={`hidden`}
-                            id={`kk_course_id`}
-                            name={`kk_course_id`}
-                            defaultValue={action === 'add' ? '' : get_one_by_course_id_courses?.kk_course_id}
-                        />}
+                        {action === 'edit' ? (
+                            <React.Fragment>
+                                <TextInput
+                                    {...register('kk_course_id')}
+                                    type={`hidden`}
+                                    id={`kk_course_id`}
+                                    name={`kk_course_id`}
+                                    defaultValue={get_one_by_course_id_courses?.kk_course_id}
+                                />
+                                <TextInput
+                                    {...register('kk_course_published')}
+                                    type={`hidden`}
+                                    id={`kk_course_published`}
+                                    name={`kk_course_published`}
+                                    defaultValue={get_one_by_course_id_courses?.kk_course_published}
+                                />
+                            </React.Fragment>) : <React.Fragment></React.Fragment>
+                        }
                         <div className="mb-3">
                             <Label htmlFor="kk_course_categoty_id">Категория:</Label>
                             <Select
@@ -228,7 +237,7 @@ const CoursesConstructorPage: FunctionComponent<CoursesConstructorPageProps> = (
                 </Col>
             </Row>
 
-            
+
         </div>
     )
 }

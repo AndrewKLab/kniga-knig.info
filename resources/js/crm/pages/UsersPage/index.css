@@ -9,3 +9,59 @@
     font-size: 32px;
     line-height: 115.5%;
 }
+
+
+.users_info_page_title_container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+.users_info_page_title_container h1{
+    margin-bottom: 0;
+}
+.users_info_page_user_card{
+    border: 1px solid rgba(var(--border-color), 1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.users_info_page_user_card_title{
+    margin: 0;
+}
+
+.users_info_page_user_card p{
+    margin: 0;
+}
+
+/* .users_info_page_table tr th, td {
+    padding: 1px !important;
+} */
+
+.users_info_page_user_card_image{
+    width: 100%;
+}
+
+.users_course_progress_page_list{
+    gap: 0 !important;
+}
+
+.users_course_progress_page_selected_lesson_container{
+    border: 1px solid rgba(var(--border-color), 1);
+    border-radius: 10px;
+}
+
+.users_course_progress_page_selected_lesson_header{
+    padding: 10px;
+    border-bottom: 1px solid rgba(var(--border-color), 1);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.users_course_progress_page_selected_lesson_body{
+    padding: 10px;
+
+}

@@ -15,9 +15,7 @@ export * from './Courses';
 export * from './Questions';
 export * from './Notifications'
 
-export * from './MainSiteLoader';
-export * from './PartLoader';
-export * from './PageLoader';
+export * from './Loaders';
 
 export * from './Modals';
 

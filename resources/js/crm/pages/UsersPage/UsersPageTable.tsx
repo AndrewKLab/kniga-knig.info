@@ -9,14 +9,15 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import './index.css';
 
 import moment from 'moment';
-import { PenIcon, TrashIcon } from "../../_components/UI/Icons";
+import { InfoIcon, PenIcon, TrashIcon } from "../../_components/UI/Icons";
 
 
 const UsersTableActions: FunctionComponent = ({ user, setIsOpenRemoveUserModal, setSelectedUserToModal }) => {
     let navigate = useNavigate();
     return (
         <div>
-            <IconButton icon={<PenIcon size={20} color={`rgba(var(--alert-warning-color), 1)`} />} title="Изменить" onClick={() => navigate(`/users/edit/${user.kk_user_id}`)} />
+            <IconButton icon={<InfoIcon size={20} color={`rgba(var(--alert-info-color), 1)`} />} title="Информация о пользователе" onClick={() => navigate(`/users/info/${user.kk_user_id}`)} />
+            <IconButton icon={<PenIcon size={20} color={`rgba(var(--alert-warning-color), 1)`} />} title="Изменить" onClick={() => navigate(`/users/action/edit/${user.kk_user_id}`)} />
             <IconButton icon={<TrashIcon size={20} color={`rgba(var(--alert-danger-color), 1)`} />} title="Удалить" onClick={() => { setIsOpenRemoveUserModal(true), setSelectedUserToModal(user) }} />
         </div>
     )
@@ -77,6 +78,10 @@ const UsersPageTable: FunctionComponent<UsersPageTableProps> = ({
         {
             Header: 'Действия',
             accessor: row => <UsersTableActions user={row} setIsOpenRemoveUserModal={setIsOpenRemoveUserModal} setSelectedUserToModal={setSelectedUserToModal} />,
+        },
+        {
+            Header: 'Дата регистрации',
+            accessor: row => moment(row.kk_user_created_at).format('DD.MM.YYYY HH:mm'),
         },
         {
             Header: 'Дата обновления',

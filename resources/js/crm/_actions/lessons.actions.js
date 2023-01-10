@@ -1,6 +1,6 @@
-import { lessonsConstants } from '../_constants';
+import { lessonsConstants, questionsUsersAnswersConstants } from '../_constants';
 import { defaultAction } from '../_helpers';
-import { lessonsService } from '../_services';
+import { lessonsService, questionsUsersProgressAnswersService } from '../_services';
 
 export const lessonsActions = {
     add,
@@ -12,6 +12,8 @@ export const lessonsActions = {
     getOneByLessonId,
 
     setLessonEditor,
+
+    editQuestionUserAnswer,
 };
 
 function add(params) {
@@ -93,6 +95,16 @@ function getOneByLessonId(params) {
     })
 }
 
+
 function setLessonEditor(lesson_editor_action, lesson_editor_kk_lesson_id) {
     return dispatch => dispatch({ type: lessonsConstants.SET_LESSON_EDITOR, lesson_editor_action, lesson_editor_kk_lesson_id })
+}
+
+function editQuestionUserAnswer(params) {
+    return defaultAction(params, {
+        serviceFunc: () => questionsUsersProgressAnswersService.edit(params),
+        requestType: questionsUsersAnswersConstants.EDIT_QUESTIONS_USERS_ANSWERS_REQUEST,
+        successType: questionsUsersAnswersConstants.EDIT_QUESTIONS_USERS_ANSWERS_SUCCESS,
+        failureType: questionsUsersAnswersConstants.EDIT_QUESTIONS_USERS_ANSWERS_FAILURE,
+    })
 }

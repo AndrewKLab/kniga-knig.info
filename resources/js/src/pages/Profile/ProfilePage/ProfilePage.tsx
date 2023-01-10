@@ -198,7 +198,7 @@ const ProfilePage: FunctionComponent<ProfilePageProps> = ({
             <h1 className={`profile_page_title`}>Мои курсы</h1>
             {get_all_courses_users_progress_loading && <PartLoader />}
             {get_all_courses_users_progress_error && <Alert className={`p-0`} message={get_all_courses_users_progress_error} />}
-            {auth_user_inprocess_courses && auth_user_inprocess_courses.length > 0 || auth_user_finished_courses && auth_user_finished_courses.length > 0 &&
+            {(auth_user_inprocess_courses && auth_user_inprocess_courses.length > 0) || (auth_user_finished_courses && auth_user_finished_courses.length > 0) ?
                 <Tabs tabs={[
                     {
                         key: 0,
@@ -211,7 +211,7 @@ const ProfilePage: FunctionComponent<ProfilePageProps> = ({
                         contentComponent: <ProfilePageCoursesList courses={auth_user_finished_courses} />
                     },
                 ]} />
-            }
+            : null}
         </div>
     )
 }

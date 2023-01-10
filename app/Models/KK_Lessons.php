@@ -36,6 +36,16 @@ class KK_Lessons extends Model
             foreach ($parts as $part_key => $part) {
 
                 switch ($part) {
+                    case 'lesson_users_progress':
+                        if (!empty(Auth::user()) && !empty($request->kk_user_id)) {
+                            $parts_queries += array($part => function ($query) use ($request, $part) {
+                                $query->where(function ($query) use ($request) {
+                                    $query->where("kk_lup_user_id", $request->kk_user_id);
+                                    if (isset($request->lesson_users_progress_status)) $query->where("kk_lup_status", $request->lesson_users_progress_status);
+                                });
+                            });
+                        }
+                        break;
                     case 'course_users_progress':
                         if (Auth::check()) {
                             $parts_queries += array($part => function ($query) use ($request, $part) {
@@ -88,7 +98,8 @@ class KK_Lessons extends Model
                                         if (in_array('user_answer', $parts)) {
                                             
                                             $with += array('user_answer' => function ($querys) use ($request, $parts) {
-                                                $querys->where("kk_qua_user_id", Auth::user()->kk_user_id);
+                                                if(!empty($request->kk_user_id)) $querys->where("kk_qua_user_id", $request->kk_user_id);
+                                                else $querys->where("kk_qua_user_id", Auth::user()->kk_user_id);
                                             });
                                         }
                                         $query->with($with);
@@ -164,6 +175,10 @@ class KK_Lessons extends Model
     }
 
     public function lessons_users_progress()
+    {
+        return $this->hasOne(KK_Lessons_Users_Progress::class, 'kk_lup_lesson_id', 'kk_lesson_id');
+    }
+    public function lesson_users_progress()
     {
         return $this->hasOne(KK_Lessons_Users_Progress::class, 'kk_lup_lesson_id', 'kk_lesson_id');
     }

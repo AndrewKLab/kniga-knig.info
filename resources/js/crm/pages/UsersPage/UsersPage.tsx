@@ -36,7 +36,7 @@ const UsersPage: FunctionComponent<UsersPageProps> = ({
     return (
         <div className={`users_page`}>
             <div className={`courses_page_header`}>
-                <Button color={'primary'} className={`courses_page_header_button`} onClick={() => navigate(`/users/add`)}>Добавить</Button>
+                <Button color={'primary'} className={`courses_page_header_button`} onClick={() => navigate(`/users/action/add`)}>Добавить</Button>
             </div>
             <ActiveTab />
         </div>

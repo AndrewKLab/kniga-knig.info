@@ -106,7 +106,6 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
     if (loading || get_all_users_roles_loading || get_one_by_user_id_users_loading) return <PageLoader />
     return (
         <div className={`users_constructor_page`}>
-            <Button className="back_button w-auto mb-3" onClick={() => navigate(`/users`)}><ArrowLeftIcon size={25} color={'rgba(255,255,255,1)'}/> Назад</Button>
             <h1 className={`crm_panel_page_title`}><a className={`cursor-pointer`} onClick={() => navigate(`/users`)}>Пользователи |</a>  <span>{kk_user_id ? `Изменить пользователя "${get_one_by_user_id_users?.kk_user_lastname} ${get_one_by_user_id_users?.kk_user_firstname}"` : 'Добавить'} </span> </h1>
             <Form id="course_from" onSubmit={handleSubmit(userActionSubmit)}>
                 <Row g={3}>
@@ -222,14 +221,14 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_sity'} />}
                     </Col>
                     <Col xs={12} lg={4}>
-                        <Label htmlFor="kk_user_commune">Община:</Label>
+                        <Label htmlFor="kk_user_commune">Организация:</Label>
                         <TextInput
                             {...register('kk_user_commune')}
                             className={`courses_constructor_page_input`}
                             type={`text`}
                             id={`kk_user_commune`}
                             name={`kk_user_commune`}
-                            placeholder={`Введите общину...`}
+                            placeholder={`Введите организацию...`}
                             defaultValue={action === 'edit' ? get_one_by_user_id_users?.kk_user_commune : null}
                         />
                         {action === 'add' && <InputError errors={add_users_errors} name={'kk_user_commune'} />}

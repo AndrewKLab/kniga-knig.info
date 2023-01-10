@@ -193,7 +193,7 @@ export function lessons_users_progress(state = initialState, action) {
                 ...state,
                 get_one_by_lesson_id_lessons_users_progress_loading: false,
                 get_one_by_lesson_id_lessons_users_progress_message: null,
-                get_one_by_lesson_id_lessons_users_progress_error: action.error,
+                get_one_by_lesson_id_lessons_users_progress_error: action.error.message,
                 get_one_by_lesson_id_lessons_users_progress: null,
             };
 

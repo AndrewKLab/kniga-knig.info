@@ -9,6 +9,8 @@ import {
   CoursesConstructorPage,
   UsersPage,
   UsersPageAction,
+  UsersPageInfo,
+  UsersPageCourseProgress,
   AboutUsPage,
   ContactsPage,
 
@@ -71,12 +73,15 @@ const MainRoutes = ({ user }) => {
             <Route path="/password/reset" element={<ResetPasswordPage />} />
 
             <Route index path="/courses" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute element={<CoursesPage />} />} />} />
-            <Route path="/courses/constructor/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute element={<CoursesConstructorPage />} />} />} />
-            <Route path="/courses/constructor/:action/:kk_course_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute element={<CoursesConstructorPage />} />} />} />
+            <Route path="/courses/constructor/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute backButton element={<CoursesConstructorPage />} />} />} />
+            <Route path="/courses/constructor/:action/:kk_course_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute backButton element={<CoursesConstructorPage />} />} />} />
 
             <Route index path="/users" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute element={<UsersPage />} />} />} />
-            <Route path="/users/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute element={<UsersPageAction />} />} />} />
-            <Route path="/users/:action/:kk_user_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute element={<UsersPageAction />} />} />} />
+            <Route path="/users/action/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute backButton element={<UsersPageAction />} />} />} />
+            <Route path="/users/action/:action/:kk_user_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute backButton element={<UsersPageAction />} />} />} />
+            <Route path="/users/info/:kk_user_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute backButton element={<UsersPageInfo />} />} />} />
+            <Route path="/users/info/course_progress/:kk_course_id/:kk_user_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element= {<PrivateRoute backButton element={<UsersPageCourseProgress />} />} />} />
+            
 
             <Route index path="/settings" element={<CustomAccessRoute rule={user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN'} element= {<PrivateRoute element={<SettingsPage />} />} />} />
 

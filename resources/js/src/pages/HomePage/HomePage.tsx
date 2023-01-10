@@ -60,7 +60,7 @@ const HomePage: FunctionComponent<HomePageProps> = ({
                     <div>Научитесь</div>
                     <div className={`text-primary`}>Понимать</div>
                     <div className={`text-primary`} >Библию</div>
-                    <div>Онлайн</div>
+                    {/* <div>Онлайн</div> */}
                 </h1>
             </div>
             <div className={`home_page_description`}>

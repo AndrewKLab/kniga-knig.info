@@ -33,14 +33,14 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 145%;
-    height: 447px;
+    height: 350px;
     width: 372px;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-left: 83px;
-    margin-top: -361px;
+    margin-top: -250px;
 }
 
 .home_page_description_first_part {

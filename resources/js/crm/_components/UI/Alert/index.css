@@ -13,3 +13,9 @@
     background-color: rgba(var(--alert-success-background-color), 1);
     border-color: rgba(var(--alert-success-color), 1);
 }
+
+.alert-info {
+    color: rgba(var(--alert-info-text-color), 1);
+    background-color: rgba(var(--alert-info-background-color), 1);
+    border-color: rgba(var(--alert-info-color), 1);
+}

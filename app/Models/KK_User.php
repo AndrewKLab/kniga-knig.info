@@ -19,7 +19,7 @@ class KK_User extends Authenticatable
     public static $defaultParts = ['role'];
 
     const CREATED_AT = 'kk_user_created_at';
-    const UPDATED_AT = 'kk_user_updated_at'; 
+    const UPDATED_AT = 'kk_user_updated_at';
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +42,7 @@ class KK_User extends Authenticatable
         'kk_user_role_id',
         'kk_user_admin_id',
         'kk_user_coordinator_id',
+        'kk_user_pastor_id',
         'kk_user_teather_id',
         'kk_user_promouter_id',
         'kk_user_avatar',
@@ -74,18 +75,162 @@ class KK_User extends Authenticatable
         $parts_queries = [];
         if (count($parts) > 0) {
             foreach ($parts as $part_key => $part) {
-                // switch ($part) {
-                //     case 'course_users_progress':
-                //         $parts_queries += array($part => function ($query) use ($request, $part) {
-                //             $query->where(function ($query) use ($request) {
-                //                 $query->where("kk_cup_user_id", Auth::user()->kk_user_id);
-                //                 if (isset($request->course_users_progress_status)) {
-                //                     $query->where("kk_cup_status", $request->course_users_progress_status);
-                //                 }
-                //             });
-                //         });
-                //         break;
-                // }
+                switch ($part) {
+                    case 'role':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
+                        break;
+                    case 'admin':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
+                    case 'coordinator':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
+                    case 'pastor':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
+                    case 'teather':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
+                    case 'teather':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
+                    case 'promouter':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
+                        break;
+                    case 'courses_user_progress':
+                        $parts_queries += array($part => function ($query) use ($request, $parts, $parts_to_count) {
+                            $with = [];
+                            $withCount = [];
+
+                            if (in_array('course', $parts)) {
+                                $with += array('course' => function ($query) use ($request, $with, $parts, $parts_to_count) {
+                                    if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+
+                                    $with = [];
+                                    $withCount = [];
+                                    if (in_array('lessons', $parts)) {
+                                        $with += array('lessons' => function ($query) use ($request, $with) {
+                                            if (isset($request->lessons_published)) {
+                                                $query->where("kk_lesson_published", $request->lessons_published);
+                                            }
+                                        });
+                                    }
+                                    if (in_array('lessons', $parts_to_count)) {
+                                        $withCount += array('lessons' => function ($query) use ($request, $withCount) {
+                                            if (isset($request->lessons_published)) {
+                                                $query->where("kk_lesson_published", $request->lessons_published);
+                                            }
+                                        });
+                                    }
+                                    if (in_array('lessons_users_progress', $parts)) {
+                                        $with += array('lessons_users_progress' => function ($query) use ($request, $with) {
+                                            if (isset($request->lessons_users_progress_status)) {
+                                                $query->where("kk_lup_status", $request->lessons_users_progress_status);
+                                            }
+                                            $query->where(['kk_lup_user_id' => $request->kk_user_id]);
+                                        });
+                                    }
+                                    if (in_array('lessons_users_progress', $parts_to_count)) {
+                                        $withCount += array('lessons_users_progress' => function ($query) use ($request, $withCount) {
+                                            if (isset($request->lessons_users_progress_status)) {
+                                                $query->where("kk_lup_status", $request->lessons_users_progress_status);
+                                            }
+                                            $query->where(['kk_lup_user_id' => $request->kk_user_id]);
+                                        });
+                                    }
+
+                                    $query->with($with)->where(function ($query) use ($request, $parts) {
+                                        if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                        $query->orderBy('kk_course_updated_at', 'ASC');
+                                    });
+                                    $query->withCount($withCount)->where(function ($query) use ($request, $parts_to_count) {
+                                        if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                        $query->orderBy('kk_course_updated_at', 'ASC');
+                                    });
+                                });
+                            }
+
+                            $query->with($with)->where(function ($query) use ($request, $parts) {
+                                if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                $query->orderBy('kk_course_updated_at', 'ASC');
+                            });
+                            $query->withCount($withCount)->where(function ($query) use ($request, $parts_to_count) {
+                                if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                $query->orderBy('kk_course_updated_at', 'ASC');
+                            });
+                        });
+                        break;
+                    case 'course_user_progress':
+                        $parts_queries += array($part => function ($query) use ($request, $parts, $parts_to_count) {
+                            $with = [];
+                            $withCount = [];
+
+                            if (in_array('course', $parts)) {
+                                $with += array('course' => function ($query) use ($request, $with, $parts, $parts_to_count) {
+                                    if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+
+                                    $with = [];
+                                    $withCount = [];
+                                    if (in_array('lessons', $parts)) {
+                                        $with += array('lessons' => function ($query) use ($request, $with, $parts) {
+                                            $with = [];
+
+                                            if (isset($request->lessons_published)) $query->where("kk_lesson_published", $request->lessons_published);
+                                            if (in_array('lesson_users_progress', $parts)) {
+                                                $with += array('lesson_users_progress' => function ($query) use ($request, $with, $parts) {
+                                                });
+                                            }
+                                            $query->with($with)->where(function ($query) use ($request, $parts) {
+
+                                            });
+                                        });
+                                    }
+                                    if (in_array('lessons', $parts_to_count)) {
+                                        $withCount += array('lessons' => function ($query) use ($request, $withCount) {
+                                            if (isset($request->lessons_published)) {
+                                                $query->where("kk_lesson_published", $request->lessons_published);
+                                            }
+                                        });
+                                    }
+                                    if (in_array('lessons_users_progress', $parts)) {
+                                        $with += array('lessons_users_progress' => function ($query) use ($request, $with) {
+                                            if (isset($request->lessons_users_progress_status)) {
+                                                $query->where("kk_lup_status", $request->lessons_users_progress_status);
+                                            }
+                                            $query->where(['kk_lup_user_id' => $request->kk_user_id]);
+                                        });
+                                    }
+                                    if (in_array('lessons_users_progress', $parts_to_count)) {
+                                        $withCount += array('lessons_users_progress' => function ($query) use ($request, $withCount) {
+                                            if (isset($request->lessons_users_progress_status)) {
+                                                $query->where("kk_lup_status", $request->lessons_users_progress_status);
+                                            }
+                                            $query->where(['kk_lup_user_id' => $request->kk_user_id]);
+                                        });
+                                    }
+
+                                    $query->with($with)->where(function ($query) use ($request, $parts) {
+                                        if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                    });
+                                    $query->withCount($withCount)->where(function ($query) use ($request, $parts_to_count) {
+                                        if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                    });
+                                });
+                            }
+
+                            $query->with($with)->where(function ($query) use ($request, $parts) {
+                                if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                if (isset($request->kk_course_id)) $query->where("kk_cup_course_id", $request->kk_course_id);
+                            });
+                            $query->withCount($withCount)->where(function ($query) use ($request, $parts_to_count) {
+                                if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
+                                if (isset($request->kk_course_id)) $query->where("kk_cup_course_id", $request->kk_course_id);
+                            });
+                        });
+                        break;
+                }
             }
         }
 
@@ -114,5 +259,33 @@ class KK_User extends Authenticatable
     public function role()
     {
         return $this->hasOne(KK_Users_Roles::class, 'kk_role_id', 'kk_user_role_id');
+    }
+    public function admin()
+    {
+        return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_user_admin_id');
+    }
+    public function coordinator()
+    {
+        return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_user_coordinator_id');
+    }
+    public function pastor()
+    {
+        return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_user_pastor_id');
+    }
+    public function teather()
+    {
+        return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_user_teather_id');
+    }
+    public function promouter()
+    {
+        return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_user_promouter_id');
+    }
+    public function courses_user_progress()
+    {
+        return $this->hasMany(KK_Courses_Users_Progress::class, 'kk_cup_user_id', 'kk_user_id');
+    }
+    public function course_user_progress()
+    {
+        return $this->hasOne(KK_Courses_Users_Progress::class, 'kk_cup_user_id', 'kk_user_id');
     }
 }

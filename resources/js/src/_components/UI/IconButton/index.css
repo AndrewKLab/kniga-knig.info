@@ -11,6 +11,7 @@
     line-height: 145%;
     font-family: 'Montserrat';
     font-weight: 500;
+    color: rgba(var(--text-color), 1)
 }
 
 .icon-button:disabled svg path{

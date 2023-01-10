@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useRef, useState, useEffect } from "react";
-import { PartLoader } from "../../PartLoader";
 import { IconButton } from "../IconButton";
 import { PlayCircleIcon, PauseCircleIcon, DotsThreeOutlineVerticalIcon, SpeakerSimpleLowIcon, SpeakerSimpleXIcon } from "../Icons";
 import { ProgressBar } from "../ProgressBar";
+import { PartLoader } from '../../'
 import './index.css'
 
 export interface AudioPlayerProps extends React.DetailedHTMLProps<React.AudioHTMLAttributes<HTMLAudioElement>, HTMLAudioElement> {
