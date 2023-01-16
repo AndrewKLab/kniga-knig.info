@@ -4,7 +4,7 @@ const initialState = {
     user_editor_action: null,
     user_editor_kk_user_id: null,
 
-    user_page_tab: 0,
+    user_page_tab: 1,
     user_page_tab_table: 6,
 
     add_users_loading: false,

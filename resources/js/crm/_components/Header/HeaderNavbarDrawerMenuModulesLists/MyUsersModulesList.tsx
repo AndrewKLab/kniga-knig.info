@@ -20,19 +20,20 @@ const MyUsersModulesList: FunctionComponent<MyUsersModulesListProps> = ({ dispat
         init();
     }, []);
 
+    let tabs = [];
+    if(user?.role?.kk_role_level <= 2) tabs.push({ key: 2, menuTitle: `Мои Администраторы` });
+    if(user?.role?.kk_role_level < 3) tabs.push({ key: 3, menuTitle: `Мои Координаторы` });
+    if(user?.role?.kk_role_level < 4) tabs.push({ key: 8, menuTitle: `Мои Пасторы` });
+    if(user?.role?.kk_role_level < 5) tabs.push({ key: 4, menuTitle: `Мои Учителя` });
+    if(user?.role?.kk_role_level < 6) tabs.push({ key: 5, menuTitle: `Мои Промоутеры` });
+    if(user?.role?.kk_role_level < 6) tabs.push({ key: 6, menuTitle: `Мои Ученики` });
+    if(user?.role?.kk_role_level < 6) tabs.push({ key: 7, menuTitle: `Мои Искатели` });
+
 
     if (loading) return <PartLoader />
     return (
         <div className={`header_navbar_drawer_modules_list`}>
-            <TabsMenu activeTab={user_page_tab_table} setActiveTab={(table)=>dispatch(usersActions.setUsersPageTabTable(table))} tabs={[
-                { key: 2, menuTitle: `Мои Администраторы` },
-                { key: 3, menuTitle: `Мои Координаторы` },
-                { key: 8, menuTitle: `Мои Пасторы` },
-                { key: 4, menuTitle: `Мои Учителя` },
-                { key: 5, menuTitle: `Мои Промоутеры` },
-                { key: 6, menuTitle: `Мои Ученики` },
-                { key: 7, menuTitle: `Мои Искатели` },
-            ]} />
+            <TabsMenu activeTab={user_page_tab_table} setActiveTab={(table)=>dispatch(usersActions.setUsersPageTabTable(table))} tabs={tabs} />
         </div>
     )
 }

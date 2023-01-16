@@ -34,7 +34,8 @@ const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, chil
     if (true) modules.push({ key: 2, menuTitle: 'Пользователи Без', module: <WithoutUsersModulesList /> })
 
     const ActiveTab = () => {
-        const module = modules.find(element => element.key === user_page_tab);
+        let tab = user_page_tab ? user_page_tab : modules[0].key;
+        const module = modules.find(element => element.key === tab);
         return module.module;
     }
 

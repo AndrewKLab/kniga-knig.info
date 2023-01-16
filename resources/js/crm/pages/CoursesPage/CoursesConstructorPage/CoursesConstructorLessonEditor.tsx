@@ -89,7 +89,7 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
     if (loading || get_one_by_lesson_id_lessons_loading) return <PartLoader />
     else if (lesson_editor_action === 'add' || (lesson_editor_action === 'edit' && get_one_by_lesson_id_lessons)) return (
         <div className={`courses_constructor_lessons_editor`}>
-            <h2 className={`courses_constructor_lessons_editor_title`}>Урок:</h2>
+            <h2 className={`courses_constructor_lessons_editor_title`}>Урок #{get_one_by_lesson_id_lessons?.kk_lesson_number}:</h2>
             <Form id="lesson_from" onSubmit={handleSubmit(lessonActionSubmit)}>
                 {lesson_editor_action === 'edit' && <TextInput
                     {...register('kk_lesson_id')}

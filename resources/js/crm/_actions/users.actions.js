@@ -26,7 +26,7 @@ function add(params, navigate) {
             .then(
                 res => {
                     dispatch(success(res))
-                    navigate(`/users/edit/${res.user.kk_user_id}`)
+                    navigate(`/users/action/edit/${res.user.kk_user_id}`)
                 },
                 error => dispatch(failure(error))
             );
