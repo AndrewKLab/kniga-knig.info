@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from "react";
 import { connect } from 'react-redux';
 import { Image, Button, Alert, List, Form, TextInput, IconButton } from '../../_components/UI';
-import { CoursesCard, PageLoader } from '../../_components';
+import { CoursesCard, PageAlert, PageLoader } from '../../_components';
 
 import { User } from '../../_interfaces';
 import { coursesCategoriesActions, coursesActions, chatsActions } from "../../_actions";
@@ -58,7 +58,7 @@ const ChatPage: FunctionComponent<ChatPageProps> = ({
 
     useEffect(() => {
         const init = async () => {
-            await dispatch(chatsActions.getOneById({ parts: 'user_one,user_two,messages', kk_chat_id: kk_chat_id }));
+            await dispatch(chatsActions.getOneById({ parts: 'user_one,user_two,messages', kk_chat_id: kk_chat_id, }));
             setLoading(false)
             scrollToBottom()
         }
@@ -80,9 +80,10 @@ const ChatPage: FunctionComponent<ChatPageProps> = ({
 
 
 
-    if (loading || get_one_by_id_chats_loading) return <PageLoader />
+    if (loading || get_one_by_id_chats_loading) return <PageLoader />;
+    if (get_one_by_id_chats_error) return <PageAlert type={'danger'} message={get_one_by_id_chats_error} />;
     return (
-        <div className={`chat_page`} style={{ height: `calc(100vh - ${width >= 1200 ? 230 : 60}px - ${header?.offsetHeight}px - ${footer?.offsetHeight}px)` }}>
+        <div className={`chat_page`} style={{ height: `calc(100vh - ${width >= 1200 ? 230 : 60}px - ${header?.offsetHeight}px)` }}>
             <div className={`chat_page_header`}>
                 <Image className={`chats_page_user_avatar`} src={`${config.images.avatars}/${chat_user.kk_user_avatar ? chat_user.kk_user_avatar : config.defaultUserAvatar}`} />
                 <h3 className={`chat_page_header_user_name`}>{`${chat_user.kk_user_lastname} ${chat_user.kk_user_firstname}`}</h3>

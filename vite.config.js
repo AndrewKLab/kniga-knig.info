@@ -14,4 +14,13 @@ export default defineConfig({
         }),
         react(),
     ],
+    // server: {
+    //     port: 3000,
+    //     https: true,
+    //     hmr: {
+    //         host: "kniga-knig-dev.info",
+    //         port: 3001,
+    //         protocol: "wss",
+    //     },
+    // },
 });

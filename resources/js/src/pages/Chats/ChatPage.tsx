@@ -98,7 +98,7 @@ const ChatPage: FunctionComponent<ChatPageProps> = ({
                         </div>
                     )
                 })}
-                <div ref={messagesEndRef} />
+                <div id="chat_page_container_end" ref={messagesEndRef} />
             </div>
             <Form className={`chat_page_actions`} onSubmit={handleSubmit(sendMessageToChat)}>
                 <TextInput

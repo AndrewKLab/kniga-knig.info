@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useState } from "react";
+import React, { FunctionComponent, useRef, useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarDesktopMenu, NavbarMenu, NavbarActionsMenu, NavbarMenuItem, Container, InputGroup, InputGroupText, TextInput, IconButton, Dropdown, Drawer, NavbarMobileMenu } from '../UI';
 import { User, Themes } from '../../_interfaces';
@@ -7,6 +7,9 @@ import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon } from ".
 import { useDetectOutsideClick } from '../../_hooks';
 import { searchActions } from "../../_actions";
 import { HeaderSearchResults } from "../";
+
+import { HeaderNavbarNotificationDropdown } from "../../../public/_components";
+import { notificationsActions } from "../../../public/_actions";
 
 type HeaderProps = {
     dispatch: any;
@@ -45,6 +48,10 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
 
     }
 
+    useEffect(() => {
+        if (user) dispatch(notificationsActions.createNotificationPusherToChannel({ channel: `App.Models.KK_User.${user.kk_user_id}` }))
+    }, [])
+
     return (
         <header id="header" className={className}>
             <Navbar>
@@ -60,11 +67,12 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                                     <a className={'navbar-menu-item-inactive'} href={`https://kniga-knig.info`} target="_blank">Посмотреть сайт</a>
                                 </li>
                             </NavbarMenu>
-                            <NavbarActionsMenu>
+                            <div className={`header_actions`}>
+                                {user && <HeaderNavbarNotificationDropdown />}
                                 <Dropdown open={openDropdown} setOpen={setOpenDropdown} dropdown={dropdownRef} overlay={<HeaderNavbarDropdownMenu setOpenDropdown={setOpenDropdown} />} overlayClassName={`navbar-dropdown-actions`}>
                                     <IconButton icon={<UserCircleOutlineIcon size={38} />} />
                                 </Dropdown>
-                            </NavbarActionsMenu>
+                            </div>
                         </NavbarDesktopMenu>
                         <NavbarMobileMenu>
                             <NavbarMenu>

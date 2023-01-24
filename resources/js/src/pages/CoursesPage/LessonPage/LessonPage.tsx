@@ -280,7 +280,12 @@ const LessonPlane: FunctionComponent<LessonPlaneProps> = ({
     const onSubmitFinishLessonForm = async (data) => {
 
         if (user) {
-            await dispatch(lessonsUsersProgressActions.edit({ kk_lup_id: lesson_users_progress.kk_lup_id, kk_lup_finished_at: moment().format("YYYY-MM-DD HH:mm:ss"), ...data }, async () => {
+            await dispatch(lessonsUsersProgressActions.edit({ 
+                kk_lup_id: lesson_users_progress.kk_lup_id, 
+                kk_lup_finished_at: moment().format("YYYY-MM-DD HH:mm:ss"), 
+                kk_lup_status: 'finished', 
+                ...data 
+            }, async () => {
                 // setIsOpenFinishLessonModal(true)
                 // setLessonToFinishLessonModal(lesson_users_progress)
                 await dispatch(lessonsUsersProgressActions.getAllByCupId({ kk_lup_cup_id: lesson_users_progress.kk_lup_cup_id }));

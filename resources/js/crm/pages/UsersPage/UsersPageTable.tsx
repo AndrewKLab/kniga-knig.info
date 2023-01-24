@@ -4,18 +4,26 @@ import { Row, Col, Button, Table, Tabs, IconButton, Modal, ModalHeader, ModalBod
 import { CoursesCard, PageAlert, PageLoader, PartAlert, PartLoader, RemoveCourseModal } from '../../_components';
 
 import { User } from '../../_interfaces';
-import { rolesCategoriesActions, rolesActions, settingsActions, usersActions } from "../../_actions";
+import { rolesCategoriesActions, rolesActions, settingsActions, usersActions, chatsActions } from "../../_actions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import './index.css';
 
 import moment from 'moment';
-import { InfoIcon, PenIcon, TrashIcon } from "../../_components/UI/Icons";
+import { ChatIcon, InfoIcon, PenIcon, TrashIcon } from "../../_components/UI/Icons";
 
 
-const UsersTableActions: FunctionComponent = ({ user, setIsOpenRemoveUserModal, setSelectedUserToModal }) => {
+const UsersTableActions: FunctionComponent = ({dispatch, user, setIsOpenRemoveUserModal, setSelectedUserToModal }) => {
     let navigate = useNavigate();
+
+    const openChat = (user) => {
+        dispatch(chatsActions.create({kk_user_id:user.kk_user_id})).then((res)=>{
+            if(res?.error?.message === 'Такой чат уже существует!') navigate(`/chats/${res?.error?.chat?.kk_chat_id}`)
+            if(res?.res?.chat) navigate(`/chats/${res?.res?.chat?.kk_chat_id}`)    
+        });
+    }
     return (
         <div>
+            <IconButton icon={<ChatIcon size={20} color={`rgba(var(--alert-success-color), 1)`} />} title="Перейти к диалогу с пользователем" onClick={() => openChat(user)} />
             <IconButton icon={<InfoIcon size={20} color={`rgba(var(--alert-info-color), 1)`} />} title="Информация о пользователе" onClick={() => navigate(`/users/info/${user.kk_user_id}`)} />
             <IconButton icon={<PenIcon size={20} color={`rgba(var(--alert-warning-color), 1)`} />} title="Изменить" onClick={() => navigate(`/users/action/edit/${user.kk_user_id}`)} />
             <IconButton icon={<TrashIcon size={20} color={`rgba(var(--alert-danger-color), 1)`} />} title="Удалить" onClick={() => { setIsOpenRemoveUserModal(true), setSelectedUserToModal(user) }} />
@@ -57,7 +65,7 @@ const UsersPageTable: FunctionComponent<UsersPageTableProps> = ({
         },
         {
             Header: 'Телефон',
-            accessor: row => `+7${row.kk_user_phonenumber}`,
+            accessor: row => row.kk_user_phonenumber ? `+7${row.kk_user_phonenumber}` : null,
         },
         {
             Header: 'E-mail',
@@ -77,7 +85,7 @@ const UsersPageTable: FunctionComponent<UsersPageTableProps> = ({
         },
         {
             Header: 'Действия',
-            accessor: row => <UsersTableActions user={row} setIsOpenRemoveUserModal={setIsOpenRemoveUserModal} setSelectedUserToModal={setSelectedUserToModal} />,
+            accessor: row => <UsersTableActions dispatch={dispatch} user={row} setIsOpenRemoveUserModal={setIsOpenRemoveUserModal} setSelectedUserToModal={setSelectedUserToModal} />,
         },
         {
             Header: 'Дата регистрации',

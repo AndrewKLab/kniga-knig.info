@@ -19,6 +19,9 @@ import { authActions } from './_actions'
 
 import { MainRoutes } from './routers';
 import { TechnicalWorksPage } from './pages';
+import { initLaravelEcho } from '../public/_helpers';
+
+// import { getTokenHelper } from './_helpers/firebase';
 
 
 // if (library.add) library.add(fab, fas)
@@ -37,13 +40,11 @@ const App = ({
   useEffect(() => {
     const init = async () => {
       const storage_token = localStorage.getItem('token');
-      if (storage_token) await dispatch(authActions.getAuthUser());
+      if (storage_token) {
+        await dispatch(authActions.getAuthUser());
+        await initLaravelEcho(storage_token)
+      }
       setLoading(false);
-
-      // await getTokenHelper(dispatch);
-      // const deviceInfo = await getDeviceInfo();
-
-
     }
     init();
   }, [])
@@ -57,10 +58,10 @@ const App = ({
         {/* <TechnicalWorksPage/> */}
         <Header />
         {/* <Notifications/> */}
-        <Container>
-          <MainRoutes />
-        </Container>
-        <Footer />
+      <Container>
+        <MainRoutes />
+      </Container>
+      <Footer />
       </Router>
     </GoogleReCaptchaProvider>
   );

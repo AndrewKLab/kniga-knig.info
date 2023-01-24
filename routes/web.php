@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::domain('https://crm.kniga-knig-dev.info')->group(function () {
+    
     Route::view('/{path?}', 'crm')->where('path', '.*');
 
 });

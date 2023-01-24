@@ -13,7 +13,7 @@ export * from './Footer/Footer.tsx';
 
 export * from './Courses';
 export * from './Questions';
-export * from './Notifications'
+// export * from './Notifications'
 export * from './Modals'
 export * from './ImageDropzone'
 export * from './TextEditor'

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\KK_Courses;
 use App\Models\KK_User;
 use App\Models\KK_Users_Roles;
+use App\Notifications\UserRegistered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -228,5 +229,16 @@ class UsersController extends Controller
         $user = KK_User::with($params->parts)->withCount($params->parts_to_count)->where([['kk_user_id', '=', $request->kk_user_id]])->where($params->where)->first();
 
         return response()->json(['message' => env('RESPONSE_SUCCESS'), 'user' => $user], 200);
+    }
+
+    public function notify(Request $request)
+    {
+        $users = KK_User::with([])->whereHas('role', function($query){
+            $query->where([['kk_role_level','<', 6 ]]);
+        })->get();
+        foreach ($users as $user) {
+            $user_n = KK_User::first();
+            $user->notify(new UserRegistered($user_n));
+        }
     }
 }

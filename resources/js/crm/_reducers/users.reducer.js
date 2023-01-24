@@ -1,4 +1,4 @@
-import { usersConstants, pagesConstants } from '../_constants';
+import { usersConstants, pagesConstants, lessonsUsersProgressConstants } from '../_constants';
 
 const initialState = {
     user_editor_action: null,
@@ -62,6 +62,26 @@ export function users(state = initialState, action) {
                 ...state,
                 user_editor_action: action.user_editor_action,
                 user_editor_kk_user_id: action.user_editor_kk_user_id,
+            }
+        case lessonsUsersProgressConstants.EDIT_LESSONS_USERS_PROGRESS_SUCCESS:
+            return {
+                ...state,
+                get_one_by_user_id_users: action?.res?.lesson && state?.get_one_by_user_id_users?.course_user_progress?.course?.lessons.length > 0 ? (
+                    {
+                        ...state.get_one_by_user_id_users,
+                        course_user_progress: {
+                            ...state.get_one_by_user_id_users.course_user_progress,
+                            course: {
+                                ...state.get_one_by_user_id_users.course_user_progress.course,
+                                lessons: state.get_one_by_user_id_users.course_user_progress.course.lessons.map((lesson, index) =>
+                                    lesson.kk_lesson_id === action?.res?.lesson.kk_lup_lesson_id ? { ...lesson, lesson_users_progress: action?.res?.lesson } : lesson
+                                )
+                            }
+                        }
+
+                    }
+                ) : state.get_one_by_user_id_users,
+
             }
 
         case usersConstants.SET_USERS_PAGE_TAB:

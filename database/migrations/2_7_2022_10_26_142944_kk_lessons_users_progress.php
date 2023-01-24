@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('kk_lup_lesson_id')->index('kk_lup_lesson_id')->comment('ID Урока');
             $table->string('kk_lup_status')->nullable(true)->comment('Статус');
             $table->integer('kk_lup_assessment')->nullable(true)->comment('Оценка');
+            $table->tinyInteger('kk_lup_checked')->default(0)->comment('Урок проверен ');
             $table->timestamp('kk_lup_started_at')->useCurrent()->comment('Дата страта');
             $table->timestamp('kk_lup_finished_at')->nullable(true)->comment('Дата финиша');
             $table->timestamp('kk_lup_created_at')->useCurrent()->comment('Дата создания');

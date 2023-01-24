@@ -1,0 +1,15 @@
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.alert-danger {
+    color: rgba(var(--alert-danger-text-color), 1);
+    background-color: rgba(var(--alert-danger-background-color), 1);
+    border-color: rgba(var(--alert-danger-color), 1);
+}
+.alert-success {
+    color: #fff;
+    background-color: rgba(var(--alert-success-background-color), 1);
+    border-color: rgba(var(--alert-success-color), 1);
+}

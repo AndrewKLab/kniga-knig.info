@@ -1,3 +1,5 @@
+import { notificationsActions } from '../../public/_actions';
+import { unsubscribeFromChannel } from '../../public/_helpers';
 import { authConstants } from '../_constants';
 import { authService } from '../_services';
 
@@ -37,6 +39,14 @@ function login(params, navigate) {
             .then(
                 res => {
                     localStorage.setItem('token', res.token);
+                    if (res.user) dispatch(notificationsActions.createNotificationPusherToChannel({
+                        channel: `App.Models.KK_User.${res.user.kk_user_id}`,
+                        options: {
+                            withInit: true,
+                            token: res.token,
+                        }
+                    }))
+
                     dispatch(success(res))
                     navigate('/')
                 },
@@ -55,6 +65,7 @@ function logout(params) {
             .then(
                 res => {
                     localStorage.removeItem('token');
+                    if (res.user) unsubscribeFromChannel(`App.Models.KK_User.${res.user.kk_user_id}`)
                     dispatch(success(res))
                 },
                 error => dispatch(failure(error))

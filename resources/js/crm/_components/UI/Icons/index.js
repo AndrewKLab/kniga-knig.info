@@ -29,3 +29,4 @@ export * from './DoubleFoldersOutlineIcon';
 export * from './StudentOutlineIcon';
 export * from './PenIcon';
 export * from './TrashIcon';
+export * from './ChatIcon';

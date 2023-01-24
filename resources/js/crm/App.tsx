@@ -19,6 +19,7 @@ import { authActions } from './_actions'
 
 import { MainRoutes } from './routers';
 import { TechnicalWorksPage } from './pages';
+import { initLaravelEcho } from '../public/_helpers';
 
 
 // if (library.add) library.add(fab, fas)
@@ -37,7 +38,10 @@ const App = ({
   useEffect(() => {
     const init = async () => {
       const storage_token = localStorage.getItem('token');
-      if (storage_token) await dispatch(authActions.getAuthUser());
+      if (storage_token) {
+        await dispatch(authActions.getAuthUser());
+        await initLaravelEcho(storage_token)
+      }
       setLoading(false);
 
       // await getTokenHelper(dispatch);

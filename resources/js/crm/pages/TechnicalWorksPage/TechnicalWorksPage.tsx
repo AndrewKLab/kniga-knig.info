@@ -10,7 +10,7 @@ export const TechnicalWorksPage: FunctionComponent = (): JSX.Element => {
             <div className={`technicals_works_page_information`}>
                 <Image height={200} src={`site/pngwing.com.png`}/>
                 <h1>Режим технического обслуживания</h1>
-                <p>В данный момент сайт находится на техническом обслуживании до <b>20.11.2022.</b></p>
+                <p>Проводятся технические работы в связи с обновлением сайта. Ориентировочное время подключения - <b>18-00 МСК.</b></p>
                 <p>Приносим извинения за временные неудобства.</p>
                 <p>Списибо за внимание.</p>
             </div>

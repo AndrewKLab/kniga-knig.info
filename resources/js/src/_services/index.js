@@ -11,3 +11,4 @@ export * from './lessons_users_progress.service';
 export * from './auth.service';
 export * from './support.service';
 export * from './chats.service';
+export * from './notifications.service';

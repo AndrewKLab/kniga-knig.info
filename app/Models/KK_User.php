@@ -5,10 +5,12 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Classes\RequestHelper;
+use App\Notifications\UserRegistered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Notification;
 
 class KK_User extends Authenticatable
 {
@@ -47,6 +49,21 @@ class KK_User extends Authenticatable
         'kk_user_promouter_id',
         'kk_user_avatar',
     ];
+
+// public static function boot(){
+//     parent::boot();
+//     static::created(function($model){
+//         $users = KK_User::with([])->whereHas('role', function($query){
+//             $query->where([['kk_role_level','<', 6 ]]);
+//         })->get();
+//         foreach ($users as $user) {
+//             $user->notify(new UserRegistered('Hello World'));
+//         }
+        
+
+//         // Notification::send($users, new UserRegistered($model));
+//     });
+// }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -180,6 +197,7 @@ class KK_User extends Authenticatable
                                             if (isset($request->lessons_published)) $query->where("kk_lesson_published", $request->lessons_published);
                                             if (in_array('lesson_users_progress', $parts)) {
                                                 $with += array('lesson_users_progress' => function ($query) use ($request, $with, $parts) {
+                                                    if(!empty($request->kk_user_id)) $query->where(['kk_lup_user_id' => $request->kk_user_id]);
                                                 });
                                             }
                                             $query->with($with)->where(function ($query) use ($request, $parts) {

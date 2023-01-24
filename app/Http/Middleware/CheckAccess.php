@@ -23,26 +23,27 @@ class CheckAccess
     {
 
         $user = Auth::user();
-        if (empty($user)) return response()->json(['message' => 'Доступ закрыт!'], 401);
+        if (empty($user)) return response()->json(['message' => config('responce_answers.access_denied')], 401);
         $module = KK_Modules::where(['kk_module_name' => $kk_module_name])->first();
         if (empty($module)) return response()->json(['message' => 'Такого модуля не существует!'], 401);
         $kk_users_roles_access = KK_Users_Roles_Access::where([['kk_ura_role_id', '=', $user->kk_user_role_id], ['kk_ura_module_id', '=', $module->kk_module_id]])->first();
-
+        if (empty($kk_users_roles_access)) return response()->json(['message' => config('responce_answers.access_denied')], 401);
+        
         switch ($action) {
             case 'create':
-                if ($kk_users_roles_access->kk_ura_create_access === 0) return response()->json(['message' => env('RESPONSE_ACCESS_DENIED')], 401);
+                if ($kk_users_roles_access->kk_ura_create_access === 0) return response()->json(['message' => config('responce_answers.access_denied')], 401);
                 break;
             case 'read':
-                if ($kk_users_roles_access->kk_ura_read_access === 0) return response()->json(['message' => env('RESPONSE_ACCESS_DENIED')], 401);
+                if ($kk_users_roles_access->kk_ura_read_access === 0) return response()->json(['message' => config('responce_answers.access_denied')], 401);
                 break;
             case 'full_read':
-                if ($kk_users_roles_access->kk_ura_full_read_access === 0) return response()->json(['message' => env('RESPONSE_ACCESS_DENIED')], 401);
+                if ($kk_users_roles_access->kk_ura_full_read_access === 0) return response()->json(['message' => config('responce_answers.access_denied')], 401);
                 break;
             case 'update':
-                if ($kk_users_roles_access->kk_ura_update_access === 0) return response()->json(['message' => env('RESPONSE_ACCESS_DENIED')], 401);
+                if ($kk_users_roles_access->kk_ura_update_access === 0) return response()->json(['message' => config('responce_answers.access_denied')], 401);
                 break;
             case 'delete':
-                if ($kk_users_roles_access->kk_ura_delete_access === 0) return response()->json(['message' => env('RESPONSE_ACCESS_DENIED')], 401);
+                if ($kk_users_roles_access->kk_ura_delete_access === 0) return response()->json(['message' => config('responce_answers.access_denied')], 401);
                 break;
 
             default:

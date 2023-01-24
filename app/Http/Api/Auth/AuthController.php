@@ -9,6 +9,8 @@ use App\Mail\ResetPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use App\Models\KK_User;
+use App\Models\KK_Users_Roles;
+use App\Notifications\UserRegistered;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
@@ -30,33 +32,48 @@ class AuthController extends Controller
     public function registration(RegisterFormRequest $request)
     {
         if ($request->kk_user_password_privacy_politic_confirmation !== 'true') return response()->json(['message' => 'Пожалуйста примите "Согласие на обработку персональных данных".'], 400);
-        $role_type = 'kk_user_promouter_id';
-        if (!empty($request->referal_user)) {
-            $user = KK_User::where(['kk_user_id' => $request->referal_user])->first();
-            if (empty($user)) return response()->json(['message' => 'Такой аользователь не найден!'], 400);
+        $referal = [
+            'kk_user_admin_id'          =>  null,
+            'kk_user_coordinator_id'    =>  null,
+            'kk_user_pastor_id'         =>  null,
+            'kk_user_teather_id'        =>  null,
+            'kk_user_promouter_id'      =>  null,
+        ];
 
-            switch ($user->kk_user_id) {
-                case 1:
-                    $role_type = 'kk_user_admin_id';
-                    break;
-                case 2:
-                    $role_type = 'kk_user_admin_id';
-                    break;
-                case 3:
-                    $role_type = 'kk_user_coordinator_id';
-                    break;
-                case 8:
-                    $role_type = 'kk_user_pastor_id';
-                    break;
-                case 4:
-                    $role_type = 'kk_user_teather_id';
-                    break;
-                case 5:
-                    $role_type = 'kk_user_promouter_id';
-                    break;
-                default:
-                    $role_type = 'kk_user_promouter_id';
-                    break;
+        if (!empty($request->referal_user)) {
+            $referal_user = KK_User::where(['kk_user_id' => $request->referal_user])->with(['role'])->first();
+            if (empty($referal_user)) return response()->json(['message' => 'Такой пользователь не найден!'], 400);
+            if (empty($referal_user->role)) return response()->json(['message' => 'Такая роль пользователя не найдена!'], 400);
+            if ($referal_user->role->kk_role_level === 1 || $referal_user->role->kk_role_level === 2) {
+                $referal['kk_user_admin_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_coordinator_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_pastor_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
+            } else if($referal_user->role->kk_role_level === 3){
+                $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
+                $referal['kk_user_coordinator_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_pastor_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
+            }else if($referal_user->role->kk_role_level === 4){
+                $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
+                $referal['kk_user_coordinator_id'] = $referal_user->kk_user_coordinator_id;
+                $referal['kk_user_pastor_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
+            }else if($referal_user->role->kk_role_level === 5){
+                $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
+                $referal['kk_user_coordinator_id'] = $referal_user->kk_user_coordinator_id;
+                $referal['kk_user_pastor_id'] = $referal_user->kk_user_pastor_id;
+                $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
+                $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
+            }else if($referal_user->role->kk_role_level === 6){
+                $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
+                $referal['kk_user_coordinator_id'] = $referal_user->kk_user_coordinator_id;
+                $referal['kk_user_pastor_id'] = $referal_user->kk_user_pastor_id;
+                $referal['kk_user_teather_id'] = $referal_user->kk_user_teather_id;
+                $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
             }
         }
 
@@ -72,11 +89,29 @@ class AuthController extends Controller
             'kk_user_password' => Hash::make($request['kk_user_password']),
             'kk_user_offline_user' => $request['kk_user_offline_user'] ? $request['kk_user_offline_user'] : 0,
             'kk_user_role_id' => $request['kk_user_role_id'] ? $request['kk_user_role_id'] : 7,
-            $role_type => !empty($request->referal_user) ? $request->referal_user : null,
+
+            'kk_user_admin_id' => $referal['kk_user_admin_id'],
+            'kk_user_coordinator_id' => $referal['kk_user_coordinator_id'],
+            'kk_user_pastor_id' => $referal['kk_user_pastor_id'],
+            'kk_user_teather_id' => $referal['kk_user_teather_id'],
+            'kk_user_promouter_id' => $referal['kk_user_promouter_id'],
+
             'kk_user_avatar' => $request['kk_user_avatar'],
             'kk_user_email_verified_at' => $request['kk_user_email_verified_at'],
 
         ]);
+
+        if (!empty($request->referal_user)) {
+            $referal_user = KK_User::where(['kk_user_id' => $request->referal_user])->first();
+            $referal_user->notify(new UserRegistered($user, 'Пользователь ' . $user->kk_user_lastname . ' ' . $user->kk_user_firstname . ' был зарегистрирован по вашей реферальной ссылке.'));
+        } else {
+            $target_users = KK_User::with(['role'])->whereHas('role', function ($query) {
+                $query->where([['kk_role_level', '<', 3]]);
+            })->get();
+            foreach ($target_users as $target_user) {
+                $target_user->notify(new UserRegistered($user, 'Пользователь ' . $user->kk_user_lastname . ' ' . $user->kk_user_firstname . ' был зарегистрирован.'));
+            }
+        }
 
         return response()->json([
             'user' => $user,
@@ -130,9 +165,11 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
         return response()->json([
             'message' => 'Вы успешно вышли из системы.',
+            'user' => $user
         ]);
     }
 

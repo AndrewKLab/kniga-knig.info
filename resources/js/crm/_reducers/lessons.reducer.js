@@ -1,4 +1,4 @@
-import { lessonsConstants, pagesConstants, questionsUsersAnswersConstants } from '../_constants';
+import { lessonsConstants, lessonsUsersProgressConstants, pagesConstants, questionsUsersAnswersConstants } from '../_constants';
 
 const initialState = {
     lesson_editor_action: null,
@@ -55,6 +55,19 @@ export function lessons(state = initialState, action) {
                 lesson_editor_action: action.lesson_editor_action,
                 lesson_editor_kk_lesson_id: action.lesson_editor_kk_lesson_id,
             }
+        case lessonsUsersProgressConstants.EDIT_LESSONS_USERS_PROGRESS_SUCCESS:
+            return {
+                ...state,
+                get_one_by_lesson_id_lessons: action?.res?.lesson && state?.get_one_by_lesson_id_lessons?.lesson_users_progress ? (
+                    {
+                        ...state.get_one_by_lesson_id_lessons,
+                        lesson_users_progress: action?.res?.lesson
+                    }
+                ) : state.get_one_by_lesson_id_lessons,
+
+            }
+
+
 
         // ADD_LESSONS
         case lessonsConstants.ADD_LESSONS_REQUEST:

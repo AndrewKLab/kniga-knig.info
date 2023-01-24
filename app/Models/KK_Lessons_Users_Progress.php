@@ -24,6 +24,7 @@ class KK_Lessons_Users_Progress extends Model
         'kk_lup_course_id',
         'kk_lup_status',
         'kk_lup_assessment',
+        'kk_lup_checked',
         'kk_lup_started_at',
         'kk_lup_finished_at',
     ];

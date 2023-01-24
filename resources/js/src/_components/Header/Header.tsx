@@ -1,13 +1,16 @@
-import React, { FunctionComponent, useRef, useState } from "react";
+import React, { FunctionComponent, useRef, useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarDesktopMenu, NavbarMenu, NavbarActionsMenu, NavbarMenuItem, Container, InputGroup, InputGroupText, TextInput, IconButton, Dropdown, Drawer, NavbarMobileMenu } from '../UI';
 import { User, Themes } from '../../_interfaces';
 import { HeaderNavbarDropdownMenu, HeaderSearchDropdownMenu, HeaderNavbarMainDropdownMenu } from "../";
-import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon, YouTubeIcon, VKIcon, OKIcon } from "../UI/Icons";
+import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon, YouTubeIcon, VKIcon, OKIcon, BellOutlineIcon } from "../UI/Icons";
 import { useDetectOutsideClick } from '../../_hooks';
 import { searchActions } from "../../_actions";
 import { HeaderSearchResults } from "../";
 import { config } from "../../_helpers";
+
+import { HeaderNavbarNotificationDropdown } from "../../../public/_components";
+import { notificationsActions } from "../../../public/_actions";
 
 type HeaderProps = {
     dispatch: any;
@@ -37,6 +40,7 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
     const mobileDropdownRef = useRef(null);
     const [openMobileDropdown, setOpenMobileDropdown] = useDetectOutsideClick(mobileDropdownRef, false);
 
+
     const [search_request, setSearchRequest] = useState('');
 
     const handleChange = (value: string) => {
@@ -45,6 +49,12 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
         if (value.length > 0) dispatch(searchActions.search({ search: value }));
 
     }
+
+    useEffect(() => {
+        if (user) dispatch(notificationsActions.createNotificationPusherToChannel({ channel: `App.Models.KK_User.${user.kk_user_id}` }))
+    }, [])
+
+
 
     const SocialIcons = () => {
         return <div className={`navbar-social-icons`}>
@@ -79,7 +89,7 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                                 <NavbarMenuItem href={`/contacts`}>Контакты</NavbarMenuItem>
                             </NavbarMenu>
                             <NavbarActionsMenu>
-                                <SocialIcons/>
+                                <SocialIcons />
                                 <InputGroup className="navbar-search-input-group">
                                     <TextInput
                                         type="search"
@@ -96,9 +106,12 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                                         <MagnifyingGlassOutlineIcon size={16} color={'#E5F8E2'} />
                                     </InputGroupText>
                                 </InputGroup>
-                                <Dropdown open={openDropdown} setOpen={setOpenDropdown} dropdown={dropdownRef} overlay={<HeaderNavbarDropdownMenu setOpenDropdown={setOpenDropdown} />} overlayClassName={`navbar-dropdown-actions`}>
-                                    <IconButton icon={<UserCircleOutlineIcon size={38} />} />
-                                </Dropdown>
+                                <div className={`header_actions`}>
+                                    {user && <HeaderNavbarNotificationDropdown />}
+                                    <Dropdown open={openDropdown} setOpen={setOpenDropdown} dropdown={dropdownRef} overlay={<HeaderNavbarDropdownMenu setOpenDropdown={setOpenDropdown} />} overlayClassName={`navbar-dropdown-actions`}>
+                                        <IconButton icon={<UserCircleOutlineIcon size={38} />} />
+                                    </Dropdown>
+                                </div>
                             </NavbarActionsMenu>
                         </NavbarDesktopMenu>
                         <NavbarMobileMenu>
@@ -113,7 +126,7 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                                 <Dropdown open={openSearchMobileDropdown} setOpen={setOpenSearchMobileDropdown} dropdown={searchMobileDropdownRef} overlay={<HeaderSearchDropdownMenu setOpenSearchMobileDropdown={setOpenSearchMobileDropdown} />} overlayClassName={`navbar-search-actions`}>
                                     <IconButton icon={<MagnifyingGlassOutlineIcon size={26} color={'#E5F8E2'} />} />
                                 </Dropdown>
-
+                                {user && <HeaderNavbarNotificationDropdown iconSize={26} />}
                                 <Dropdown open={openMobileDropdown} setOpen={setOpenMobileDropdown} dropdown={mobileDropdownRef} overlay={<HeaderNavbarDropdownMenu setOpenDropdown={setOpenMobileDropdown} />} overlayClassName={`navbar-dropdown-actions`}>
                                     <IconButton icon={<UserCircleOutlineIcon size={26} />} />
                                 </Dropdown>

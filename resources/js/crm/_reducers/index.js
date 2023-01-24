@@ -16,8 +16,9 @@ import { lessons_users_progress } from './lessons_users_progress.reducer';
 import { questions } from './questions.reducer';
 import { auth } from './auth.reducer';
 import { support } from './support.reducer';
-import { chats } from './chats.reducer';
 import { settings } from './settings.reducer';
+
+import { notifications, chats } from '../../public/_reducers';
 
 const rootReducer = combineReducers({
   users,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   support,
   chats,
   settings,
+  notifications
 });
 
 export default rootReducer;

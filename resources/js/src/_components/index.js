@@ -1,19 +1,13 @@
 export * from './PrivateRoute';
 
 //new
-export * from './Header/Header.tsx';
-export * from './Header/HeaderNavbarDropdownMenu.tsx';
-export * from './Header/HeaderNavbarMainDropdownMenu.tsx';
-export * from './Header/HeaderSearchDropdownMenu.tsx';
-export * from './Header/HeaderNavbarDrawerMenu.tsx';
-export * from './Header/HeaderSearchResults.tsx';
-export * from './Header/HeaderSearchResultsItem.tsx';
+export * from './Header';
 
 export * from './Footer/Footer.tsx';
 
 export * from './Courses';
 export * from './Questions';
-export * from './Notifications'
+// export * from './Notifications'
 
 export * from './Loaders';
 

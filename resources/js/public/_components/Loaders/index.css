@@ -1,0 +1,16 @@
+.main_site_loader{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page_loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.part_loader{
+    display: flex;
+    justify-content: center;
+}

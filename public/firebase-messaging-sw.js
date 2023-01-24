@@ -4,13 +4,13 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
-    apiKey: "AIzaSyA36-3U3YsTwG6IRc72Ozq5mfrFp4U2OLo",
-    authDomain: "kniga-knig.firebaseapp.com",
-    projectId: "kniga-knig",
-    storageBucket: "kniga-knig.appspot.com",
-    messagingSenderId: "939497128330",
-    appId: "1:939497128330:web:57a893dd141d4287560873",
-    measurementId: "G-R8EQC1KGRY"
+  apiKey: "AIzaSyDspzc7EIbHytDY1MVjj_N41c3mFnAMYLw",
+  authDomain: "kniga-knig-dev.firebaseapp.com",
+  projectId: "kniga-knig-dev",
+  storageBucket: "kniga-knig-dev.appspot.com",
+  messagingSenderId: "861384103549",
+  appId: "1:861384103549:web:d3bd468e69ac64bb4e0314",
+  measurementId: "G-CKYPYSW6FZ"
 };
 
 firebase.initializeApp(firebaseConfig);

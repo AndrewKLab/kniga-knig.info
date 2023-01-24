@@ -15,6 +15,7 @@ export * from './AudioPlayer'
 
 
 
+
 export * from './Input';
 export * from './Modal';
 export * from './Share';
@@ -23,8 +24,8 @@ export * from './Share';
 export * from './IconButton/IconButton.tsx';
 export * from './Button/Button.tsx';
 
-export * from './Dropdown/Dropdown.tsx';
-export * from './Dropdown/DropdownMenu.tsx';
+export * from './Dropdown';
+export * from './Badge';
 
 export * from './Drawer/Drawer.tsx';
 export * from './Drawer/DrawerMenu.tsx';

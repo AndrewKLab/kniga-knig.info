@@ -4,6 +4,7 @@ export const chatsService = {
     getAllByUser,
     getOneById,
     sendMessage,
+    create
 };
 
 const api_path = `/chats/`;
@@ -20,6 +21,10 @@ async function sendMessage(params) {
     const response = await fetch(`${config.apiUrl}${api_path}messages/sendMessage`, {...config.POST, headers:{...authHeader()}, body: paramsObjectToFormData({...params, '_token': csrf()})});
     return handleResponse(response);
 }
+async function create(params) {
+    const response = await fetch(`${config.apiUrl}${api_path}create`, {...config.POST, headers:{...authHeader()}, body: paramsObjectToFormData({...params, '_token': csrf()})});
+    return handleResponse(response);
+}
 
 function handleResponse(response) {
     return response.text().then(text => {
@@ -32,7 +37,7 @@ function handleResponse(response) {
                 // logout();
             }
 
-            const error = (data && data.message) || response.statusText;
+            const error = data;
             return Promise.reject(error);
         }
         return data;

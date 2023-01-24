@@ -5,7 +5,10 @@ namespace App\Http\Api\Courses;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\KK_Courses;
 use App\Models\KK_Courses_Users_Progress;
+use App\Models\KK_User;
+use App\Notifications\CourseFinished;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -31,12 +34,30 @@ class CoursesUsersProgressController extends Controller
         if (empty($request->kk_cup_id)) return response()->json(['message' => env('RESPONSE_MISSING_DATA')], 400);
         $cup = KK_Courses_Users_Progress::where([['kk_cup_user_id', '=', $user->kk_user_id], ['kk_cup_id', '=', $request->kk_cup_id]])->first();
         if (empty($cup)) return response()->json(['message' => "Вы еще не проходите данный курс!"], 400);
-        KK_Courses_Users_Progress::where([['kk_cup_id', '=', $request->kk_cup_id]])->update([
+
+        $cup->update([
             'kk_cup_status' => $request->kk_lup_status,
             'kk_cup_finished_at' => !empty($request->kk_lup_status) && $request->kk_lup_status === 'finished' ? Carbon::now() : null,
         ]);
-        $lesson_user_progress = KK_Courses_Users_Progress::where([['kk_cup_id', '=', $request->kk_cup_id]])->first();
-        return response()->json(['message' => env('RESPONSE_UPDATE_SUCCESS'), 'course' => $lesson_user_progress], 200);
+
+        //Отправка уведомления
+        if (!empty($request->kk_lup_status) && $request->kk_lup_status === 'finished' && !empty(Auth::user()->kk_user_teather_id)) {
+            $target_user = KK_User::where([['kk_user_id', '=', Auth::user()->kk_user_teather_id]])->first();
+            $target_users = KK_User::with(['role'])->whereHas('role', function ($query) {
+                $query->where([['kk_role_level', '<', 3]]);
+                if(!empty(Auth::user()->kk_user_teather_id)) $query->where([['kk_user_id', '!=', Auth::user()->kk_user_teather_id]]);
+            })->get();
+            $course = KK_Courses::where([['kk_course_id', '=', $cup->kk_cup_course_id]])->first();
+            $message = null;
+
+            if (!empty($course)) $message = 'Пользователь ' . Auth::user()->kk_user_lastname . ' ' . Auth::user()->kk_user_firstname . ' прошел курс "' . $course->kk_course_name . '".';
+            if (!empty($message)) {
+                if (!empty($target_user) && Auth::user()->kk_user_id !== $target_user->kk_user_id) $target_user->notify(new CourseFinished($cup, $message));
+                if (!empty($target_users) && $target_users->count() > 0) foreach ($target_users as $tu) if(Auth::user()->kk_user_id !== $tu->kk_user_id) $tu->notify(new CourseFinished($cup, $message));
+            }
+        }
+
+        return response()->json(['message' => env('RESPONSE_UPDATE_SUCCESS'), 'course' => $cup], 200);
     }
     public function remove(Request $request)
     {

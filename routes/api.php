@@ -14,12 +14,28 @@ use App\Http\Api\Courses\Lessons\LessonsController;
 use App\Http\Api\Courses\Lessons\LessonsUsersProgressController;
 use App\Http\Api\Courses\Lessons\Questions\QuestionsController;
 use App\Http\Api\Courses\Lessons\Questions\QuestionsUsersAnswersController;
+use App\Http\Api\Notifications\NotificationsController;
 use App\Http\Api\SearchContorller;
 use App\Http\Api\Settings\ModulesController;
 use App\Http\Api\Settings\UsersRolesAccessController;
 use App\Http\Api\Settings\UsersRolesController;
 use App\Http\Api\Support\SupportContorller;
 use App\Http\Api\Users\UsersController;
+use Illuminate\Support\Facades\Broadcast;
+
+// Broadcast::routes(['middleware' => ['auth:sanctum']]);
+// Route::post('/lessons/questions/remove', [QuestionsController::class, 'remove'])->middleware('checkAccess:Вопросы,delete');
+
+// if (request()->hasHeader('X-Tenant')) {
+//     Broadcast::routes(['middleware' => ['auth:sanctum', InitializeTenancyByRequestData::class]]);
+// } else {
+//     Broadcast::routes(['middleware' => ['auth:sanctum']]);
+// }
+
+// Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+//     return (int) $user->id === (int) $id;
+// });
+// require base_path('routes/channels.php');
 
 Route::post('/auth/registration', [AuthController::class, 'registration'])->name('registration');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
@@ -43,10 +59,13 @@ Route::get('/lessons/getFirstByCourseId', [LessonsController::class, 'getFirstBy
 
 
 Route::get('/search', [SearchContorller::class, 'search']);
-
 Route::post('/support/create', [SupportContorller::class, 'create']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    //     Route::post('/broadcasting/auth', function (Illuminate\Http\Request $req) { 
+    //         return Auth::user();
+    //    });
+
     Route::post('/auth/user/edit', [AuthController::class, 'editAuthUser']);
     Route::post('/auth/user/edit/avatar', [AuthController::class, 'editAvatarAuthUser']);
     Route::get('/auth/getAuthUser', [AuthController::class, 'getAuthUser']);
@@ -56,7 +75,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/courses/add', [CoursesController::class, 'add'])->middleware('checkAccess:Курсы,create');
     Route::post('/courses/edit', [CoursesController::class, 'edit'])->middleware('checkAccess:Курсы,update');
     Route::post('/courses/remove', [CoursesController::class, 'remove'])->middleware('checkAccess:Курсы,delete');
-   
+
     Route::post('/lessons/add', [LessonsController::class, 'add'])->middleware('checkAccess:Уроки,create');
     Route::post('/lessons/edit', [LessonsController::class, 'edit'])->middleware('checkAccess:Уроки,update');
     Route::post('/lessons/remove', [LessonsController::class, 'remove'])->middleware('checkAccess:Уроки,delete');
@@ -91,6 +110,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/chats/getAllByUser', [ChatsController::class, 'getAllByUser']);
     Route::get('/chats/getOneById', [ChatsController::class, 'getOneById']);
+    Route::post('/chats/create', [ChatsController::class, 'create']);
 
     Route::post('/chats/messages/sendMessage', [MessagesController::class, 'sendMessage']);
 
@@ -110,4 +130,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/settings/users_roles_access/add', [UsersRolesAccessController::class, 'add']);
     Route::post('/settings/users_roles_access/edit', [UsersRolesAccessController::class, 'edit']);
     Route::post('/settings/users_roles_access/remove', [UsersRolesAccessController::class, 'remove']);
+
+    Route::get('/notifications/getAll', [NotificationsController::class, 'getAll']);
+    Route::post('/notifications/markAsReadOneById', [NotificationsController::class, 'markAsReadOneById']);
+    Route::post('/notifications/markAsReadAll', [NotificationsController::class, 'markAsReadAll']);
+    Route::post('/notifications/sendNotifications', [NotificationsController::class, 'sendNotifications'])->middleware('checkAccess:Уведомления,create');
 });

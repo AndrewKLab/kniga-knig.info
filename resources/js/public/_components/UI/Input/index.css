@@ -1,0 +1,177 @@
+/* text-input */
+
+.text-input {
+    border: 1px solid rgba(var(--text-color));
+    border-radius: 5px;
+    padding: 5px;
+
+    display: block;
+    width: 100%;
+    /* height: 60px; */
+    padding: 17px 26px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    background: transparent;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    color: rgba(var(--text-color));
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 130%;
+}
+
+.text-input::placeholder {
+    color: rgba(var(--text-color));
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 130%;
+}
+
+.text-input:focus {
+    border-color: rgba(var(--primary-main-color), 1);
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(var(--primary-main-color), 1);
+}
+
+.label {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    margin-bottom: .5rem;
+    display: inline-block;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    margin-right: 0.5em;
+    vertical-align: top;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 2px solid rgba(var(--primary-color), 1);
+    border-radius: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.checkbox-input:checked {
+    background-color: rgba(var(--primary-color), 1);
+    border-color: rgba(var(--primary-color), 1);
+}
+
+
+.radio-input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    margin-right: 0.5em;
+    vertical-align: top;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 2px solid rgba(var(--primary-color), 1);
+    border-radius: 50%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.radio-input:checked {
+    background-color: rgba(var(--primary-color), 1);
+    border-color: rgba(var(--primary-color), 1);
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group>.dropdown-toggle:nth-last-child(n+3),
+.input-group> :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group> :not(:first-child):not(.dropdown-menu) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group>.text-input,
+.input-group>.form-file,
+.input-group>.form-select {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 17px 26px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(var(--text-color), 1);
+    text-align: center;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 1px solid rgba(var(--text-color));
+    border-radius: 5px;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 130%;
+}
+
+@media (max-width: 1200px) {
+    .text-input {
+        padding: 11px 14px;
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 125%;
+    }
+    .text-input::placeholder {
+        color: rgba(var(--text-color));
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 125%;
+    }
+    .input-group-text {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 125%;
+    }
+}

@@ -6,6 +6,7 @@ export const chatsActions = {
     getAllByUser,
     getOneById,
     sendMessage,
+    create,
 };
 
 
@@ -31,5 +32,13 @@ function sendMessage(params) {
         requestType: chatsConstants.SEND_MESSAGE_CHATS_REQUEST,
         successType: chatsConstants.SEND_MESSAGE_CHATS_SUCCESS,
         failureType: chatsConstants.SEND_MESSAGE_CHATS_FAILURE,
+    })
+}
+function create(params) {
+    return defaultAction(params, {
+        serviceFunc: () => chatsService.create(params),
+        requestType: chatsConstants.CREATE_CHATS_REQUEST,
+        successType: chatsConstants.CREATE_CHATS_SUCCESS,
+        failureType: chatsConstants.CREATE_CHATS_FAILURE,
     })
 }

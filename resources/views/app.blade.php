@@ -18,6 +18,10 @@
 
 <body>
     <div id="app"></div>
+    <script>
+        let csrfToken = "{{ csrf_token() }}"
+    </script>
+    
     @viteReactRefresh
     @vite('resources/js/app.js')
 </body>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KK_Chats;
 use App\Models\KK_Chats_Messages;
+use App\Models\KK_User;
+use App\Notifications\ChatNewMessage;
 use Illuminate\Support\Facades\Auth;
 
 class MessagesController extends Controller
@@ -34,6 +36,10 @@ class MessagesController extends Controller
         ]);
 
         $message = KK_Chats_Messages::where(['kk_cm_id'=>$message_id])->first();
+
+        $target_user = KK_User::where([['kk_user_id', '=', $request->kk_cm_send_to_user_id]])->first();
+        $target_user->notify(new ChatNewMessage($message, 'У вас новое сообщение в чате с пользователем ' . Auth::user()->kk_user_lastname . ' ' . Auth::user()->kk_user_firstname . '.'));
+
         // $params = KK_Chats::Params($request);
         // $chats = KK_Chats::with($params->parts)->withCount($params->parts_to_count)->where(function ($query) use ($user) {
         //     $query->where([['kk_chat_user_one_id', '=', $user->kk_user_id]])->orWhere([['kk_chat_user_two_id', '=', $user->kk_user_id]]);
