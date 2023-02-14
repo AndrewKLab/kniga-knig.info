@@ -1,14 +1,15 @@
 import React, { FunctionComponent, useEffect, useCallback } from "react";
 import { connect } from 'react-redux';
-import { Image, Button, InputError, IconButton, TextInput, Label, Form, Loading, Alert, Tabs, Row, Col, ProgressBar } from '../../../_components/UI';
+import { Image, Button, InputError, IconButton, TextInput, Label, Form, Loading, Alert, Tabs, Row, Col, ProgressBar } from '../../../../public/_components/UI';
+import { PenOutlineIcon, LockKeyOutlineIcon } from "../../../../public/_components/UI/Icons";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { User } from '../../../_interfaces';
 import { authActions, coursesUsersProgressActions } from "../../../_actions";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './index.css';
 import { config, getLastInprocessLesson } from "../../../_helpers";
-import { PenOutlineIcon, LockKeyOutlineIcon } from "../../../_components/UI/Icons";
 import { CoursesCard, PartLoader } from "../../../_components";
+
 
 type ProfilePageCoursesListProps = {
     courses: Array<any> | null;

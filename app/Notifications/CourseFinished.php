@@ -30,8 +30,8 @@ class CourseFinished extends Notification implements ShouldBroadcast
     {
         return [
             'message' => $this->message,
-            'finished_course' => $this->course,
-            'notifiable' => $notifiable,
+            // 'finished_course' => $this->course,
+            // 'notifiable' => $notifiable,
         ];
     }
 

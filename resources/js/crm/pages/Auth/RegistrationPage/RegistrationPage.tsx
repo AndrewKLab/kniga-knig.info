@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useCallback } from "react";
+import React, { FunctionComponent, useEffect, useCallback, useState } from "react";
 import { connect } from 'react-redux';
 import { Row, Col, Button, Image, Label, TextInput, Checkbox, InputGroup, InputGroupText, InputError, Alert, Form } from '../../../_components/UI';
 import { TimerOutlineIcon, FolderOutlineIcon } from '../../../_components/UI/Icons';
@@ -8,6 +8,7 @@ import { User } from '../../../_interfaces';
 import { authActions } from "../../../_actions";
 import { useNavigate, Link } from "react-router-dom";
 import './index.css';
+import { EyeOffOutlineIcon, EyeOutlineIcon } from "../../../../public/_components/UI/Icons";
 
 type RegistrationPageProps = {
     dispatch: any;
@@ -26,6 +27,8 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
     registration_errors,
     registration_error_message,
 }): JSX.Element => {
+    const [togglePasswordShow, setTogglePasswordShow] = useState(false);
+    const [togglePasswordConfirmShow, setTogglePasswordConfirmShow] = useState(false);
     let navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { executeRecaptcha } = useGoogleReCaptcha();
@@ -119,28 +122,39 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                                         placeholder={`Введите Номер телефона...`}
                                     />
                                 </InputGroup>
+                                <span>Номер телефона необходимо вводить без страны (8, +7 и тд.).</span><br/>
                                 <InputError errors={registration_errors} name={'kk_user_phonenumber'} />
                             </Col>
                             <Col xs={12} md={6}>
-                                <Label htmlFor="kk_user_password">Пароль:</Label>
-                                <TextInput
-                                    {...register('kk_user_password')}
-                                    type={`password`}
-                                    id={`kk_user_password`}
-                                    name={`kk_user_password`}
-                                    placeholder={`Введите Пароль...`}
-                                />
+                                <Label htmlFor="kk_user_password">Пароль*:</Label>
+                                <InputGroup>
+                                    <TextInput
+                                        {...register('kk_user_password')}
+                                        type={togglePasswordShow ? `text` : `password`}
+                                        id={`kk_user_password`}
+                                        name={`kk_user_password`}
+                                        placeholder={`Введите Пароль...`}
+                                    />
+                                    <Button className="w-auto" color="primary" onClick={() => setTogglePasswordShow(!togglePasswordShow)}>
+                                        {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                    </Button>
+                                </InputGroup>
                                 <InputError errors={registration_errors} name={'kk_user_password'} />
                             </Col>
                             <Col xs={12} md={6}>
-                                <Label htmlFor="kk_user_password_confirmation">Подтвердите пароль:</Label>
-                                <TextInput
-                                    {...register('kk_user_password_confirmation')}
-                                    type={`password`}
-                                    id={`kk_user_password_confirmation`}
-                                    name={`kk_user_password_confirmation`}
-                                    placeholder={`Введите Пароль еще раз...`}
-                                />
+                                <Label htmlFor="kk_user_password_confirmation">Подтвердите пароль*:</Label>
+                                <InputGroup>
+                                    <TextInput
+                                        {...register('kk_user_password_confirmation')}
+                                        type={togglePasswordConfirmShow ? `text` : `password`}
+                                        id={`kk_user_password_confirmation`}
+                                        name={`kk_user_password_confirmation`}
+                                        placeholder={`Введите Пароль еще раз...`}
+                                    />
+                                    <Button className="w-auto" color="primary" onClick={() => setTogglePasswordConfirmShow(!togglePasswordConfirmShow)}>
+                                        {togglePasswordConfirmShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                    </Button>
+                                </InputGroup>
                                 <InputError errors={registration_errors} name={'kk_user_password_confirmation'} />
                             </Col>
                             <Col xs={12} md={12}>
@@ -157,10 +171,10 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                             <Col xs={12} md={12}>
                                 <InputError errors={registration_errors} name={'g-recaptcha-response'} />
                                 {registration_error_message && <Alert message={registration_error_message} type={'danger'} />}
-                                <Button type={`submit`} className={`registration_page_button`} loading={registration_loading} disabled={registration_loading}>Зарегистрироваться</Button>
+                                <Button type={`submit`} className={`registration_page_button w-100`} loading={registration_loading} disabled={registration_loading}>Зарегистрироваться</Button>
                             </Col>
                             <Col xs={12} md={12}>
-                                <Link to={`/login`} className={`registration_page_login_link`}>Уже есть аккаут? Войти</Link>
+                                <Link to={`/login`} className={`registration_page_login_link`}>Уже есть аккаунт? Войти</Link>
                             </Col>
                         </Row>
                     </Form>

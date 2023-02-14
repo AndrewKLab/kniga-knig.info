@@ -1,9 +1,8 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { connect } from 'react-redux';
-import { IconButton, InputGroup, Divider, ListItemProps, List, ListItem } from '../UI';
+import {Divider, ListItemProps, List } from '../../../public/_components/UI';
 import { User } from '../../_interfaces';
 import { useNavigate } from "react-router-dom";
-import { GearOutlineIcon, UserCircleOutlineIcon, XCircleIcon, MagnifyingGlassOutlineIcon } from "../UI/Icons";
 import { HeaderSearchResultsItem } from '../../_components';
 
 

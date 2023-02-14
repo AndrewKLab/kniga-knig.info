@@ -24,6 +24,8 @@ export * from './PartAlert';
 export * from './PageLoader';
 export * from './PageAlert';
 
+export * from './PageBuilder'
+
 //end new
 
 // export * from './Container';

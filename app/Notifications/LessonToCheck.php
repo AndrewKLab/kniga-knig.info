@@ -34,7 +34,7 @@ class LessonToCheck extends Notification implements ShouldBroadcast
             'link' => config('app.crm_url').'/users/info/course_progress/'.$this->lesson->kk_lup_course_id.'/'.$this->lesson->kk_lup_user_id.'?kk_lesson_id='.$this->lesson->kk_lup_lesson_id,
             // 'lesson_to_check' => $this->lesson,
 
-            'notifiable' => $notifiable,
+            // 'notifiable' => $notifiable,
         ];
     }
 

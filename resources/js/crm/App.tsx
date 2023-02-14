@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
-
+import "grapesjs/dist/css/grapes.min.css";
 import { Header, Footer, MainSiteLoader, Notifications } from './_components';
 import { Container } from './_components/UI';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';

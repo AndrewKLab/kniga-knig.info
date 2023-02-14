@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import './index.css';
 import { config } from "../../_helpers";
 import { MyUsersModule } from '../UsersPage';
+import PageBuilder from "../../_components/PageBuilder/PageBuilder";
 
 type HomePageProps = {
     dispatch: any;

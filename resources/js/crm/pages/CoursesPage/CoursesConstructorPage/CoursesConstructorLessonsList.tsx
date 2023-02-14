@@ -51,7 +51,9 @@ const CoursesConstructorLessonsList: FunctionComponent<CoursesConstructorLessons
     }, []);
 
     const addNewLesson = () => dispatch(lessonsActions.setLessonEditor('add', null));
-    const selectLessonToEdit = (lesson) => dispatch(lessonsActions.setLessonEditor('edit', lesson.kk_lesson_id));;
+    const selectLessonToEdit = (lesson) => {
+        dispatch(lessonsActions.setLessonEditor('edit', lesson.kk_lesson_id))
+    };
     const openDeleteLessonModal = async (event, lesson) => {
         event.stopPropagation()
         setIsOpenRemoveLessonModal(true);
@@ -66,7 +68,6 @@ const CoursesConstructorLessonsList: FunctionComponent<CoursesConstructorLessons
         setIsOpenRemoveLessonModal(false);
         setSelectedLessonToModal(null);
     }
-
 
 
     if (loading || get_all_by_course_id_lessons_loading) return <PartLoader />
@@ -88,13 +89,13 @@ const CoursesConstructorLessonsList: FunctionComponent<CoursesConstructorLessons
                                 onClick={() => selectLessonToEdit(lesson)} />}
                     />
                     <div className={`courses_constructor_lessons_empty_list`}>
-                        <Button onClick={addNewLesson}>Добавить</Button>
+                        <Button className="w-100" onClick={addNewLesson}>Добавить</Button>
                     </div>
                 </React.Fragment>
             ) : (
                 <div className={`courses_constructor_lessons_empty_list`}>
                     <p>В данном курсе нет уроков.</p>
-                    <Button onClick={addNewLesson}>Добавить</Button>
+                    <Button className="w-100" onClick={addNewLesson}>Добавить</Button>
                 </div>
             )}
 

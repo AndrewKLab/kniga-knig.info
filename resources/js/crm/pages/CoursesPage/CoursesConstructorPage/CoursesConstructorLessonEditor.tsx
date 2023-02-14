@@ -12,6 +12,7 @@ import { FinishCourseButton, ImageDropzone, PageLoader, PartLoader, Question, Te
 import { CoursesConstructorLessonTestEditor, NoMatchPage } from "../..";
 import moment from 'moment';
 import 'moment/dist/locale/ru';
+import PageBuilder from "../../../_components/PageBuilder/PageBuilder";
 
 
 type CoursesConstructorLessonEditorProps = {
@@ -67,12 +68,15 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
 }): JSX.Element => {
     let navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const [editor, setEditor] = useState(null);
     const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
 
     useEffect(() => {
         const init = async () => {
             reset()
             if (lesson_editor_action === 'edit') await dispatch(lessonsActions.getOneByLessonId({ kk_lesson_id: lesson_editor_kk_lesson_id }))
+            const lesson_editor_start = document.getElementById('lesson_editor_start');
+            lesson_editor_start.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
             setLoading(false)
         }
         init();
@@ -80,13 +84,13 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
 
     const lessonActionSubmit = async (data) => {
         if (lesson_editor_action === 'add') {
-            await dispatch(lessonsActions.add(data))
-        } else if (lesson_editor_action === 'edit') await dispatch(lessonsActions.edit(data))
+            await dispatch(lessonsActions.add({...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
+        } else if (lesson_editor_action === 'edit') await dispatch(lessonsActions.edit({...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
         await dispatch(lessonsActions.getAllByCourseId({ kk_lesson_course_id: kk_course_id }))
-        console.log(lesson_editor_action, data)
+        console.log(lesson_editor_action, {...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')})
     }
 
-    if (loading || get_one_by_lesson_id_lessons_loading) return <PartLoader />
+    if (loading || get_one_by_lesson_id_lessons_loading) return <PageLoader />
     else if (lesson_editor_action === 'add' || (lesson_editor_action === 'edit' && get_one_by_lesson_id_lessons)) return (
         <div className={`courses_constructor_lessons_editor`}>
             <h2 className={`courses_constructor_lessons_editor_title`}>Урок #{get_one_by_lesson_id_lessons?.kk_lesson_number}:</h2>
@@ -135,14 +139,15 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
                 </div>
                 <div className="mb-3">
                     <Label htmlFor="kk_lesson_text">Текст:</Label>
-                    <TextEditor
+                    <PageBuilder editor={editor} setEditor={setEditor} defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_text : null}/>
+                    {/* <TextEditor
                         {...register('kk_lesson_text')}
                         name={'kk_lesson_text'}
                         setValue={setValue}
                         placeholder={`Введите текст...`}
                         height={500}
                         defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_text : null}
-                    />
+                    /> */}
 
                     {lesson_editor_action === 'add' && <InputError errors={add_lessons_errors} name={'kk_lesson_text'} />}
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_text'} />}

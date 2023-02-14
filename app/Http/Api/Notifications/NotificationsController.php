@@ -36,7 +36,7 @@ class NotificationsController extends Controller
      */
     public function getAll(Request $request)
     {
-        $notifications = Auth::user()->notifications;
+        $notifications = Auth::user()->unreadNotifications;
         $unread_notifications_count = Auth::user()->unreadNotifications->count();
 
         if (count($notifications) === 0) return response()->json(['message' => 'Список ваших уведомлений пуст.'], 400);
@@ -48,7 +48,7 @@ class NotificationsController extends Controller
         if (empty($request->id)) return response()->json(['message' => 'Данные не полные!'], 400);
         $notification = Auth::user()->notifications->where('id', $request->id)->first()->markAsRead();
 
-        $notifications = Auth::user()->notifications;
+        $notifications = Auth::user()->unreadNotifications;
         $unread_notifications_count = Auth::user()->unreadNotifications->count();
 
         if (count($notifications) === 0) return response()->json(['message' => 'Список ваших уведомлений пуст.'], 400);
@@ -62,7 +62,7 @@ class NotificationsController extends Controller
 
         
         $unread_notifications_count = 0;
-        $notifications = $user->notifications;
+        $notifications = $user->unreadNotifications;
 
         if (count($notifications) === 0) return response()->json(['message' => 'Список ваших уведомлений пуст.'], 400);
         return response()->json(['message' => env('RESPONSE_SUCCESS'), 'notifications' => $notifications, 'unread_notifications_count' => $unread_notifications_count], 200);

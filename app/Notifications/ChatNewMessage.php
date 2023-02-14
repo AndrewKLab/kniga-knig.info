@@ -31,7 +31,7 @@ class ChatNewMessage extends Notification implements ShouldBroadcast
             'message' => $this->message,
             'link'=>'/chats/'.$this->chat_message->kk_cm_chat_id,
             'new_chat_message' => $this->chat_message,
-            'notifiable' => $notifiable,
+            // 'notifiable' => $notifiable,
         ];
     }
 

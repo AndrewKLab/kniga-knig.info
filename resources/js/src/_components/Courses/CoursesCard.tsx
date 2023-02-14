@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useState } from "react";
 import './index.css';
 import { connect } from 'react-redux';
-import { IconButton, Image, Share } from '../UI';
 import { User } from "../../_interfaces";
-import { ShareOutlineIcon } from "../UI/Icons";
 import { config } from "../../_helpers";
+import { IconButton,Image, Share } from "../../../public/_components/UI";
+import { ShareOutlineIcon } from "../../../public/_components/UI/Icons";
 
 export interface CoursesCardProps extends React.HTMLAttributes<HTMLDivElement> {
     children?:

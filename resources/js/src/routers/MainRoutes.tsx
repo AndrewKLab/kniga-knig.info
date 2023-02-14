@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from "react-router-dom";
+import React, { useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 import { connect } from 'react-redux';
-import { alertActions, userActions, lessonActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 
 import {
@@ -21,30 +20,13 @@ import {
   ProfilePage,
   ProfileEditPage,
 
-  ChatsPage,
-  ChatPage,
-
   NoMatchPage,
   PrivacyPoliticPage
 } from '../pages';
 
+import { ChatsPage, ChatPage } from '../../public/_components';
+
 const MainRoutes = ({ }) => {
-  const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //     const init = async () => {
-  //         await getTokenHelper(dispatch);
-  //         const deviceInfo = await getDeviceInfo();
-  //         const checkAuth = await dispatch(userActions.checkAuth(deviceInfo))
-  //         if (checkAuth.isLogined) await dispatch(userActions.validateToken(checkAuth.token))
-  //         setLoading(false)
-  //     }
-  //     init();
-  // }, [])
-
-
-  // if (loading === true || validate_token_loading === true) return <Loading />
-
   return (
     <Routes>
       <Route index path="/" element={<HomePage />} />

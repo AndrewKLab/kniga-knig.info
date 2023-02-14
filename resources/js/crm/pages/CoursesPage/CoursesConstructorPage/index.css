@@ -22,6 +22,7 @@
     border-radius: 10px;
 }
 
+
 .courses_constructor_lessons_list_title {
     padding: 10px;
     margin: 0;
@@ -29,7 +30,9 @@
 }
 
 .courses_constructor_lessons_list {
-    gap: 0px
+    gap: 0px;
+    overflow: auto;
+    height: calc(100vh - 600px);
 }
 
 .courses_constructor_lessons_empty_list {
@@ -135,4 +138,11 @@
     line-height: 130%;
     padding: 5px 10px;
     font-family: 'Montserrat';
+}
+
+
+.courses_constructor_page_lessons_list_container {
+    position: sticky;
+    top: 0;
+    /* height: calc(-114px + 100vh); */
 }

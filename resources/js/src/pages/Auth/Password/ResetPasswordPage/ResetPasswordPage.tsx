@@ -1,12 +1,13 @@
-import React, { FunctionComponent, useEffect, useCallback } from "react";
+import React, { FunctionComponent,  useCallback, useState } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, Image, Label, TextInput, Checkbox, Alert, InputError } from '../../../../_components/UI';
+import { Row, Col, Button, Label, TextInput, Alert, InputError, InputGroup } from '../../../../../public/_components/UI';
 import { useForm } from "react-hook-form";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { User } from '../../../../_interfaces';
 import { authActions } from "../../../../_actions";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import './index.css';
+import { EyeOffOutlineIcon, EyeOutlineIcon } from "../../../../../public/_components/UI/Icons";
 
 type ResetPasswordPageProps = {
     dispatch: any;
@@ -31,6 +32,8 @@ const ResetPasswordPage: FunctionComponent<ResetPasswordPageProps> = ({
     reset_password_error_messge,
 
 }): JSX.Element => {
+    const [togglePasswordShow, setTogglePasswordShow] = useState(false);
+    const [togglePasswordConfirmShow, setTogglePasswordConfirmShow] = useState(false);
     let navigate = useNavigate();
     let [urlSearchParams] = useSearchParams();
     const kk_user_email = urlSearchParams.get('kk_user_email');
@@ -81,24 +84,34 @@ const ResetPasswordPage: FunctionComponent<ResetPasswordPageProps> = ({
                                 />
 
                                 <Label htmlFor="kk_user_password">Пароль:</Label>
-                                <TextInput
-                                    {...register('kk_user_password')}
-                                    type={`password`}
-                                    id={`kk_user_password`}
-                                    name={`kk_user_password`}
-                                    placeholder={`Введите Пароль...`}
-                                />
+                                <InputGroup>
+                                    <TextInput
+                                        {...register('kk_user_password')}
+                                        type={togglePasswordShow ? `text` : `password`}
+                                        id={`kk_user_password`}
+                                        name={`kk_user_password`}
+                                        placeholder={`Введите Пароль...`}
+                                    />
+                                    <Button className="w-auto" color="primary" onClick={() => setTogglePasswordShow(!togglePasswordShow)}>
+                                    {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                    </Button>
+                                </InputGroup>
                                 <InputError errors={reset_password_errors} name={'kk_user_password'} />
                             </Col>
                             <Col xs={12} md={6}>
                                 <Label htmlFor="kk_user_password_confirmation">Подтвердите пароль:</Label>
-                                <TextInput
-                                    {...register('kk_user_password_confirmation')}
-                                    type={`password`}
-                                    id={`kk_user_password_confirmation`}
-                                    name={`kk_user_password_confirmation`}
-                                    placeholder={`Введите Пароль еще раз...`}
-                                />
+                                <InputGroup>
+                                    <TextInput
+                                        {...register('kk_user_password_confirmation')}
+                                        type={togglePasswordConfirmShow ? `text` : `password`}
+                                        id={`kk_user_password_confirmation`}
+                                        name={`kk_user_password_confirmation`}
+                                        placeholder={`Введите Пароль еще раз...`}
+                                    />
+                                    <Button className="w-auto" color="primary" onClick={() => setTogglePasswordConfirmShow(!togglePasswordConfirmShow)}>
+                                        {togglePasswordConfirmShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                    </Button>
+                                </InputGroup>
                                 <InputError errors={reset_password_errors} name={'kk_user_password_confirmation'} />
                             </Col>
 

@@ -1,14 +1,16 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, Image, CaruselItem, Spoiler } from '../../_components/UI';
-import { TimerOutlineIcon, FolderOutlineIcon, LockKeyOutlineIcon } from '../../_components/UI/Icons';
+import { Row, Col, Button, Image, Spoiler } from '../../../public/_components/UI';
+import { FolderOutlineIcon, LockKeyOutlineIcon } from '../../../public/_components/UI/Icons';
 
 import { User } from '../../_interfaces';
-import { coursesCategoriesActions, coursesActions, coursesUsersProgressActions } from "../../_actions";
+import { coursesActions, coursesUsersProgressActions } from "../../_actions";
 import { useNavigate, useParams } from "react-router-dom";
 import './index.css';
 import { PageLoader } from "../../_components";
 import { getLastInprocessLesson } from "../../_helpers";
+import { DonateModal } from "../../../public/_components";
+import { modalsActions } from "../../../public/_actions";
 
 type CoursePageActionButtonProps = {
     className?: string;
@@ -98,6 +100,7 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
     get_one_by_course_id_courses_users_progress_error,
     get_one_by_course_id_courses_users_progress,
 }): JSX.Element => {
+
     let navigate = useNavigate();
     let { kk_course_id } = useParams();
 
@@ -131,17 +134,17 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
 
     interface LessonProgressIconProps { lesson: object, lups?: object[] }
     const LessonProgressIcon: FunctionComponent<LessonProgressIconProps> = ({ lesson, lups }): JSX.Element => {
-        
-        if (lups){
-            let lup = lups.filter((l)=>l.kk_lup_lesson_id === lesson.kk_lesson_id)
-            if(lup && lup.length > 0) {
-                if(lup[0].kk_lup_status === 'finished') return <div className={`course_page_lessons_list_item_reactangle active`}></div>
-                else if(lup[0].kk_lup_status === 'inprocess') return <div className={`course_page_lessons_list_item_reactangle`}></div>
+
+        if (lups) {
+            let lup = lups.filter((l) => l.kk_lup_lesson_id === lesson.kk_lesson_id)
+            if (lup && lup.length > 0) {
+                if (lup[0].kk_lup_status === 'finished') return <div className={`course_page_lessons_list_item_reactangle active`}></div>
+                else if (lup[0].kk_lup_status === 'inprocess') return <div className={`course_page_lessons_list_item_reactangle`}></div>
             }
-            return <LockKeyOutlineIcon size={20}/>
+            return <LockKeyOutlineIcon size={20} />
         }
-        else if(lesson.kk_lesson_number === 1) return <div className={`course_page_lessons_list_item_reactangle`}></div>
-        return <LockKeyOutlineIcon size={20}/>;
+        else if (lesson.kk_lesson_number === 1) return <div className={`course_page_lessons_list_item_reactangle`}></div>
+        return <LockKeyOutlineIcon size={20} />;
     }
 
     if (get_one_by_course_id_courses_loading || get_one_by_course_id_courses_users_progress_loading) return <PageLoader />
@@ -166,7 +169,7 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
                             </div>
                         </div> */}
                     </div>
-                    <p className={`course_page_description`} dangerouslySetInnerHTML={{__html: get_one_by_course_id_courses.kk_course_description}}></p>
+                    <p className={`course_page_description`} dangerouslySetInnerHTML={{ __html: get_one_by_course_id_courses.kk_course_description }}></p>
                     <CoursePageActionButton
                         className={`course_page_button`}
                         user={user}
@@ -195,6 +198,10 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
                 </div>
 
             }
+
+            <Row g={5} className={`course_page_course_card`}>
+                <Col xs={12} sm={12} lg={6}><Button className="mt-3 " onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button></Col>
+            </Row>
             {/* <Button className={`course_page_button mobile`}>Перейти к прохождению</Button> */}
         </div>
     )

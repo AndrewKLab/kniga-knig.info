@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import { PrivateRoute, Header, HeaderNavbarDrawerMenu, PageAlert } from '../_components';
 
+
 import {
   HomePage,
   CoursesPage,
@@ -33,12 +34,15 @@ import {
 } from '../pages';
 
 import { Alert, Col, Drawer, Row } from '../_components/UI';
+import { useWindowWidth } from '../_hooks';
 
 
 
 const MainRoutes = ({ user }) => {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const header = document.getElementById('header')
+  const width = useWindowWidth();
 
   useEffect(() => {
     const init = async () => {
@@ -62,7 +66,7 @@ const MainRoutes = ({ user }) => {
           <Drawer open={true} overlay={<HeaderNavbarDrawerMenu />} />
         </div>
         }
-        <div className={`crm_panel_page_container`}>
+        <div className={`crm_panel_page_container`} style={{ height: `calc(100vh - ${header?.offsetHeight}px)` }} >
           <Routes>
             <Route index path="/" element={<PrivateRoute element={<HomePage />} />} />
 

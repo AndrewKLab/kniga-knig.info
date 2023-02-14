@@ -1,12 +1,13 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { connect } from 'react-redux';
-import { Image, Button, Carusel, CaruselItem } from '../../_components/UI';
+import { Image, Button, Carusel, CaruselItem } from '../../../public/_components/UI';
 import { CoursesCard } from '../../_components';
 
 import { User } from '../../_interfaces';
 import { coursesCategoriesActions, coursesActions } from "../../_actions";
 import { useNavigate } from "react-router-dom";
 import './index.css';
+import { modalsActions } from "../../../public/_actions";
 
 type HomePageProps = {
     dispatch: any;
@@ -94,9 +95,11 @@ const HomePage: FunctionComponent<HomePageProps> = ({
                             <li>Существуют специальные курсы по семье и здоровью. Портал постоянно пополняется!</li>
                         </ul>
                         <Button className={`home_page_information_third_part_button`} onClick={() => navigate('/courses')}>Выбрать курс</Button>
+                        <Button className="mt-3 w-100" onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button>
                     </div>
                     <Image className={`home_page_information_third_part_image cursor-pointer`} src={`site/Img-5.png`} onClick={() => navigate('/courses')} />
                 </div>
+                
                 {get_all_courses && <Carusel
                     className={`home_page_first_carousel`}
                     caruselTitle={<h2><span className={`text-primary`}>Новые</span> курсы </h2>}

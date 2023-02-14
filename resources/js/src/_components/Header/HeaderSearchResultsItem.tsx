@@ -1,8 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { ListItem } from '../UI';
-import { User } from '../../_interfaces';
-
-
+import { ListItem } from '../../../public/_components/UI';
 
 export interface HeaderSearchResultsItemProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import './index.css'
 import { connect } from 'react-redux';
-import { Button } from '../UI';
+import { Button } from '../../../public/_components/UI';
 import { useNavigate } from "react-router-dom";
 import { coursesUsersProgressActions } from "../../_actions/courses_users_progress.actions";
 

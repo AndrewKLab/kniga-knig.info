@@ -210,9 +210,11 @@ const CoursesConstructorPage: FunctionComponent<CoursesConstructorPageProps> = (
                             {action === 'edit' && <InputError errors={edit_courses_errors} name={'kk_course_image'} />}
                         </div>
                     </Form>
+                    <div id="lesson_editor_start"></div>
                     {action === 'edit' && <CoursesConstructorLessonEditor kk_course_id={kk_course_id} />}
                 </Col>
                 <Col lg={3}>
+                    <div className={`courses_constructor_page_lessons_list_container`}>
                     <div className={`courses_constructor_page_action_buttons`}>
                         <Button type="submit" form="course_from" loading={add_courses_loading || edit_courses_loading} disabled={add_courses_loading || edit_courses_loading}>Сохранить</Button>
                         {action === 'edit' && (user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN' || user?.role?.kk_role_type === 'ROLE_ADMIN' || user?.role?.kk_role_type === 'ROLE_COORDINATOR') &&
@@ -234,6 +236,7 @@ const CoursesConstructorPage: FunctionComponent<CoursesConstructorPageProps> = (
                     </div>
 
                     {action === 'edit' && <CoursesConstructorLessonsList kk_course_id={kk_course_id} />}
+                    </div>
                 </Col>
             </Row>
 

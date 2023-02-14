@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, Carusel, CaruselItem } from '../../_components/UI';
+import { Row, Col, Button } from '../../../public/_components/UI';
 import { CoursesCard } from '../../_components';
 
 import { User } from '../../_interfaces';
 import { coursesCategoriesActions, coursesActions } from "../../_actions";
 import { useNavigate, useSearchParams  } from "react-router-dom";
 import './index.css';
+import { DonateModal } from "../../../public/_components";
 
 type CoursesPageProps = {
     dispatch: any;
@@ -26,6 +27,7 @@ const CoursesPage: FunctionComponent<CoursesPageProps> = ({
     get_all_courses_categories_error,
     get_all_courses_categories,
 }): JSX.Element => {
+    const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false)
     let navigate = useNavigate();
     const [searchParams] = useSearchParams();
     let selected_course_category = searchParams.get('selected_course_category')
@@ -65,6 +67,7 @@ const CoursesPage: FunctionComponent<CoursesPageProps> = ({
                             </div>
                         ))}
                     </div>
+
                 </React.Fragment>
             }
         </div>

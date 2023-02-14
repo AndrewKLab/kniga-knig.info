@@ -12,6 +12,7 @@ import { FinishCourseButton, ImageDropzone, PageLoader, PartLoader, Question, Re
 import { CoursesConstructorLessonQuestionEditor, NoMatchPage } from "../..";
 import moment from 'moment';
 import 'moment/dist/locale/ru';
+import parse from 'html-react-parser';
 
 
 type CoursesConstructorLessonTestEditorProps = {
@@ -85,7 +86,6 @@ const CoursesConstructorLessonTestEditor: FunctionComponent<CoursesConstructorLe
         <div className={`courses_constructor_question_editor`}>
             <div className={`courses_constructor_lessons_test_editor_actions`}>
                 <h2 className={`courses_constructor_question_editor_title`}>Тест:</h2>
-                <Button onClick={addNewQuestion}>Добавить вопрос</Button>
             </div>
             {get_all_by_lesson_id_questions?.length === 0 && "Вопросы не найдены."}
             {get_all_by_lesson_id_questions?.length > 0 && get_all_by_lesson_id_questions?.map(question => (
@@ -95,7 +95,7 @@ const CoursesConstructorLessonTestEditor: FunctionComponent<CoursesConstructorLe
                     ) : (
                         <div className={``}>
                             <h5 className={`courses_constructor_question_title`}>
-                                {question.kk_question_text}
+                                {parse(question.kk_question_text)}
                                 <div className={`courses_constructor_question_title_actions`}>
                                     <IconButton icon={<PenIcon size={20} />} onClick={(event) => dispatch(questionsActions.setQuestionEditor('edit', question))} />
                                     <IconButton icon={<TrashIcon size={20} />} onClick={(event) => openDeleteQuestionModal(event, question)} />
@@ -104,7 +104,7 @@ const CoursesConstructorLessonTestEditor: FunctionComponent<CoursesConstructorLe
                             Ответы:
                             <div className={`courses_constructor_questions_answers`}>
                                 {question?.answers && question?.answers.length > 0 && question?.answers?.map(answer => (
-                                    <div className={`courses_constructor_questions_answer_item`}>
+                                    <div key={answer.kk_qa_id} className={`courses_constructor_questions_answer_item`}>
                                         <div className={`courses_constructor_questions_answer_title`}>
                                             {question.kk_question_type === 'checkbox' && <Checkbox disabled />}
                                             {question.kk_question_type === 'radio' && <Radio disabled />}
@@ -123,7 +123,7 @@ const CoursesConstructorLessonTestEditor: FunctionComponent<CoursesConstructorLe
             }
             {question_editor_action === 'add' && <CoursesConstructorLessonQuestionEditor kk_lesson_id={kk_lesson_id} question={question_editor_question} />}
             <RemoveQuestionModal isOpen={isOpenRemoveQuestionModal} setIsOpen={setIsOpenRemoveQuestionModal} question={selectedQuestionToModal} onDelete={removeQuestionSubmit} />
-
+            {question_editor_action !== 'add' && <Button className="mt-3" onClick={addNewQuestion}>Добавить вопрос</Button>}
         </div >
     )
 }

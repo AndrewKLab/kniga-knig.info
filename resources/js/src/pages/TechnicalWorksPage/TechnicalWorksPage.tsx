@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useLocation } from "react-router-dom";
-import {Image} from '../../_components/UI';
+import { Image } from "../../../public/_components/UI";
 import './index.css';
 
 export const TechnicalWorksPage: FunctionComponent = (): JSX.Element => {

@@ -1,10 +1,9 @@
 import moment from "moment";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent} from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { config } from "../../_helpers";
-import { useDisableBodyScroll } from "../../_hooks";
-import { Button, Col, Modal, ModalActions, ModalBody, ModalHeader, Row, Share } from "../UI";
+import { Button, Col, Modal, ModalActions, ModalBody, ModalHeader, Row, Share } from "../../../public/_components/UI";
 
 export interface FinishLessonModalProps extends React.HTMLAttributes<HTMLDivElement> {
     children?:

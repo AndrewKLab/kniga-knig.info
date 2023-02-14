@@ -6,5 +6,5 @@ import App from './App';
 
 
 if (document.getElementById('app')) {
-    ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('app'));
+    ReactDOM.render(<React.StrictMode><Provider store={store}><App /></Provider></React.StrictMode>, document.getElementById('app'));
 }

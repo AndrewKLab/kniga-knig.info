@@ -1,11 +1,10 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent,  useState } from "react";
 import { connect } from 'react-redux';
-import { IconButton, List, ListItem, Switch, ListItemProps, Button } from '../UI';
-import { User, Themes } from '../../_interfaces';
-import { stylesActions } from "../../_actions";
-import { config, setTheme } from '../../_helpers';
-import { GearOutlineIcon, UserCircleOutlineIcon, ChatsCircleOutlineIcon, XCircleIcon } from "../UI/Icons";
+import { List, ListItem, ListItemProps } from '../../../public/_components/UI';
+import { User } from '../../_interfaces';
+import { config } from '../../_helpers';
 import { useNavigate, useLocation } from "react-router-dom";
+import { modalsActions } from "../../../public/_actions";
 
 type HeaderProps = {
     dispatch: any;
@@ -56,6 +55,12 @@ const HeaderNavbarMainDropdownMenu: FunctionComponent<HeaderProps> = ({ dispatch
                 itemTitle: 'Контакты',
                 onClick: () => goToLink('/contacts'),
                 link: '/contacts'
+            },
+            {
+                itemAvatar: <div className={`navbar-mobile-main-menu-item-circle`}></div>,
+                itemTitle: 'Пожертвовать',
+                onClick: () => {setOpenMainMenuMobileDropdown(false), dispatch(modalsActions.openDonateModal(true))},
+                // link: '/contacts'
             },
             {
                 itemAvatar: <div className={`navbar-mobile-main-menu-item-circle`}></div>,

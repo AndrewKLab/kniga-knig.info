@@ -6,11 +6,12 @@ export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAtt
     children?: React.ReactElement | React.ReactNode;
     className?: string;
     loading?: boolean;
+    color?: string;
 }
 
-export const Button: FunctionComponent<ButtonProps> = ({ children, className, loading, ...other }) => {
+export const Button: FunctionComponent<ButtonProps> = ({ children, className, loading, color, ...other }) => {
     return (
-        <button type={other?.type ? other.type : `button`} className={`button${className ? ` ${className}` : ''}`} {...other}>
+        <button type={other?.type ? other.type : `button`} className={`button${color ? ` button-${color}`:``}${className ? ` ${className}` : ''}`} {...other}>
             {loading && <div className="button-loading"><Loading color={"rgba(255, 255, 255, 1)"} borderColor={'rgba(var(--background-color), 0.5)'}/></div>}
             {children}
         </button>

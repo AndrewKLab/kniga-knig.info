@@ -29,8 +29,8 @@ class ChatCreated extends Notification implements ShouldBroadcast
         return [
             'message' => $this->message,
             'link'=>'/chats/'.$this->chat->kk_chat_id,
-            'created_chat' => $this->chat,
-            'notifiable' => $notifiable,
+            // 'created_chat' => $this->chat,
+            // 'notifiable' => $notifiable,
         ];
     }
 

@@ -1,10 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, Image, CaruselItem, Spoiler, AudioPlayer, Form, IconButton, Alert, Share } from '../../../_components/UI';
-import { ArrowLeftIcon, ArrowSquareRightIcon, FileOutlineIcon } from '../../../_components/UI/Icons';
-
+import { Row, Col, Button, AudioPlayer, Form, IconButton, Alert, Share } from "../../../../public/_components/UI";
+import { ArrowLeftIcon, ArrowSquareRightIcon, FileOutlineIcon } from '../../../../public/_components/UI/Icons';
 import { User } from '../../../_interfaces';
-import { coursesCategoriesActions, coursesActions, coursesUsersProgressActions, lessonsActions, lessonsUsersProgressActions, pagesActions } from "../../../_actions";
+import { lessonsActions, lessonsUsersProgressActions, pagesActions } from "../../../_actions";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import './index.css';
@@ -13,6 +12,9 @@ import { NoMatchPage } from "../../";
 import moment from 'moment';
 import 'moment/dist/locale/ru';
 import { config, getPercentageOfCorrectAnswers, hasTextQuestion } from "../../../_helpers";
+import { DonateButton, DonateModal } from "../../../../public/_components";
+import { modalsActions } from "../../../../public/_actions";
+
 
 type LessonPageProps = {
     dispatch: any;
@@ -280,11 +282,11 @@ const LessonPlane: FunctionComponent<LessonPlaneProps> = ({
     const onSubmitFinishLessonForm = async (data) => {
 
         if (user) {
-            await dispatch(lessonsUsersProgressActions.edit({ 
-                kk_lup_id: lesson_users_progress.kk_lup_id, 
-                kk_lup_finished_at: moment().format("YYYY-MM-DD HH:mm:ss"), 
-                kk_lup_status: 'finished', 
-                ...data 
+            await dispatch(lessonsUsersProgressActions.edit({
+                kk_lup_id: lesson_users_progress.kk_lup_id,
+                kk_lup_finished_at: moment().format("YYYY-MM-DD HH:mm:ss"),
+                kk_lup_status: 'finished',
+                ...data
             }, async () => {
                 // setIsOpenFinishLessonModal(true)
                 // setLessonToFinishLessonModal(lesson_users_progress)
@@ -395,10 +397,10 @@ const LessonPlane: FunctionComponent<LessonPlaneProps> = ({
 
                             {lesson_users_progress?.kk_lup_status === 'finished' &&
                                 <Row g={3} >
-                                    <Col xs={12} lg={6}><Button className="w-100" color={'primary'} onClick={onEdit} loading={remove_lessons_users_progress_loading} disabled={remove_lessons_users_progress_loading || !(lesson.questions && lesson.questions.length > 0)}>Повторить тест</Button></Col>
+                                    <Col xs={12} lg={6}><Button className="w-100" onClick={onEdit} loading={remove_lessons_users_progress_loading} disabled={remove_lessons_users_progress_loading || !(lesson.questions && lesson.questions.length > 0)}>Повторить тест</Button></Col>
                                     <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/`)}>Завершить занятие</Button></Col>
                                     <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/contacts`)}>Задать вопрос</Button></Col>
-                                    <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/`)}>Поддержать сайт</Button></Col>
+                                    <Col xs={12} lg={6}><Button className="w-100" onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button></Col>
                                     <Col xs={12} lg={12}>Поделиться:<br /><Share className={`mt-3`} link={`${config.appUrl}/courses/${lesson.kk_lesson_course_id}`} whatsapp viber telegram sms copy /></Col>
                                 </Row>
                             }

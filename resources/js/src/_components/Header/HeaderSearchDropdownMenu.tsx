@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { connect } from 'react-redux';
-import { IconButton, InputGroup, InputGroupText, TextInput, ListItemProps, Button } from '../UI';
+import { IconButton, InputGroup, InputGroupText, TextInput } from '../../../public/_components/UI';
 import { HeaderSearchResults } from '../';
 import { searchActions } from "../../_actions";
 import { User, Themes } from '../../_interfaces';
 
-import { GearOutlineIcon, UserCircleOutlineIcon, XCircleIcon, MagnifyingGlassOutlineIcon } from "../UI/Icons";
+import { XCircleIcon, MagnifyingGlassOutlineIcon } from "../../../public/_components/UI/Icons";
 
 
 export interface HeaderSearchDropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {

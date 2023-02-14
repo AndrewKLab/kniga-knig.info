@@ -1,12 +1,14 @@
-import React, { FunctionComponent, useEffect, useCallback } from "react";
+import React, { FunctionComponent, useEffect, useCallback, useState } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, Image, Label, TextInput, InputGroup, InputGroupText, InputError, Checkbox, IconButton, Alert, Form } from '../../../_components/UI';
+import { Row, Col, Button, Label, TextInput, InputGroup, InputError, Checkbox, Alert, Form } from '../../../../public/_components/UI';
 import { useForm } from "react-hook-form";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { User } from '../../../_interfaces';
 import { authActions } from "../../../_actions";
 import { useNavigate, Link } from "react-router-dom";
 import './index.css';
+// import { EyeOutlineIcon } from "../../../../public/_components/UI/Icons/EyeOutlineIcon";
+import { EyeOffOutlineIcon, EyeOutlineIcon } from "../../../../public/_components/UI/Icons";
 
 type LoginPageProps = {
     dispatch: any;
@@ -27,6 +29,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
     login_error_messge,
     user,
 }): JSX.Element => {
+    const [togglePasswordShow, setTogglePasswordShow] = useState(false)
     let navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { executeRecaptcha } = useGoogleReCaptcha();
@@ -73,16 +76,20 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                             </Col>
                             <Col xs={12} md={12}>
                                 <Label htmlFor="kk_user_password">Пароль:</Label>
+
                                 <InputGroup>
                                     <TextInput
                                         {...register('kk_user_password')}
-                                        type={`password`}
+                                        type={togglePasswordShow ? `text`:`password`}
                                         id={`kk_user_password`}
                                         name={`kk_user_password`}
                                         placeholder={`Введите Пароль...`}
                                     />
-                                    {/* <IconButton icon={}/> */}
+                                    <Button className="w-auto" color="primary" onClick={() => setTogglePasswordShow(!togglePasswordShow)}>
+                                        {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                    </Button>
                                 </InputGroup>
+
                                 <InputError errors={login_errors} name={'kk_user_password'} />
                             </Col>
                             <Col xs={12} md={12}>

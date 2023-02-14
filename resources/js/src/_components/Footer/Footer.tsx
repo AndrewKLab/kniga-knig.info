@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Container, Row, Col, IconButton } from '../UI';
-import { OKIcon, VKIcon, YouTubeIcon } from "../UI/Icons";
+import { Container, Row, Col, IconButton } from '../../../public/_components/UI';
+import { OKIcon, VKIcon, YouTubeIcon } from "../../../public/_components/UI/Icons";
 import { useNavigate } from "react-router-dom";
 
 type FooterProps = {

@@ -115,8 +115,8 @@ const CoursesConstructorLessonQuestionEditor: FunctionComponent<CoursesConstruct
     }
 
     const actionQuestionSubmit = async (data) => {
-        if (question_editor_action === 'add') await dispatch(questionsActions.add(data));
-        else if (question_editor_action === 'edit') await dispatch(questionsActions.edit(data));
+        if (question_editor_action === 'add') await dispatch(questionsActions.add({ ...data, kk_question_text: data.kk_question_text.split('\n').join('<br>') }));
+        else if (question_editor_action === 'edit') await dispatch(questionsActions.edit({ ...data, kk_question_text: data.kk_question_text.split('\n').join('<br>') }));
         dispatch(questionsActions.setQuestionEditor(null, null));
         await dispatch(questionsActions.getAllByLessonId({ kk_question_lesson_id: kk_lesson_id, parts: 'answers' }))
     }
@@ -145,7 +145,16 @@ const CoursesConstructorLessonQuestionEditor: FunctionComponent<CoursesConstruct
                     />
                     <div className="mb-3">
                         <Label htmlFor="kk_question_text">Текст вопроса:</Label>
-                        <TextInput
+                        <TextArea
+                            {...register('kk_question_text')}
+                            className={`courses_constructor_page_input`}
+                            id={`kk_question_text`}
+                            name={`kk_question_text`}
+                            placeholder={`Введите текст вопроса...`}
+                        >
+                            {question_editor_action === 'edit' ? question?.kk_question_text.split('<br>').join('\n') : null}
+                        </TextArea>
+                        {/* <TextInput
                             {...register('kk_question_text')}
                             className={`courses_constructor_page_input`}
                             type={`text`}
@@ -153,7 +162,7 @@ const CoursesConstructorLessonQuestionEditor: FunctionComponent<CoursesConstruct
                             name={`kk_question_text`}
                             placeholder={`Введите текст вопроса...`}
                             defaultValue={question_editor_action === 'edit' ? question?.kk_question_text : null}
-                        />
+                        /> */}
                         {question_editor_action === 'add' && <InputError errors={add_questions_errors} name={'kk_question_text'} />}
                         {question_editor_action === 'edit' && <InputError errors={edit_questions_errors} name={'kk_question_text'} />}
                     </div>
@@ -207,7 +216,7 @@ const CoursesConstructorLessonQuestionEditor: FunctionComponent<CoursesConstruct
                                 {question_editor_action === 'edit' && <InputError errors={edit_questions_errors} name={`answers.${index}.kk_qa_text`} />}
                             </div>
                         ))}
-                        {getValues('kk_question_type') !== 'text' && <Button onClick={() => addNewAnswer(initialAnswer)}>+</Button>}
+                        {getValues('kk_question_type') !== 'text' && <Button className="w-100" onClick={() => addNewAnswer(initialAnswer)}>+</Button>}
                     </div>
 
                 </div>

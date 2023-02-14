@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Checkbox, Radio, TextInput } from "../../UI";
-import { DoneCircleIcon, XCircleIcon } from "../../UI/Icons";
+import { Checkbox, Radio, TextInput } from "../../../../public/_components/UI";
+import { DoneCircleIcon, XCircleIcon } from "../../../../public/_components/UI/Icons";
 import './index.css'
 
 export interface AnswerProps extends React.HTMLAttributes<HTMLDivElement> {

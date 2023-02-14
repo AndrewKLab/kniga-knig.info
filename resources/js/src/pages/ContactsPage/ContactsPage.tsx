@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useCallback } from "react";
-import { Image, Row, Col, TextInput, TextArea, Button, InputError, Form, Alert } from '../../_components/UI';
+import { Image, Row, Col, TextInput, TextArea, Button, InputError, Form, Alert } from '../../../public/_components/UI';
 import { useForm } from "react-hook-form";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import './index.css';
 import { supportActions } from "../../_actions";
 import { User } from "../../_interfaces";
 import { connect } from 'react-redux';
+import { modalsActions } from "../../../public/_actions";
 
 type ContactsPageProps = {
     dispatch: any;
@@ -116,6 +117,7 @@ const ContactsPage: FunctionComponent<ContactsPageProps> = ({
                         <li><b>Горячая линия:</b> <a href="tel:88001001844">8 (800) 100 18 44</a></li>
                         <li><b>E-mail:</b> <a href="mailto:contact@kniga-knig.info">contact@kniga-knig.info</a></li>
                     </ul>
+                    <Button className="mt-3 mb-3 w-100" onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button>
                     <iframe className={`contacts_page_second_section_map`} src="https://yandex.ru/map-widget/v1/?um=constructor%3A4f021669817283c358bd66f69b1168a605ce30c85ba408126f8182f81ce85ec7&amp;source=constructor" width="100%" height="530" frameBorder="0"></iframe>
                 </Col>
             </Row>

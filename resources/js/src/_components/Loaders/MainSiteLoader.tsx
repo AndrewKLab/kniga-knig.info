@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Loading } from "../UI";
+import { Loading } from "../../../public/_components/UI";
 import './index.css'
 
 export interface MainSiteLoaderProps extends React.HTMLAttributes<HTMLDivElement> {

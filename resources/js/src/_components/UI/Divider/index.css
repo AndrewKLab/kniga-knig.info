@@ -1,9 +1,0 @@
-/* Divider */
-
-.divider {
-    height: 0;
-    margin: .5rem 0;
-    overflow: hidden;
-    border-top: 1px solid #e9ecef;
-    padding: 0;
-}

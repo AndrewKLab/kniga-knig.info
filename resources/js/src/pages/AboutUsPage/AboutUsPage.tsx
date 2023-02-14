@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from "react";
-import { Image, Row, Col } from '../../_components/UI';
+import { connect } from "react-redux";
+import { modalsActions } from "../../../public/_actions";
+import { Image, Row, Col, Button } from '../../../public/_components/UI';
 import './index.css';
 
-export const AboutUsPage: FunctionComponent = (): JSX.Element => {
+const AboutUsPage: FunctionComponent = ({dispatch}): JSX.Element => {
     return (
         <div className={`about_us_page`}>
             <h1 className={`about_us_title`}>
@@ -37,8 +39,16 @@ export const AboutUsPage: FunctionComponent = (): JSX.Element => {
                         <br />
                         Во всех странах существуют сказки и легенды, где рассказывается о волшебных кошельках, сколько бы раз человек ни доставал оттуда монеты, в них всегда остаются деньги. Священное Писание не легенда, но действительно обладает схожими «чудесными» свойствами. Каждый раз, открывая ее страницы, мы находим для себя что-то новое, важное, нужное нам.
                     </p>
+                    <Button className="mt-3 w-100" onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button>
                 </Col>
             </Row>
         </div>
     )
 }
+
+function mapStateToProps(state) {
+    const { user } = state.auth;
+    return {user};
+}
+const connectedAboutUsPage = connect(mapStateToProps)(AboutUsPage);
+export { connectedAboutUsPage as AboutUsPage };

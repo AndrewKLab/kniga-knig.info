@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useEffect, useCallback } from "react";
+import React, { FunctionComponent, useCallback } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, Image, Label, TextInput, Checkbox, Alert, InputError } from '../../../../_components/UI';
+import { Row, Col, Button, Label, TextInput, Alert, InputError } from '../../../../../public/_components/UI';
 import { useForm } from "react-hook-form";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { User } from '../../../../_interfaces';

@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Button, Modal, ModalActions, ModalBody, ModalHeader } from "../UI";
+import parse from 'html-react-parser';
 
 export interface RemoveQuestionModalProps extends React.HTMLAttributes<HTMLDivElement> {
     children?:
@@ -39,7 +40,7 @@ const RemoveQuestionModal: FunctionComponent<RemoveQuestionModalProps> = ({
         <Modal centered isOpen={isOpen} setIsOpen={setIsOpen}>
             <ModalHeader setIsOpen={setIsOpen}>Удалить урок</ModalHeader>
             <ModalBody>
-                Вы действительно хотите удалить вопрос {`"${question?.kk_question_text}"`}? Вместе с ним будут удалены все ответы и ответы пользователей связанные с этим вопросом.
+                Вы действительно хотите удалить вопрос "{parse(question?.kk_question_text)}"? Вместе с ним будут удалены все ответы и ответы пользователей связанные с этим вопросом.
             </ModalBody>
             <ModalActions>
                 <Button color={'primary'} onClick={onDelete} loading={remove_questions_loading} disabled={remove_questions_loading}>Удалить</Button>

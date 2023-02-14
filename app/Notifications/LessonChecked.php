@@ -30,7 +30,7 @@ class LessonChecked extends Notification implements ShouldBroadcast
     {
         return [
             'message' => $this->message,
-            'checked_lesson' => $this->lesson,
+            // 'checked_lesson' => $this->lesson,
             'notifiable' => $notifiable,
         ];
     }

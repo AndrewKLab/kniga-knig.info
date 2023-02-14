@@ -12,8 +12,7 @@ import { CoursesCard, FinishCourseButton, ImageDropzone, PageLoader, PartLoader,
 import { NoMatchPage } from "../";
 import moment from 'moment';
 import 'moment/dist/locale/ru';
-import { config } from "../../_helpers";
-import { getLastInprocessLesson } from "../../../src/_helpers";
+import parse from 'html-react-parser';
 
 
 
@@ -191,7 +190,7 @@ const UsersPageCourseProgress: FunctionComponent<UsersPageCourseProgressProps> =
                                             {get_one_by_lesson_id_lessons?.questions.map((question, index) =>
                                                 <React.Fragment>
                                                     <tr key={question.kk_question_id} >
-                                                        <td rowSpan={question?.answers?.length + 1}>{question.kk_question_text}</td>
+                                                        <td rowSpan={question?.answers?.length + 1}>{parse(question?.kk_question_text)}</td>
                                                         <td rowSpan={question?.answers?.length + 1}>
                                                             {question.kk_question_type === 'radio' && 'Один верный ответ'}
                                                             {question.kk_question_type === 'checkbox' && 'Несколько верных ответов'}

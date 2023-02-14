@@ -1,42 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { connect } from 'react-redux';
-
-import { Header, Footer, MainSiteLoader, Notifications } from './_components';
-import { Container } from './_components/UI';
+import { Header, Footer, MainSiteLoader } from './_components';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-
-// import { getDeviceInfo, 
-//     // getTokenHelper, 
-//     // history 
-// } from './_helpers';
 import { authActions } from './_actions'
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { fab } from '@fortawesome/free-brands-svg-icons'
-// import { fas } from '@fortawesome/free-solid-svg-icons'
-
-
+import grapesjs from "grapesjs";
+import "grapesjs/dist/css/grapes.min.css";
 
 import { MainRoutes } from './routers';
 import { TechnicalWorksPage } from './pages';
 import { initLaravelEcho } from '../public/_helpers';
-
-// import { getTokenHelper } from './_helpers/firebase';
-
-
-// if (library.add) library.add(fab, fas)
+import { Container } from '../public/_components/UI';
+import { DonateModal } from '../public/_components';
+import { modalsActions } from '../public/_actions';
 
 
 const App = ({
   dispatch,
-  token,
-  user,
+
   get_auth_user_loading,
   get_auth_user_message,
   get_auth_user_error,
+
+  open_donate_modal,
 }) => {
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const init = async () => {
       const storage_token = localStorage.getItem('token');
@@ -58,10 +46,10 @@ const App = ({
         {/* <TechnicalWorksPage/> */}
         <Header />
         {/* <Notifications/> */}
-      <Container>
-        <MainRoutes />
-      </Container>
-      <Footer />
+        <Container>
+          <MainRoutes />
+        </Container>
+        <Footer />
       </Router>
     </GoogleReCaptchaProvider>
   );
@@ -75,12 +63,16 @@ function mapStateToProps(state) {
     get_auth_user_message,
     get_auth_user_error,
   } = state.auth
+  const {
+    open_donate_modal,
+  } = state.modals
   return {
     token,
     user,
     get_auth_user_loading,
     get_auth_user_message,
     get_auth_user_error,
+    open_donate_modal
   };
 }
 

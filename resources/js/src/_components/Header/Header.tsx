@@ -1,16 +1,16 @@
 import React, { FunctionComponent, useRef, useState, useEffect } from "react";
 import { connect } from 'react-redux';
-import { Navbar, NavbarBrand, NavbarCollapse, NavbarDesktopMenu, NavbarMenu, NavbarActionsMenu, NavbarMenuItem, Container, InputGroup, InputGroupText, TextInput, IconButton, Dropdown, Drawer, NavbarMobileMenu } from '../UI';
+import { Navbar, NavbarBrand, NavbarCollapse, NavbarDesktopMenu, NavbarMenu, NavbarActionsMenu, NavbarMenuItem, Container, InputGroup, InputGroupText, TextInput, IconButton, Dropdown, NavbarMobileMenu } from '../../../public/_components/UI';
 import { User, Themes } from '../../_interfaces';
 import { HeaderNavbarDropdownMenu, HeaderSearchDropdownMenu, HeaderNavbarMainDropdownMenu } from "../";
-import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon, YouTubeIcon, VKIcon, OKIcon, BellOutlineIcon } from "../UI/Icons";
+import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon, YouTubeIcon, VKIcon, OKIcon } from "../../../public/_components/UI/Icons";
 import { useDetectOutsideClick } from '../../_hooks';
 import { searchActions } from "../../_actions";
 import { HeaderSearchResults } from "../";
 import { config } from "../../_helpers";
 
-import { HeaderNavbarNotificationDropdown } from "../../../public/_components";
-import { notificationsActions } from "../../../public/_actions";
+import { DonateModal, HeaderNavbarNotificationDropdown } from "../../../public/_components";
+import { modalsActions, notificationsActions } from "../../../public/_actions";
 
 type HeaderProps = {
     dispatch: any;
@@ -22,9 +22,10 @@ type HeaderProps = {
     user: User;
     currentTheme: string;
     themes: Themes;
+    open_donate_modal: boolean;
 }
 
-const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className, user, currentTheme, themes }): JSX.Element => {
+const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className, user, open_donate_modal }): JSX.Element => {
     const searchDropdownRef = useRef(null);
     const [openSearchDropdown, setOpenSearchDropdown] = useDetectOutsideClick(searchDropdownRef, false);
 
@@ -83,10 +84,10 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                                     (user.role_type === 'ROLE_USER' && user.role_name === 'Промоутер') && <NavbarMenuItem href={`/promouter-panel`}>Панель промоутера</NavbarMenuItem>
                                 )} */}
 
-                            </NavbarMenu>
-                            <NavbarMenu>
+
                                 <NavbarMenuItem href={`/about-us`}>О нас</NavbarMenuItem>
                                 <NavbarMenuItem href={`/contacts`}>Контакты</NavbarMenuItem>
+                                <NavbarMenuItem onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать</NavbarMenuItem>
                             </NavbarMenu>
                             <NavbarActionsMenu>
                                 <SocialIcons />
@@ -115,14 +116,14 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                             </NavbarActionsMenu>
                         </NavbarDesktopMenu>
                         <NavbarMobileMenu>
-                            <NavbarMenu>
+                            <div className="d-flex gap-3 align-items-center">
                                 <Dropdown open={openMobileDrawer} setOpen={setOpenMobileDrawer} dropdown={drawerRef} overlay={<HeaderNavbarMainDropdownMenu setOpenMainMenuMobileDropdown={setOpenMobileDrawer} />} overlayClassName={`navbar-main-menu-dropdown`}>
                                     <IconButton icon={<BurgerIcon size={30} />} />
                                 </Dropdown>
                                 <NavbarBrand className={'navbar-brand-mobile'} href="/">КНИГА<br />КНИГ</NavbarBrand>
-                            </NavbarMenu>
+                            </div>
 
-                            <NavbarMenu>
+                            <div className="d-flex gap-3 align-items-center">
                                 <Dropdown open={openSearchMobileDropdown} setOpen={setOpenSearchMobileDropdown} dropdown={searchMobileDropdownRef} overlay={<HeaderSearchDropdownMenu setOpenSearchMobileDropdown={setOpenSearchMobileDropdown} />} overlayClassName={`navbar-search-actions`}>
                                     <IconButton icon={<MagnifyingGlassOutlineIcon size={26} color={'#E5F8E2'} />} />
                                 </Dropdown>
@@ -130,11 +131,15 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                                 <Dropdown open={openMobileDropdown} setOpen={setOpenMobileDropdown} dropdown={mobileDropdownRef} overlay={<HeaderNavbarDropdownMenu setOpenDropdown={setOpenMobileDropdown} />} overlayClassName={`navbar-dropdown-actions`}>
                                     <IconButton icon={<UserCircleOutlineIcon size={26} />} />
                                 </Dropdown>
-                            </NavbarMenu>
+                            </div>
                         </NavbarMobileMenu>
                     </NavbarCollapse>
                 </Container>
             </Navbar>
+            <DonateModal
+                isOpen={open_donate_modal}
+                setIsOpen={(open) => dispatch(modalsActions.openDonateModal(open))}
+            />
             {children}
         </header>
     )
@@ -143,7 +148,8 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
 function mapStateToProps(state) {
     const { user } = state.auth;
     const { currentTheme, themes } = state.style;
-    return { user, currentTheme, themes };
+    const { open_donate_modal } = state.modals
+    return { user, currentTheme, themes, open_donate_modal };
 }
 const connectedHeader = connect(mapStateToProps)(Header);
 export { connectedHeader as Header };

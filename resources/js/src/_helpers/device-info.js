@@ -1,5 +1,5 @@
 import { isMobile, browserName } from 'react-device-detect';
-import  Fingerprint  from '@fingerprintjs/fingerprintjs';
+// import  Fingerprint  from '@fingerprintjs/fingerprintjs';
 
 
 export const getDeviceInfo = async (user_id) => {

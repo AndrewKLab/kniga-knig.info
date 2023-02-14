@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useCallback } from "react";
+import React, { FunctionComponent, useEffect, useCallback, useState } from "react";
 import { connect } from 'react-redux';
 import { Row, Col, Button, Image, Label, TextInput, InputGroup, InputGroupText, InputError, Checkbox, IconButton, Alert, Form } from '../../../_components/UI';
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { User } from '../../../_interfaces';
 import { authActions } from "../../../_actions";
 import { useNavigate, Link } from "react-router-dom";
 import './index.css';
+import { EyeOffOutlineIcon, EyeOutlineIcon } from "../../../../public/_components/UI/Icons";
 
 type LoginPageProps = {
     dispatch: any;
@@ -30,6 +31,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
     let navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { executeRecaptcha } = useGoogleReCaptcha();
+    const [togglePasswordShow, setTogglePasswordShow] = useState(false)
 
     useEffect(() => {
         if (user) navigate('/');
@@ -71,12 +73,14 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                                 <InputGroup>
                                     <TextInput
                                         {...register('kk_user_password')}
-                                        type={`password`}
+                                        type={togglePasswordShow ? `text`:`password`}
                                         id={`kk_user_password`}
                                         name={`kk_user_password`}
                                         placeholder={`Введите Пароль...`}
                                     />
-                                    {/* <IconButton icon={}/> */}
+                                    <Button className="w-auto" color="primary" onClick={() => setTogglePasswordShow(!togglePasswordShow)}>
+                                        {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                    </Button>
                                 </InputGroup>
                                 <InputError errors={login_errors} name={'kk_user_password'} />
                             </Col>
@@ -92,7 +96,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                             <Col xs={12} lg={12}>
                                 <InputError errors={login_errors} name={'g-recaptcha-response'} />
                                 {login_error_messge && <Alert message={login_error_messge} type={'danger'} />}
-                                <Button type={`submit`} className={`registration_page_button`} loading={login_loading} disabled={login_loading}>Войти</Button>
+                                <Button type={`submit`} className={`registration_page_button w-100`} loading={login_loading} disabled={login_loading}>Войти</Button>
                             </Col>
                             <Col lg={6}>
                                 <Link to={`/password/forgot`}>Забыли пароль?</Link>

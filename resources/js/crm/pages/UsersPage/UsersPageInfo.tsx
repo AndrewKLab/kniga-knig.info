@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState, useCallback } from "react";
 import { connect } from 'react-redux';
 import { Button, Col, Form, Image, Row, Label, InputGroup, TextInput, InputError, TextArea, Alert, InputGroupText, ControlledSelect, Checkbox, IconButton, Tabs, ProgressBar } from '../../_components/UI';
-import { ArrowLeftIcon, ArrowSquareRightIcon, FileOutlineIcon, PenIcon } from '../../_components/UI/Icons';
+import { ArrowLeftIcon, ArrowSquareRightIcon, ChatIcon, FileOutlineIcon, PenIcon } from '../../_components/UI/Icons';
 
 import { User } from '../../_interfaces';
-import { usersActions, pagesActions, settingsActions } from "../../_actions";
+import { usersActions, pagesActions, settingsActions, chatsActions } from "../../_actions";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import './index.css';
@@ -21,28 +21,28 @@ type UsersPageInfoCoursesListProps = {
     courses: Array<any> | null;
 }
 
-const UsersPageInfoCoursesList: FunctionComponent<UsersPageInfoCoursesListProps> = ({kk_user_id, courses }): JSX.Element => {
+const UsersPageInfoCoursesList: FunctionComponent<UsersPageInfoCoursesListProps> = ({ kk_user_id, courses }): JSX.Element => {
     let navigate = useNavigate();
     return courses && courses.length > 0 ? (
         <Row g={3}>
             {courses.map((item, index) => <Col key={item.kk_cup_id} xs={12} lg={3} className={`profile-page-course-item`}>
-            <CoursesCard
-                coursesCardImage={item?.course?.kk_course_image}
-                coursesCardTitle={item?.course?.kk_course_name}
-                coursesCardSubtitle={
-                    <React.Fragment>
-                        <div>{`${item?.course?.lessons_count} уроков`}</div>
-                        <div className={`courses-card-progress`}>
-                            Пройдено
-                            <ProgressBar progress={(item?.course?.lessons_users_progress_count / item?.course?.lessons_count)} />
-                            <div>{item?.course?.lessons_users_progress_count} из {item?.course?.lessons_count}</div>
-                        </div>
-                        <Button  onClick={() => navigate(`/users/info/course_progress/${item?.course?.kk_course_id}/${kk_user_id}`)}>Подробнее</Button>
-                    </React.Fragment>
-                }
-            />
-        </Col>
-        )}
+                <CoursesCard
+                    coursesCardImage={item?.course?.kk_course_image}
+                    coursesCardTitle={item?.course?.kk_course_name}
+                    coursesCardSubtitle={
+                        <React.Fragment>
+                            <div>{`${item?.course?.lessons_count} уроков`}</div>
+                            <div className={`courses-card-progress`}>
+                                Пройдено
+                                <ProgressBar progress={(item?.course?.lessons_users_progress_count / item?.course?.lessons_count)} />
+                                <div>{item?.course?.lessons_users_progress_count} из {item?.course?.lessons_count}</div>
+                            </div>
+                            <Button onClick={() => navigate(`/users/info/course_progress/${item?.course?.kk_course_id}/${kk_user_id}`)}>Подробнее</Button>
+                        </React.Fragment>
+                    }
+                />
+            </Col>
+            )}
         </Row>
     ) : (<Alert className={`p-0`} message={`Ничего не найдено.`} />)
 }
@@ -77,18 +77,25 @@ const UsersPageInfo: FunctionComponent<UsersPageInfoProps> = ({
     useEffect(() => {
         const init = async () => {
             await dispatch(pagesActions.openPage())
-            await dispatch(usersActions.getOneByUserId({ 
-                kk_user_id: 
-                kk_user_id, 
+            await dispatch(usersActions.getOneByUserId({
+                kk_user_id:
+                    kk_user_id,
                 parts: 'role,admin,coordinator,pastor,teather,promouter,courses_user_progress,course,lessons,lessons_users_progress',
                 parts_to_count: 'lessons,lessons_users_progress',
                 lessons_users_progress_status: 'finished',
-             }));
+            }));
 
             setLoading(false)
         }
         init();
     }, [kk_user_id]);
+
+    const openChat = (user) => {
+        dispatch(chatsActions.create({ kk_user_id: user.kk_user_id })).then((res) => {
+            if (res?.error?.message === 'Такой чат уже существует!') navigate(`/chats/${res?.error?.chat?.kk_chat_id}`)
+            if (res?.res?.chat) navigate(`/chats/${res?.res?.chat?.kk_chat_id}`)
+        });
+    }
 
 
     if (noMatch) return <NoMatchPage />
@@ -96,8 +103,11 @@ const UsersPageInfo: FunctionComponent<UsersPageInfoProps> = ({
     return (
         <div className={`users_info_page`}>
             <div className={`users_info_page_title_container`}>
-            <h1 className={`crm_panel_page_title`}><a className={`cursor-pointer`} onClick={() => navigate(`/users`)}>Пользователи |</a>  <span>{`"${get_one_by_user_id_users?.kk_user_lastname} ${get_one_by_user_id_users?.kk_user_firstname}"` } </span> </h1>
-            <IconButton icon={<PenIcon size={30} color={`rgba(var(--alert-warning-color), 1)`} />} title="Изменить" onClick={() => navigate(`/users/action/edit/${get_one_by_user_id_users?.kk_user_id}`)} />
+                <h1 className={`crm_panel_page_title`}><a className={`cursor-pointer`} onClick={() => navigate(`/users`)}>Пользователи |</a>  <span>{`"${get_one_by_user_id_users?.kk_user_lastname} ${get_one_by_user_id_users?.kk_user_firstname}"`} </span> </h1>
+                <div className="d-flex gap-3">
+                    <IconButton icon={<ChatIcon size={30} color={`rgba(var(--alert-success-color), 1)`} />} title="Перейти к диалогу с пользователем" onClick={() => openChat(get_one_by_user_id_users)} />
+                    <IconButton icon={<PenIcon size={30} color={`rgba(var(--alert-warning-color), 1)`} />} title="Изменить" onClick={() => navigate(`/users/action/edit/${get_one_by_user_id_users?.kk_user_id}`)} />
+                </div>
             </div>
             <div className={`users_info_page_user_card`}>
                 <Row g={3}>
@@ -182,18 +192,18 @@ const UsersPageInfo: FunctionComponent<UsersPageInfoProps> = ({
             <h2>Прогресс пользователя:</h2>
             {
                 get_one_by_user_id_users?.courses_user_progress?.length > 0 ?
-                <Tabs tabs={[
-                    {
-                        key: 0,
-                        menuTitle: 'в процессе',
-                        contentComponent: <UsersPageInfoCoursesList kk_user_id={kk_user_id} courses={get_one_by_user_id_users?.courses_user_progress.filter(course => course.kk_cup_status === 'inprocess')} />
-                    },
-                    {
-                        key: 1,
-                        menuTitle: 'завершенные',
-                        contentComponent: <UsersPageInfoCoursesList kk_user_id={kk_user_id} courses={get_one_by_user_id_users?.courses_user_progress.filter(course => course.kk_cup_status === 'finished')} />
-                    },
-                ]} /> : 'Пользователь пока не начал проходить курсы!'
+                    <Tabs tabs={[
+                        {
+                            key: 0,
+                            menuTitle: 'в процессе',
+                            contentComponent: <UsersPageInfoCoursesList kk_user_id={kk_user_id} courses={get_one_by_user_id_users?.courses_user_progress.filter(course => course.kk_cup_status === 'inprocess')} />
+                        },
+                        {
+                            key: 1,
+                            menuTitle: 'завершенные',
+                            contentComponent: <UsersPageInfoCoursesList kk_user_id={kk_user_id} courses={get_one_by_user_id_users?.courses_user_progress.filter(course => course.kk_cup_status === 'finished')} />
+                        },
+                    ]} /> : 'Пользователь пока не начал проходить курсы!'
             }
         </div>
     )

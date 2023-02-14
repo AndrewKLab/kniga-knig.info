@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect, useCallback } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, Image, Label, TextInput, InputGroup, InputGroupText, InputError, Checkbox, IconButton, Alert, Form } from '../../../_components/UI';
 import { useForm } from "react-hook-form";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { User } from '../../../_interfaces';
 import { authActions } from "../../../_actions";
 import { useNavigate, Link } from "react-router-dom";
 import './index.css';
+import { Row, Col, Button, Label, TextInput, InputGroup, InputGroupText, InputError, Alert, Form } from "../../../../public/_components/UI";
 
 type ProfileEditPageProps = {
     dispatch: any;

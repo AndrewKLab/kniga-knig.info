@@ -1,10 +1,7 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { connect } from 'react-redux';
-import { IconButton, List, ListItem, Switch, ListItemProps, Button } from '../UI';
-import { User, Themes } from '../../_interfaces';
-import { stylesActions } from "../../_actions";
-import { setTheme } from '../../_helpers';
-import { GearOutlineIcon, UserCircleOutlineIcon, ChatsCircleOutlineIcon, MoonStarsOutlineIcon } from "../UI/Icons";
+import { List, ListItem, Switch, ListItemProps } from '../../../public/_components/UI';
+import { User } from '../../_interfaces';
 import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
