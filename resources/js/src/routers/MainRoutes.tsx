@@ -34,6 +34,7 @@ const MainRoutes = ({ }) => {
       <Route path="/courses/:kk_course_id" element={<CoursePage />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/registration" element={<RegistrationPage />} />
+      <Route path="/login/:type" element={<LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/password/forgot" element={<ForgotPasswordPage />} />
       <Route path="/password/verify/pin" element={<VerifyPinPasswordPage />} />

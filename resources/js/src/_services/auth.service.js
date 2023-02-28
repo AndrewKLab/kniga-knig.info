@@ -1,3 +1,4 @@
+import { paramsObjectToString } from '../../public/_helpers';
 import {config, authHeader, csrf, paramsObjectToFormData} from '../_helpers';
 
 export const authService = {
@@ -9,7 +10,11 @@ export const authService = {
     resetPassword,
     editAuthUser,
     editAvatarAuthUser,
-    getAuthUser
+    getAuthUser,
+
+    googleAuthCallback,
+    vkontakteAuthCallback,
+    odnoklassnikiAuthUrlAuthCallback,
 };
 
 const api_path = `/auth/`;
@@ -51,6 +56,19 @@ async function editAvatarAuthUser(params) {
 }
 async function getAuthUser(params) {
     const response = await fetch(`${config.apiUrl}${api_path}getAuthUser`, {...config.GET, headers:{...authHeader()}});
+    return handleResponse(response);
+}
+
+async function googleAuthCallback(params) {
+    const response = await fetch(`${config.apiUrl}${api_path}google/callback${params ? paramsObjectToString(params) : ''}`, {...config.GET});
+    return handleResponse(response);
+}
+async function vkontakteAuthCallback(params) {
+    const response = await fetch(`${config.apiUrl}${api_path}vkontakte/callback${params ? paramsObjectToString(params) : ''}`, {...config.GET});
+    return handleResponse(response);
+}
+async function odnoklassnikiAuthUrlAuthCallback(params) {
+    const response = await fetch(`${config.apiUrl}${api_path}odnoklassniki/callback${params ? paramsObjectToString(params) : ''}`, {...config.GET});
     return handleResponse(response);
 }
 

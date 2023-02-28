@@ -21,6 +21,9 @@ use App\Http\Api\Settings\UsersRolesAccessController;
 use App\Http\Api\Settings\UsersRolesController;
 use App\Http\Api\Support\SupportContorller;
 use App\Http\Api\Users\UsersController;
+use App\Http\Api\Auth\GoogleController;
+use App\Http\Api\Auth\OdniklassnikiController;
+use App\Http\Api\Auth\VKController;
 use Illuminate\Support\Facades\Broadcast;
 
 // Broadcast::routes(['middleware' => ['auth:sanctum']]);
@@ -42,6 +45,13 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 Route::post('/auth/password/forgot', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
 Route::post('/auth/password/verify/pin', [AuthController::class, 'verifyPinPassword'])->name('verifyPinPassword');
 Route::post('/auth/password/reset', [AuthController::class, 'resetPassword'])->name('resetPassword');
+
+Route::get('/auth/google/url', [GoogleController::class, 'authUrl']);
+Route::get('/auth/google/callback', [GoogleController::class, 'authCallback']);
+Route::get('/auth/vkontakte/url', [VKController::class, 'authUrl']);
+Route::get('/auth/vkontakte/callback', [VKController::class, 'authCallback']);
+Route::get('/auth/odnoklassniki/url', [OdniklassnikiController::class, 'authUrl']);
+Route::get('/auth/odnoklassniki/callback', [OdniklassnikiController::class, 'authCallback']);
 
 
 Route::get('/courses/getAll', [CoursesController::class, 'getAll']);

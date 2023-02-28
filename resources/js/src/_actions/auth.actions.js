@@ -12,7 +12,11 @@ export const authActions = {
     resetPassword,
     editAuthUser,
     editAvatarAuthUser,
-    getAuthUser
+    getAuthUser,
+
+    googleAuthCallback,
+    vkontakteAuthCallback,
+    odnoklassnikiAuthUrlAuthCallback,
 };
 
 function registration(params, navigate) {
@@ -58,6 +62,86 @@ function login(params, navigate) {
     function success(res) { return { type: authConstants.LOGIN_SUCCESS, res } }
     function failure(error) { return { type: authConstants.LOGIN_FAILURE, error } }
 }
+function googleAuthCallback(params, navigate) {
+    return dispatch => {
+        dispatch(request(params));
+        return authService.googleAuthCallback(params)
+            .then(
+                res => {
+                    localStorage.setItem('token', res.token);
+                    if (res.user) dispatch(notificationsActions.createNotificationPusherToChannel({
+                        channel: `App.Models.KK_User.${res.user.kk_user_id}`,
+                        options: {
+                            withInit: true,
+                            token: res.token,
+                        }
+                    }))
+
+                    dispatch(success(res))
+                    navigate('/')
+                },
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request(params) { return { type: authConstants.LOGIN_REQUEST, params } }
+    function success(res) { return { type: authConstants.LOGIN_SUCCESS, res } }
+    function failure(error) { return { type: authConstants.LOGIN_FAILURE, error } }
+}
+function vkontakteAuthCallback(params, navigate) {
+    return dispatch => {
+        dispatch(request(params));
+        return authService.vkontakteAuthCallback(params)
+            .then(
+                res => {
+                    localStorage.setItem('token', res.token);
+                    if (res.user) dispatch(notificationsActions.createNotificationPusherToChannel({
+                        channel: `App.Models.KK_User.${res.user.kk_user_id}`,
+                        options: {
+                            withInit: true,
+                            token: res.token,
+                        }
+                    }))
+
+                    dispatch(success(res))
+                    navigate('/')
+                },
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request(params) { return { type: authConstants.LOGIN_REQUEST, params } }
+    function success(res) { return { type: authConstants.LOGIN_SUCCESS, res } }
+    function failure(error) { return { type: authConstants.LOGIN_FAILURE, error } }
+}
+
+function odnoklassnikiAuthUrlAuthCallback(params, navigate) {
+    return dispatch => {
+        dispatch(request(params));
+        return authService.odnoklassnikiAuthUrlAuthCallback(params)
+            .then(
+                res => {
+                    localStorage.setItem('token', res.token);
+                    if (res.user) dispatch(notificationsActions.createNotificationPusherToChannel({
+                        channel: `App.Models.KK_User.${res.user.kk_user_id}`,
+                        options: {
+                            withInit: true,
+                            token: res.token,
+                        }
+                    }))
+
+                    dispatch(success(res))
+                    navigate('/')
+                },
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request(params) { return { type: authConstants.LOGIN_REQUEST, params } }
+    function success(res) { return { type: authConstants.LOGIN_SUCCESS, res } }
+    function failure(error) { return { type: authConstants.LOGIN_FAILURE, error } }
+}
+
 function logout(params) {
     return dispatch => {
         dispatch(request(params));

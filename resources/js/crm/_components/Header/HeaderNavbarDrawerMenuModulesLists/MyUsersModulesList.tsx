@@ -10,10 +10,7 @@ import { usersActions } from "../../../_actions";
 type MyUsersModulesListProps = { dispatch: any; user: User; user_page_tab_table: number; }
 
 const MyUsersModulesList: FunctionComponent<MyUsersModulesListProps> = ({ dispatch, user, user_page_tab_table}): JSX.Element => {
-    let navigate = useNavigate();
-
     const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState(6)
 
     useEffect(() => {
         const init = async () => setLoading(false)

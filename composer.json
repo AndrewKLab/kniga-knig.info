@@ -10,9 +10,12 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
+        "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
         "pusher/pusher-php-server": "^7.2",
+        "socialiteproviders/odnoklassniki": "^4.1",
+        "socialiteproviders/vkontakte": "^5.0",
         "timehunter/laravel-google-recaptcha-v3": "~2.5"
     },
     "require-dev": {

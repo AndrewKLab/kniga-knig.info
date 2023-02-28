@@ -1,0 +1,12 @@
+.vk_auth_button{
+    background-color: #4a76a8;
+    color: #fff;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border-radius: 0.5rem;
+    font-size: 16px;
+    cursor: pointer;
+}

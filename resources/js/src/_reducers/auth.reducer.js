@@ -104,6 +104,7 @@ export function auth(state = initialState, action) {
             };
         case authConstants.LOGIN_FAILURE:
             return {
+                ...state,
                 login_loading: false,
                 login_message: null,
                 login_errors: action.error.data,

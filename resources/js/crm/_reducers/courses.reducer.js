@@ -1,6 +1,8 @@
 import { coursesConstants, pagesConstants } from '../_constants';
 
 const initialState = {
+    course_page_tab: 1,
+    course_page_tab_table: 1,
 
     add_courses_loading: false,
     add_courses_message: null,
@@ -47,6 +49,17 @@ export function courses(state = initialState, action) {
             return initialState
         case pagesConstants.CLOSE_PAGE:
             return initialState
+
+        case coursesConstants.SET_COURSES_PAGE_TAB:
+            return {
+                ...state,
+                course_page_tab: action.tab,
+            }
+        case coursesConstants.SET_COURSES_PAGE_TAB_TABLE:
+            return {
+                ...state,
+                course_page_tab_table: action.table,
+            }
 
         // ADD_COURSES_CATEGORIES
         case coursesConstants.ADD_COURSES_REQUEST:

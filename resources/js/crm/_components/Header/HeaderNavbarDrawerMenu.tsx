@@ -2,11 +2,11 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import { IconButton, List, ListItem, Switch, ListItemProps, Button, TabsMenu } from '../UI';
 import { User, Themes } from '../../_interfaces';
-import { stylesActions, usersActions } from "../../_actions";
+import { coursesActions, stylesActions, usersActions } from "../../_actions";
 import { setTheme } from '../../_helpers';
 import { StudentOutlineIcon, ChartLineUpOutlineIcon, InfoOutlineIcon, DoubleFoldersOutlineIcon, GearOutlineIcon, FolderOutlineIcon } from "../UI/Icons";
 import { useNavigate } from "react-router-dom";
-import {AllUsersModulesList, MyUsersModulesList, WithoutUsersModulesList } from "./HeaderNavbarDrawerMenuModulesLists";
+import { AllCoursesModulesList, AllUsersModulesList, MyCoursesModulesList, MyUsersModulesList, WithoutUsersModulesList } from "./HeaderNavbarDrawerMenuModulesLists";
 
 type HeaderProps = {
     dispatch: any;
@@ -17,26 +17,36 @@ type HeaderProps = {
 
     user: User;
     user_page_tab?: number;
+    course_page_tab?: number;
     setOpenMobileDrawer: any;
 }
 
-const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, children, className, user, user_page_tab, setOpenMobileDrawer }): JSX.Element => {
+const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, children, className, user, user_page_tab, course_page_tab, setOpenMobileDrawer }): JSX.Element => {
     let navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState(1)
 
-    const modules = [];
+    const course_modules = [];
+    if (user?.role?.kk_role_level < 6) course_modules.push({ key: 0, menuTitle: 'Курсы', module: <AllCoursesModulesList /> })
+    if (user?.role?.kk_role_level < 6) course_modules.push({ key: 1, menuTitle: 'Мои Курсы', module: <MyCoursesModulesList /> })
+
+    const user_modules = [];
     if (
         user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN' ||
         user?.role?.kk_role_type === 'ROLE_ADMIN' ||
         user?.role?.kk_role_type === 'ROLE_COORDINATOR'
-    ) modules.push({ key: 0, menuTitle: 'Пользователи', module: <AllUsersModulesList/>})
-    if (true) modules.push({ key: 1, menuTitle: 'Мои Пользователи', module: <MyUsersModulesList /> })
-    if (true) modules.push({ key: 2, menuTitle: 'Пользователи Без', module: <WithoutUsersModulesList /> })
+    ) user_modules.push({ key: 0, menuTitle: 'Пользователи', module: <AllUsersModulesList /> })
+    if (true) user_modules.push({ key: 1, menuTitle: 'Мои Пользователи', module: <MyUsersModulesList /> })
+    if (true) user_modules.push({ key: 2, menuTitle: 'Пользователи Без', module: <WithoutUsersModulesList /> })
+    if (true) user_modules.push({ key: 3, menuTitle: 'Древо ваших связей', module: <WithoutUsersModulesList /> })
 
-    const ActiveTab = () => {
-        let tab = user_page_tab ? user_page_tab : modules[0].key;
-        const module = modules.find(element => element.key === tab);
-        return module.module;
+    const ActiveCoursesTab = () => {
+        let tab = course_page_tab ? course_page_tab : course_modules[0].key;
+        const module = course_modules.find(element => element.key === tab);
+        return module ? module.module : null;
+    }
+    const ActiveUsersTab = () => {
+        let tab = user_page_tab ? user_page_tab : user_modules[0].key;
+        const module = user_modules.find(element => element.key === tab);
+        return module ? module.module : null;
     }
 
     const goToLink = (link: string) => {
@@ -64,6 +74,10 @@ const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, chil
             itemTitle: 'Курсы',
             onClick: () => goToLink('/courses'),
             itemLink: '/courses',
+            itemDropdown: <div className={`drawer_dropdown_menu_container`}>
+                <TabsMenu className={`drawer_dropdown_menu`} activeTab={course_page_tab} setActiveTab={(tab) => dispatch(coursesActions.setCoursesPageTab(tab))} tabs={course_modules} />
+                <ActiveCoursesTab />
+            </div>,
         })
         if (user?.role?.kk_role_type !== 'ROLE_PROMOUTER') menu_items.push({
             itemAvatar: <StudentOutlineIcon color={location.pathname === '/users' ? "rgba(var(--primary-color),1)" : "rgba(var(--text-color), 1)"} />,
@@ -71,8 +85,8 @@ const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, chil
             onClick: () => goToLink('/users'),
             itemLink: '/users',
             itemDropdown: <div className={`drawer_dropdown_menu_container`}>
-                <TabsMenu className={`drawer_dropdown_menu`} activeTab={user_page_tab} setActiveTab={(tab) => dispatch(usersActions.setUsersPageTab(tab))} tabs={modules} />
-                <ActiveTab />
+                <TabsMenu className={`drawer_dropdown_menu`} activeTab={user_page_tab} setActiveTab={(tab) => dispatch(usersActions.setUsersPageTab(tab))} tabs={user_modules} />
+                <ActiveUsersTab />
             </div>,
         })
         if (user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN') menu_items.push({
@@ -121,7 +135,8 @@ const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, chil
 function mapStateToProps(state) {
     const { user } = state.auth;
     const { user_page_tab } = state.users;
-    return { user, user_page_tab };
+    const { course_page_tab } = state.courses;
+    return { user, user_page_tab, course_page_tab };
 }
 const connectedHeaderNavbarDrawerMenu = connect(mapStateToProps)(HeaderNavbarDrawerMenu);
 export { connectedHeaderNavbarDrawerMenu as HeaderNavbarDrawerMenu };

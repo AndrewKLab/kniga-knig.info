@@ -9,13 +9,14 @@ import { useNavigate } from "react-router-dom";
 type CoursesPageProps = {
     dispatch: any;
     user: User;
+    course_page_tab: number;
 }
 
 const CoursesPage: FunctionComponent<CoursesPageProps> = ({
     dispatch,
     user,
+    course_page_tab
 }): JSX.Element => {
-    const [activeTab, setActiveTab] = useState(1)
     let navigate = useNavigate();
     const modules = [];
     if (
@@ -23,18 +24,17 @@ const CoursesPage: FunctionComponent<CoursesPageProps> = ({
         user?.role?.kk_role_type === 'ROLE_ADMIN' ||
         user?.role?.kk_role_type === 'ROLE_COORDINATOR'
     ) modules.push({ key: 0, menuTitle: 'Курсы', module: <AllCoursesModule /> })
-    if (true) modules.push({ key: 1, menuTitle: 'Мои Курсы', module: <MyCoursesModule /> })
-    // if (true) modules.push({ key: 2, menuTitle: 'Пользователи Без', module: <WithoutCoursesModule /> })
+    if (user?.role?.kk_role_level < 6) modules.push({ key: 1, menuTitle: 'Мои Курсы', module: <MyCoursesModule /> })
 
     const ActiveTab = () => {
-        const module = modules.find(element => element.key === activeTab);
+        let tab = course_page_tab ? course_page_tab : modules[0].key;
+        const module = modules.find(element => element.key === tab);
         return module.module;
     }
 
     return (
         <div className={`users_page`}>
             <div className={`courses_page_header`}>
-                <TabsMenu className={`users_page_modules_tabs`} activeTab={activeTab} setActiveTab={setActiveTab} tabs={modules} />
                 <Button color={'primary'} className={`courses_page_header_button`} onClick={() => navigate(`/courses/constructor/add`)}>Добавить</Button>
             </div>
 
@@ -45,7 +45,8 @@ const CoursesPage: FunctionComponent<CoursesPageProps> = ({
 
 function mapStateToProps(state) {
     const { user } = state.auth;
-    return { user };
+    const { course_page_tab } = state.courses;
+    return { user, course_page_tab };
 }
 const connectedCoursesPage = connect(mapStateToProps)(CoursesPage);
 export { connectedCoursesPage as CoursesPage };

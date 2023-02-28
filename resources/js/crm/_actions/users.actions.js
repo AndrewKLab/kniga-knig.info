@@ -3,6 +3,7 @@ import { defaultAction } from '../_helpers';
 import { usersService } from '../_services';
 
 export const usersActions = {
+    setUserForTreeInfo,
     setUsersPageTab,
     setUsersPageTabTable,
 
@@ -16,6 +17,7 @@ export const usersActions = {
 };
 
 
+function setUserForTreeInfo(user) { return { type: usersConstants.SET_USER_FOR_TREE_INFO, user } }
 function setUsersPageTab(tab) { return { type: usersConstants.SET_USERS_PAGE_TAB, tab } }
 function setUsersPageTabTable(table) { return { type: usersConstants.SET_USERS_PAGE_TAB_TABLE, table } }
 

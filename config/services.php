@@ -31,4 +31,24 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOLE_CLIENT_SECRET'),
+        'redirect' => env('GOOLE_REDIRECT_URL'),
+    ],
+
+    'vkontakte' => [
+        'client_id' => env('VK_CLIENT_ID'),
+        'client_secret' => env('VK_CLIENT_SECRET'),
+        'redirect' => env('VK_REDIRECT_URL'),
+    ],
+
+    'odnoklassniki' => [    
+        'client_id' => env('ODNOKLASSNIKI_CLIENT_ID'),  
+        'client_public' => env('ODNOKLASSNIKI_CLIENT_PUBLIC'),
+        'client_secret' => env('ODNOKLASSNIKI_CLIENT_SECRET'),  
+        'redirect' => env('ODNOKLASSNIKI_REDIRECT_URL') 
+      ],
+      
+
 ];

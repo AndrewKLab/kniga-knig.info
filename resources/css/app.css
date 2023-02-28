@@ -309,12 +309,12 @@ ul li::marker {
 .navbar-menu {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 1rem;
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
     flex: 1;
     margin-left: 15px;
     margin-right: 15px;

@@ -3,6 +3,9 @@ import { defaultAction } from '../_helpers';
 import { coursesService } from '../_services';
 
 export const coursesActions = {
+    setCoursesPageTab,
+    setCoursesPageTabTable,
+
     add,
     edit,
     editPublished,
@@ -11,6 +14,9 @@ export const coursesActions = {
     getAllByCategoryId,
     getOneByCourseId
 };
+
+function setCoursesPageTab(tab) { return { type: coursesConstants.SET_COURSES_PAGE_TAB, tab } }
+function setCoursesPageTabTable(table) { return { type: coursesConstants.SET_COURSES_PAGE_TAB_TABLE, table } }
 
 function add(params, navigate) {
     return dispatch => {

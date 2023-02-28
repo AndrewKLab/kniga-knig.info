@@ -62,8 +62,9 @@ class LessonsUsersProgressController extends Controller
                 $questions_messages = [];
                 foreach ($lesson->questions as $key => $question) {
                     if ($question->kk_question_type === 'text') $has_text_question = true;
-                    $questions['q' . $question->kk_question_id] = ['required', 'string'];
+                    $questions['q' . $question->kk_question_id] = ['required', 'string','max:255' ];
                     $questions_messages['q' . $question->kk_question_id . '.required'] = "Это поле обязательно для заполнения!";
+                    $questions_messages['q' . $question->kk_question_id . '.max:255'] = "Количество символов в поле не может превышать 255.";
                 }
                 $validator = Validator::make($request->all(), $questions, $questions_messages);
                 if ($validator->fails())  return response()->json(['success'   => false, 'message'   => 'Пожалуйста пройдите тест!', 'data' => $validator->errors()], 422);

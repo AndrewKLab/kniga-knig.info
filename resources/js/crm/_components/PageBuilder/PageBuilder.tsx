@@ -11,7 +11,7 @@ import Tabs from 'grapesjs-tabs';
 import CustomCode from 'grapesjs-custom-code';
 import ParserPostcss from 'grapesjs-parser-postcss';
 import Tooltip from 'grapesjs-tooltip';
-import ru from 'grapesjs/locale/en';
+import { ru } from './languages';
 
 type PageBuilderProps = {
   editor: object | null;
@@ -24,13 +24,8 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
   useEffect(() => {
     const editor = grapesjs.init({
       container: '#editor',
+      protectedCss: `body {font-family: 'Montserrat';} img {width:100%; objet-fit:cover;}`,
       height: 'calc(90vh - 114px)',
-      // i18n: {
-      //   locale: 'ru', // default locale
-      //   detectLocale: true, // by default, the editor will detect the language
-      //   localeFallback: 'ru', // default fallback
-      //   // messages: { ru },
-      // },
       showOffsets: true,
       selectorManager: { componentFirst: true },
       canvas: {
@@ -39,6 +34,7 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
       styleManager: {
         sectors: [
           {
+            id: 'General',
             name: 'General',
             properties: [
               {
@@ -60,6 +56,7 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
             ],
           },
           {
+            id: 'Dimension',
             name: 'Dimension',
             open: false,
             properties: [
@@ -74,18 +71,21 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
               },
               'height',
               'max-width',
+              'max-height',
+              'min-width',
               'min-height',
               'margin',
               'padding'
             ],
-          }, {
+          },
+          {
+            id: 'Typography',
             name: 'Typography',
             open: false,
             properties: [
               {
                 type: 'select',
                 property: 'font-family',
-                label: 'Font',
                 name: 'Font',
                 default: "'Montserrat', sans-serif",
                 options: [
@@ -128,7 +128,9 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
               },
               'text-shadow'
             ],
-          }, {
+          },
+          {
+            id: 'Decorations',
             name: 'Decorations',
             open: false,
             properties: [
@@ -136,9 +138,11 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
               'border-radius',
               'border',
               'box-shadow',
-              'background', // { id: 'background-bg', property: 'background', type: 'bg' }
+              'background',
             ],
-          }, {
+          },
+          {
+            id: 'Extra',
             name: 'Extra',
             open: false,
             buildProps: [
@@ -146,7 +150,9 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
               'perspective',
               'transform'
             ],
-          }, {
+          },
+          {
+            id: 'Flex',
             name: 'Flex',
             open: false,
             properties: [{
@@ -299,35 +305,62 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
           }
         ],
       },
+      i18n: {
+        messagesAdd: {
+          en: ru
+        }
+      },
       plugins: [
         BlocksBasic,
         PresetWebpage,
-        Touch,
         Countdown,
-        Newsletter, 
+        Newsletter,
         Forms,
         Export,
-        Tabs,
         CustomCode,
         ParserPostcss,
-        Tooltip
+        Tooltip,
+        Tabs, //Табы
+        Touch, // Доступность в мобильной версии
       ],
       pluginsOpts: {
-        [BlocksBasic]: { flexGrid: true },
-        [PresetWebpage]: {
-          // blocks: ['link-block', 'quote', 'text-basic']
+        [BlocksBasic]: {
+          blocks: ['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video', 'map'],
+          flexGrid: true,
+          labelColumn37: '2 Колонки 3/7',
         },
-        [Touch]: {},
-        [Countdown]: {},
+        [PresetWebpage]: {
+          blocks: ['link-block', 'quote', 'text-basic'],
+          textCleanCanvas: 'Вы уверены, что хотите очистить холст?'
+        },
+        [Countdown]: {
+          endText: 'ВРЕМЯ ИСТЕКЛО',
+          labelDays: 'дни',
+          labelHours: 'часы',
+          labelMinutes: 'минуты',
+          labelSeconds: 'секунды',
+        },
         [Newsletter]: {
           updateStyleManager: false,
+          modalTitleImport: 'Импортировать шаблон',
+          modalBtnImport: 'Импорт',
+          modalTitleExport: 'Экспорт шаблона',
         },
         [Forms]: {},
         [Export]: {},
-        [Tabs]: { tabsBlock: { category: 'Extra' } },
-        [CustomCode]: {},
+        
+        [CustomCode]: {
+          blockCustomCode: { category: 'Extra', },
+          toolbarBtnCustomCode: { label: '</>', attributes: { title: 'Открыть пользовательский код' } },
+          modalTitle: 'Вставьте свой код',
+          buttonLabel: 'Сохранить',
+        },
         [ParserPostcss]: {},
-        [Tooltip]: {},
+        // [Tooltip]: {
+        //   labelTooltip: 'Подсказка',
+        // },
+        [Tabs]: { tabsBlock: { category: 'Extra' } },
+        [Touch]: {},
       }
     });
     setEditor(editor);
@@ -335,6 +368,28 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
     editor.onReady(() => {
       var $ = grapesjs.$;
       var pn = editor.Panels;
+      var blockManager = editor.BlockManager;
+
+      var c = blockManager.get('video').set({
+        category: 'Basic',
+        changing: true,
+        attributes: {
+        },
+        content: {
+          tagName: 'div',
+          style: {
+            'aspect-ratio': '16/9',
+          },
+          components: [{
+            type: 'video',
+            style: {
+              'width': '100%',
+              'height': '100%',
+            },
+          }]
+        }
+      })
+
       if (defaultValue) editor.setComponents(defaultValue)
 
       pn.getButton('options', 'sw-visibility').set('active', 1);
@@ -350,7 +405,7 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
 
       // Add Settings Sector
       var traitsSector = $('<div class="gjs-sm-sector no-select">' +
-        '<div class="gjs-sm-sector-title"><span class="icon-settings fa fa-cog"></span> <span class="gjs-sm-sector-label">Settings</span></div>' +
+        '<div class="gjs-sm-sector-title"><span class="icon-settings fa fa-cog"></span> <span class="gjs-sm-sector-label">Настройки</span></div>' +
         '<div class="gjs-sm-properties" style="display: none;"></div></div>');
       var traitsProps = traitsSector.find('.gjs-sm-properties');
       traitsProps.append($('.gjs-trt-traits'));
@@ -374,7 +429,6 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
 
 
     return () => {
-      console.log('destroy')
       editor.destroy();
     }
 

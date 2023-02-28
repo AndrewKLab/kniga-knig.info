@@ -5,10 +5,11 @@ import { useForm } from "react-hook-form";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { User } from '../../../_interfaces';
 import { authActions } from "../../../_actions";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
 import './index.css';
 // import { EyeOutlineIcon } from "../../../../public/_components/UI/Icons/EyeOutlineIcon";
 import { EyeOffOutlineIcon, EyeOutlineIcon } from "../../../../public/_components/UI/Icons";
+import { GoogleAuthButton, OdniklassnikiAuthButton, VKAuthButton } from "../../../../public/_components";
 
 type LoginPageProps = {
     dispatch: any;
@@ -33,9 +34,33 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
     let navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { executeRecaptcha } = useGoogleReCaptcha();
+    let { type } = useParams();
+    let [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         if (user) navigate('/');
+        if (type) {
+            const params = {};
+            searchParams.forEach((value, key) => {
+                params[key] = value;
+            });
+            switch (type) {
+                case 'google':
+                    dispatch(authActions.googleAuthCallback(params, navigate))
+                    break;
+                case 'vkontakte':
+                    dispatch(authActions.vkontakteAuthCallback(params, navigate))
+                    break;
+                case 'odnoklassniki':
+                    dispatch(authActions.odnoklassnikiAuthUrlAuthCallback(params, navigate))
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
     }, []);
 
     const handleReCaptchaVerify = useCallback(async () => {
@@ -80,13 +105,13 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                                 <InputGroup>
                                     <TextInput
                                         {...register('kk_user_password')}
-                                        type={togglePasswordShow ? `text`:`password`}
+                                        type={togglePasswordShow ? `text` : `password`}
                                         id={`kk_user_password`}
                                         name={`kk_user_password`}
                                         placeholder={`Введите Пароль...`}
                                     />
                                     <Button className="w-auto" color="primary" onClick={() => setTogglePasswordShow(!togglePasswordShow)}>
-                                        {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                        {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon color={'#fff'} />}
                                     </Button>
                                 </InputGroup>
 
@@ -111,6 +136,11 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                             </Col>
                             <Col xs={12} md={6}>
                                 <Link to={`/registration`} className={`registration_page_login_link`}>Регистрация</Link>
+                            </Col>
+                            <Col xs={12} md={12}>
+                                <GoogleAuthButton className={`mb-3`}>Войти c помощью Google</GoogleAuthButton>
+                                <VKAuthButton className={`mb-3`}>Войти c помощью VK</VKAuthButton>
+                                <OdniklassnikiAuthButton>Войти c помощью OK</OdniklassnikiAuthButton>
                             </Col>
                         </Row>
                     </Form>

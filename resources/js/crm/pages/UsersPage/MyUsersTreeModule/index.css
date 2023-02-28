@@ -1,0 +1,29 @@
+
+.my_users_tree_module_list_item_button{
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+    font-size: 14px;
+    font-family: 'Montserrat';
+    background-color: transparent;
+    cursor: pointer;
+    padding-left: 15px;
+}
+
+.my_users_tree_module_list_item_button:hover{
+    background-color: rgba(var(--text-color), 0.05);
+}
+
+.my_users_tree_module_list_title{
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+.my_users_tree_module_list_item_content:hover{
+    background-color: rgba(var(--text-color), 0.05);
+}
+
+.my_users_tree_module_list{
+    padding-left: 10px;
+}

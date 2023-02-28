@@ -7,6 +7,8 @@ const initialState = {
     user_page_tab: 1,
     user_page_tab_table: 6,
 
+    user_for_tree_info: null,
+
     add_users_loading: false,
     add_users_message: null,
     add_users_errors: null,
@@ -62,6 +64,11 @@ export function users(state = initialState, action) {
                 ...state,
                 user_editor_action: action.user_editor_action,
                 user_editor_kk_user_id: action.user_editor_kk_user_id,
+            }
+        case usersConstants.SET_USER_FOR_TREE_INFO:
+            return {
+                ...state,
+                user_for_tree_info: action.user,
             }
         case lessonsUsersProgressConstants.EDIT_LESSONS_USERS_PROGRESS_SUCCESS:
             return {

@@ -61,8 +61,7 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                             <NavbarBrand href="/">КНИГА<br />КНИГ</NavbarBrand>
                             <NavbarMenu>
                                 {user?.role && <NavbarMenuItem href={`/`}>{user?.role.kk_role_name}</NavbarMenuItem>}
-                            </NavbarMenu>
-                            <NavbarMenu>
+     
                                 <li className={`navbar-menu-item`} >
                                     <a className={'navbar-menu-item-inactive'} href={`https://kniga-knig.info`} target="_blank">Посмотреть сайт</a>
                                 </li>
