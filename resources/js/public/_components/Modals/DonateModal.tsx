@@ -44,16 +44,20 @@ const DonateModal: FunctionComponent<DonateModalProps> = ({
         }
 
         var amount = parseFloat(data.amount);
-        var accountId = data.email;
+        // var accountId = data.email;
 
         widget.charge({ // options
             publicId: 'pk_c7e901dc17201762a41e6c5e5beb6', //id из личного кабинета
             description: 'Пожертвование на уставную деятельность АНО РТЦ "Голос надежды"', //назначение
             amount: amount, //сумма
             currency: 'RUB', //валюта
-            accountId: accountId, //идентификатор плательщика (обязательно для создания подписки)
-            email: accountId,
-            data: data
+            // accountId: accountId, //идентификатор плательщика (обязательно для создания подписки)
+            // email: accountId,
+            data: data,
+            applePaySupport: true,
+            googlePaySupport: true,
+            yandexPaySupport: true,
+            tinkoffInstallmentSupport: true,
         },
             function (options) { // success
                 setIsOpen(false)
@@ -70,7 +74,7 @@ const DonateModal: FunctionComponent<DonateModalProps> = ({
                 <ModalHeader setIsOpen={setIsOpen}>Поддержать сайт</ModalHeader>
                 <ModalBody>
                     <Row g={3}>
-                        <Col xs={12} md={6}>
+                        {/* <Col xs={12} md={6}>
                             <Label htmlFor="lastName">Фамилия:</Label>
                             <TextInput
                                 {...register('lastName')}
@@ -92,15 +96,15 @@ const DonateModal: FunctionComponent<DonateModalProps> = ({
                             />
                         </Col>
                         <Col xs={12} md={12}>
-                                <Label htmlFor="email">E-mail:</Label>
-                                <TextInput
-                                    {...register('email')}
-                                    type={`email`}
-                                    id={`email`}
-                                    name={`email`}
-                                    placeholder={`Введите E-mail...`}
-                                />
-                            </Col>
+                            <Label htmlFor="email">E-mail:</Label>
+                            <TextInput
+                                {...register('email')}
+                                type={`email`}
+                                id={`email`}
+                                name={`email`}
+                                placeholder={`Введите E-mail...`}
+                            />
+                        </Col> */}
                         <Col xs={12} md={12}>
                             <Label htmlFor={`amount`}>Сумма:</Label>
                             <TextInput
@@ -112,13 +116,21 @@ const DonateModal: FunctionComponent<DonateModalProps> = ({
                             />
                         </Col>
                         <Col xs={12} md={12}>
-                                <Checkbox
-                                    {...register('reccurent')}
-                                    id={`reccurent`}
-                                    name={`reccurent`}
-                                    label={<React.Fragment>Поддерживать ежемесячно</React.Fragment>}
-                                />
-                            </Col>
+                            <Checkbox
+                                {...register('reccurent')}
+                                id={`reccurent`}
+                                name={`reccurent`}
+                                label={<React.Fragment>Поддерживать ежемесячно</React.Fragment>}
+                            />
+                        </Col>
+                        <Col xs={12} md={12}>
+                            <Checkbox
+                                {...register('privacy_politic_confirmation')}
+                                id={`privacy_politic_confirmation`}
+                                name={`privacy_politic_confirmation`}
+                                label={<React.Fragment>Нажимая кнопку «Поддержать», я даю согласие на обработку своих персональных данных и принимаю <Link to={`/confidential`} target="_blank" className={`link`}>Политику конфиденциальности</Link>.</React.Fragment>}
+                            />
+                        </Col>
                     </Row>
 
 

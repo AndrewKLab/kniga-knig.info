@@ -93,7 +93,7 @@ const Navbar = ({ history, dispatch, currentTheme, themes, user, search }) => {
                                 user.role_type === 'ROLE_TEATHER' && <Nav link={'/teather-panel'}>Панель учителя</Nav>
                             )}
                             {user === null ? (null) : (
-                                user.role_type === 'ROLE_USER' && user.role_name === 'Промоутер' && <Nav link={'/promouter-panel'}>Панель промоутера</Nav>
+                                user.role_type === 'ROLE_USER' && user.role_name === 'Сеятель' && <Nav link={'/promouter-panel'}>Панель сеятеля</Nav>
                             )}
                             <Nav link={'/courses'}>Курсы</Nav>
                             <Nav link={'/contacts'}>Контакты</Nav>
@@ -204,10 +204,10 @@ const Navbar = ({ history, dispatch, currentTheme, themes, user, search }) => {
                             </ListItem>
                         )}
                         {user === null ? (null) : (
-                            user.role_type === 'user' && user.role_name === 'ПРОМОУТЕР' &&
+                            user.role_type === 'user' && user.role_name === 'Сеятель' &&
                             <ListItem onPress={() => { history.push('/promouter-panel'), toggleDrawer('left', false) }} button>
                                 <ListItemFirstAction>
-                                    <ListItemText title="Панель промоутера" />
+                                    <ListItemText title="Панель сеятеля" />
                                 </ListItemFirstAction>
                             </ListItem>
                         )}

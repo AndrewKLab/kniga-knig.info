@@ -31,6 +31,8 @@ const initialState = {
             // 'background-color-disabled': '228, 231, 234',
 
             // 'border-color': '232, 232, 232'
+
+            'drawer-background-color': '229, 248, 226',
         },
         dark: {
             // 'primary-light-color': '253, 223, 89',
@@ -57,6 +59,8 @@ const initialState = {
             // 'background-color-disabled': '89, 89, 89',
 
             // 'border-color': '10, 43, 62',
+
+            'drawer-background-color': '39, 22, 23',
         }
     }
 };

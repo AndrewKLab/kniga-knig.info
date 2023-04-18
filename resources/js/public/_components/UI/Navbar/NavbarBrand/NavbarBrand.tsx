@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import './index.css';
+import { Image } from "../../Image";
 
 export interface NavbarBrandProps extends React.HTMLProps<HTMLAnchorElement> {
   children?:
@@ -9,5 +11,5 @@ export interface NavbarBrandProps extends React.HTMLProps<HTMLAnchorElement> {
 }
 
 export const NavbarBrand: FunctionComponent<NavbarBrandProps> = ({ children, className, ...other }) => {
-  return <Link to={other.href} className={`navbar-brand${className ? ` ${className}` : ''}`}>{children}</Link>
+  return <Link to={other.href} className={`navbar-brand${className ? ` ${className}` : ''}`}><Image src={`site/лого книга книг-05.svg`} height={'45px'} width={`100%`} /><h1>{children}</h1></Link>
 } 

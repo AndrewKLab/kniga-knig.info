@@ -1,5 +1,5 @@
 import { notificationsActions } from '../../public/_actions';
-import { unsubscribeFromChannel } from '../../public/_helpers';
+import { localCoursesUserProgressHelper, unsubscribeFromChannel } from '../../public/_helpers';
 import { authConstants } from '../_constants';
 import { authService } from '../_services';
 
@@ -25,8 +25,14 @@ function registration(params, navigate) {
         return authService.registration(params)
             .then(
                 res => {
+                    if (res) {
+                        localStorage.removeItem('courses_user_progress')
+                        localStorage.removeItem('lessons_user_progress')
+                        localStorage.removeItem('questions_users_answers')
+                    }
                     dispatch(success(res))
                     navigate('/login')
+
                 },
                 error => dispatch(failure(error))
             );

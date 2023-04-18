@@ -69,25 +69,27 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
     let navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [editor, setEditor] = useState(null);
+    const [editorDescription, setEditorDescription] = useState(null);
     const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
 
     useEffect(() => {
         const init = async () => {
             reset()
-            if (lesson_editor_action === 'edit') await dispatch(lessonsActions.getOneByLessonId({ kk_lesson_id: lesson_editor_kk_lesson_id }))
+            await dispatch(lessonsActions.getOneByLessonId({ kk_lesson_id: lesson_editor_kk_lesson_id }))
             const lesson_editor_start = document.getElementById('lesson_editor_start');
             lesson_editor_start.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
             setLoading(false)
         }
         init();
+
     }, [lesson_editor_kk_lesson_id]);
 
     const lessonActionSubmit = async (data) => {
         if (lesson_editor_action === 'add') {
-            await dispatch(lessonsActions.add({...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
-        } else if (lesson_editor_action === 'edit') await dispatch(lessonsActions.edit({...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
+            await dispatch(lessonsActions.add({...data, kk_lesson_description: editorDescription.runCommand('gjs-get-inlined-html'),  kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
+        } else if (lesson_editor_action === 'edit') await dispatch(lessonsActions.edit({...data, kk_lesson_description: editorDescription.runCommand('gjs-get-inlined-html'), kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
         await dispatch(lessonsActions.getAllByCourseId({ kk_lesson_course_id: kk_course_id }))
-        console.log(lesson_editor_action, {...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')})
+        // console.log(lesson_editor_action, {...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')})
     }
 
     if (loading || get_one_by_lesson_id_lessons_loading) return <PageLoader />
@@ -125,30 +127,13 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
                 </div>
                 <div className="mb-3">
                     <Label htmlFor="kk_lesson_description">Бот-приветствие:</Label>
-                    <TextEditor
-                        {...register('kk_lesson_description')}
-                        name={'kk_lesson_description'}
-                        setValue={setValue}
-                        placeholder={`Введите описание...`}
-                        height={300}
-                        defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_description : null}
-                    />
-
+                    <PageBuilder id="kk_lesson_description" editor={editorDescription} setEditor={setEditorDescription} defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_description : null}/>
                     {lesson_editor_action === 'add' && <InputError errors={add_lessons_errors} name={'kk_lesson_description'} />}
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_description'} />}
                 </div>
                 <div className="mb-3">
                     <Label htmlFor="kk_lesson_text">Текст:</Label>
-                    <PageBuilder editor={editor} setEditor={setEditor} defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_text : null}/>
-                    {/* <TextEditor
-                        {...register('kk_lesson_text')}
-                        name={'kk_lesson_text'}
-                        setValue={setValue}
-                        placeholder={`Введите текст...`}
-                        height={500}
-                        defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_text : null}
-                    /> */}
-
+                    <PageBuilder id="kk_lesson_text" editor={editor} setEditor={setEditor} defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_text : null}/>
                     {lesson_editor_action === 'add' && <InputError errors={add_lessons_errors} name={'kk_lesson_text'} />}
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_text'} />}
                 </div>

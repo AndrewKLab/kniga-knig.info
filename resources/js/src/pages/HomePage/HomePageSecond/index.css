@@ -1,0 +1,141 @@
+.home_page_second {
+    padding-top: 90px;
+}
+
+.home_page_second_block {
+    margin-bottom: 90px;
+    padding: 20px 26px 36px 26px;
+}
+
+.home_page_second img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.home_page_second_button {
+    padding: 18px 34px 18px 51px;
+    width: fit-content;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 20px;
+    text-transform: none;
+    border-radius: 12px;
+}
+
+.home_page_second_button_with_chevron {
+    padding: 18px 51px 18px 51px !important;
+}
+
+
+.home_page_second_button_icon {
+    margin-left: 27px;
+    top: 50%;
+}
+
+.home_page_second_title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    text-transform: uppercase;
+}
+
+/* .home_page_second_title_margins {
+    margin: 27px 0;
+} */
+
+.home_page_second_text_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    gap: 1rem;
+}
+
+.home_page_second_text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.home_page_second_green_block {
+    background: rgba(var(--drawer-background-color), 1);
+    border-radius: 20px;
+}
+
+.home_page_second_hello_block_desc {
+    margin-top: 16px;
+    margin-bottom: 53px;
+}
+
+.home_page_second_course_desciption p  {
+    font-size: 18px !important;
+    line-height: 22px !important;
+    margin: 0px !important;
+}
+.home_page_second_course_desciption span{
+    font-size: 18px !important;
+    line-height: 22px !important;
+    margin: 0px !important;
+}
+.home_page_second_courses_block {
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.home_page_second_course_autor_card {
+    padding: 22px;
+    -webkit-box-shadow: 1px 2px 12px 1px rgba(var(--text-color), 0.12);
+    -moz-box-shadow: 1px 2px 12px 1px rgba(var(--text-color), 0.12);
+    box-shadow: 1px 2px 12px 1px rgba(var(--text-color), 0.12);
+    border-radius: 15px;
+}
+
+.home_page_second_course_autor_card img {
+    background-color: #F0F0F0;
+}
+
+.home_page_second_video {
+    border-radius: 20px;
+}
+
+
+
+@media (max-width: 1200px) {
+
+    .home_page_second {
+        padding-top: 30px;
+    }
+
+    .home_page_second_block {
+        margin-bottom: 30px;
+        padding: 0px 7px 15px 7px;
+    }
+
+    .home_page_second_title {
+        font-size: 25px;
+        line-height: 30px;
+    }
+
+    .home_page_second_text {
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .home_page_second_hello_block_desc {
+        margin-top: 15px;
+        margin-bottom: 30px;
+    }
+
+    .home_page_second_text_block {
+        display: block;
+    }
+
+    .home_page_second_button {
+        width: 100%;
+    }
+
+
+
+}

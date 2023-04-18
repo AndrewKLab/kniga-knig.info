@@ -19,7 +19,8 @@ function add(params) {
             .then(
                 res => {
                     dispatch(success(res))
-                    dispatch(setQuestionEditor('edit', res.question.kk_question_id))
+                    dispatch(setQuestionEditor(null, null));
+                    dispatch(getAllByLessonId({ kk_question_lesson_id: params.kk_question_lesson_id, parts: 'answers' }))
                 },
                 error => dispatch(failure(error))
             );
@@ -30,22 +31,33 @@ function add(params) {
     function failure(error) { return { type: questionsConstants.ADD_QUESTIONS_FAILURE, error } }
 }
 
-// function add(params) {
+function edit(params) {
+    return dispatch => {
+        dispatch(request(params));
+        return questionsService.edit(params)
+            .then(
+                res => {
+                    dispatch(success(res))
+                    dispatch(setQuestionEditor(null, null));
+                    dispatch(getAllByLessonId({ kk_question_lesson_id: params.kk_question_lesson_id, parts: 'answers' }))
+                },
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request(params) { return { type: questionsConstants.EDIT_QUESTIONS_REQUEST, params } }
+    function success(res) { return { type: questionsConstants.EDIT_QUESTIONS_SUCCESS, res } }
+    function failure(error) { return { type: questionsConstants.EDIT_QUESTIONS_FAILURE, error } }
+}
+
+// function edit(params) {
 //     return defaultAction(params, {
-//         serviceFunc: () => questionsService.add(params),
-//         requestType: questionsConstants.ADD_QUESTIONS_REQUEST,
-//         successType: questionsConstants.ADD_QUESTIONS_SUCCESS,
-//         failureType: questionsConstants.ADD_QUESTIONS_FAILURE,
+//         serviceFunc: () => questionsService.edit(params),
+//         requestType: questionsConstants.EDIT_QUESTIONS_REQUEST,
+//         successType: questionsConstants.EDIT_QUESTIONS_SUCCESS,
+//         failureType: questionsConstants.EDIT_QUESTIONS_FAILURE,
 //     })
 // }
-function edit(params) {
-    return defaultAction(params, {
-        serviceFunc: () => questionsService.edit(params),
-        requestType: questionsConstants.EDIT_QUESTIONS_REQUEST,
-        successType: questionsConstants.EDIT_QUESTIONS_SUCCESS,
-        failureType: questionsConstants.EDIT_QUESTIONS_FAILURE,
-    })
-}
 
 function remove(params) {
     return defaultAction(params, {

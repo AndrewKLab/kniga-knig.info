@@ -9,6 +9,7 @@
     background-color: transparent;
     cursor: pointer;
     padding-left: 15px;
+    color:  rgba(var(--text-color));
 }
 
 .my_users_tree_module_list_item_button:hover{
@@ -17,7 +18,6 @@
 
 .my_users_tree_module_list_title{
     font-weight: bold;
-    padding-left: 15px;
 }
 
 .my_users_tree_module_list_item_content:hover{
@@ -26,4 +26,10 @@
 
 .my_users_tree_module_list{
     padding-left: 10px;
+}
+.my_users_tree_module_roles_list{
+    padding-left: 10px;
+}
+.my_users_tree_module_list_item_empty{
+    padding-left: 25px;
 }

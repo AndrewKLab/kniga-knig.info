@@ -3,33 +3,36 @@ import grapesjs from "grapesjs";
 import BlocksBasic from 'grapesjs-blocks-basic';
 import PresetWebpage from 'grapesjs-preset-webpage';
 import Touch from 'grapesjs-touch';
-import Countdown from 'grapesjs-component-countdown';
 import Newsletter from 'grapesjs-preset-newsletter';
 import Forms from 'grapesjs-plugin-forms';
 import Export from 'grapesjs-plugin-export';
-import Tabs from 'grapesjs-tabs';
-import CustomCode from 'grapesjs-custom-code';
 import ParserPostcss from 'grapesjs-parser-postcss';
 import Tooltip from 'grapesjs-tooltip';
+// import Carousel from 'grapesjs-carousel';
 import { ru } from './languages';
+import { button, image, link, listItems, quote, text, textBasic, video } from "./components";
+import styles  from '../../../../css/app.css';
 
 type PageBuilderProps = {
+  id?: string;
   editor: object | null;
   setEditor: any;
   defaultValue: string | null;
 }
 
-const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, defaultValue }): JSX.Element => {
+const PageBuilder: FunctionComponent<PageBuilderProps> = ({ id, editor, setEditor, defaultValue }): JSX.Element => {
 
   useEffect(() => {
     const editor = grapesjs.init({
-      container: '#editor',
-      protectedCss: `body {font-family: 'Montserrat';} img {width:100%; objet-fit:cover;}`,
+      container: `#${id ? `${id}_`:``}editor`,
       height: 'calc(90vh - 114px)',
       showOffsets: true,
       selectorManager: { componentFirst: true },
       canvas: {
-        styles: ['https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'],
+        styles: [
+          'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
+        ],
+        frameStyle: styles,
       },
       styleManager: {
         sectors: [
@@ -103,6 +106,15 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
                 ]
               },
               'font-size',
+              // {
+              //   type: 'number',
+              //   property: 'font-size',
+              //   default: 18,
+              //   units: ['px', '%', 'rem', 'em'],
+              //   unit: 'px',
+              //   min: 0,
+              //   max: 100,
+              // },
               'font-weight',
               'letter-spacing',
               'color',
@@ -305,6 +317,11 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
           }
         ],
       },
+      blockManager: {
+        blocks: [
+
+        ]
+      },
       i18n: {
         messagesAdd: {
           en: ru
@@ -313,54 +330,37 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
       plugins: [
         BlocksBasic,
         PresetWebpage,
-        Countdown,
         Newsletter,
-        Forms,
+        // Forms,
         Export,
-        CustomCode,
         ParserPostcss,
-        Tooltip,
-        Tabs, //Табы
+        // Tooltip,
         Touch, // Доступность в мобильной версии
+        // Carousel,
       ],
       pluginsOpts: {
         [BlocksBasic]: {
-          blocks: ['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video', 'map'],
+          blocks: ['text', 'link', 'image', 'video'],
           flexGrid: true,
-          labelColumn37: '2 Колонки 3/7',
         },
         [PresetWebpage]: {
-          blocks: ['link-block', 'quote', 'text-basic'],
+          blocks: ['quote', 'text-basic'],
           textCleanCanvas: 'Вы уверены, что хотите очистить холст?'
         },
-        [Countdown]: {
-          endText: 'ВРЕМЯ ИСТЕКЛО',
-          labelDays: 'дни',
-          labelHours: 'часы',
-          labelMinutes: 'минуты',
-          labelSeconds: 'секунды',
-        },
         [Newsletter]: {
+          blocks: ['button', 'divider', 'image', 'list-items',],
           updateStyleManager: false,
           modalTitleImport: 'Импортировать шаблон',
           modalBtnImport: 'Импорт',
           modalTitleExport: 'Экспорт шаблона',
         },
-        [Forms]: {},
-        [Export]: {},
-        
-        [CustomCode]: {
-          blockCustomCode: { category: 'Extra', },
-          toolbarBtnCustomCode: { label: '</>', attributes: { title: 'Открыть пользовательский код' } },
-          modalTitle: 'Вставьте свой код',
-          buttonLabel: 'Сохранить',
-        },
-        [ParserPostcss]: {},
-        // [Tooltip]: {
-        //   labelTooltip: 'Подсказка',
+        // [Forms]: {
+        //   blocks: ['form', 'select', 'label', 'checkbox']
         // },
-        [Tabs]: { tabsBlock: { category: 'Extra' } },
+        [Export]: {},
+        [ParserPostcss]: {},
         [Touch]: {},
+        // [Carousel]: {},
       }
     });
     setEditor(editor);
@@ -369,28 +369,25 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
       var $ = grapesjs.$;
       var pn = editor.Panels;
       var blockManager = editor.BlockManager;
+      var components = editor.Components;
 
-      var c = blockManager.get('video').set({
-        category: 'Basic',
-        changing: true,
-        attributes: {
-        },
-        content: {
-          tagName: 'div',
-          style: {
-            'aspect-ratio': '16/9',
-          },
-          components: [{
-            type: 'video',
-            style: {
-              'width': '100%',
-              'height': '100%',
-            },
-          }]
-        }
-      })
+      //set default styles
+      blockManager.get('text').set(text);
+      blockManager.get('link').set(link);
+      blockManager.get('text-basic').set(textBasic);
+      blockManager.get('quote').set(quote);
+      blockManager.get('video').set(video);
+      blockManager.get('image').set(image);
+      blockManager.get('button').set(button);
+      blockManager.get('list-items').set(listItems);
+
+      // console.log(components.getType('list-items'));
+      // console.log(blockManager.get('list-items'));
+
+
 
       if (defaultValue) editor.setComponents(defaultValue)
+      else editor.setComponents(null)
 
       pn.getButton('options', 'sw-visibility').set('active', 1);
 
@@ -405,12 +402,12 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
 
       // Add Settings Sector
       var traitsSector = $('<div class="gjs-sm-sector no-select">' +
-        '<div class="gjs-sm-sector-title"><span class="icon-settings fa fa-cog"></span> <span class="gjs-sm-sector-label">Настройки</span></div>' +
-        '<div class="gjs-sm-properties" style="display: none;"></div></div>');
-      var traitsProps = traitsSector.find('.gjs-sm-properties');
-      traitsProps.append($('.gjs-trt-traits'));
-      $('.gjs-sm-sectors').before(traitsSector);
-      traitsSector.find('.gjs-sm-sector-title').on('click', function () {
+        `<div class="gjs-sm-sector-title"><span class="icon-settings fa fa-cog"></span> <span class="gjs-sm-sector-label">Настройки</span></div>` +
+        `<div class="gjs-sm-properties" style="display: none;"></div></div>`);
+      var traitsProps = traitsSector.find(`.gjs-sm-properties`);
+      traitsProps.append($(`#${id ? `${id}_editor`:``} .gjs-trt-traits`));
+      $(`#${id ? `${id}_editor`:``} .gjs-sm-sectors`).before(traitsSector);
+      traitsSector.find(`#${id ? `${id}_editor`:``} .gjs-sm-sector-title`).on('click', function () {
         var traitStyle = traitsProps.get(0).style;
         var hidden = traitStyle.display == 'none';
         if (hidden) {
@@ -430,12 +427,13 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ editor, setEditor, d
 
     return () => {
       editor.destroy();
+      setEditor(null);
     }
 
   }, []);
 
   return (
-    <div id="editor"></div>
+    <div id={`${id ? `${id}_`:``}editor`}></div>
   );
 };
 export default PageBuilder;

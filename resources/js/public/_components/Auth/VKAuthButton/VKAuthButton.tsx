@@ -5,9 +5,10 @@ import './index.css'
 export interface VKAuthButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     children?: React.ReactElement | React.ReactFragment;
     className?: string;
+    referal_user?: string|null;
 }
 
-export const VKAuthButton: FunctionComponent<VKAuthButtonProps> = ({ children, className, ...other }) => {
+export const VKAuthButton: FunctionComponent<VKAuthButtonProps> = ({ children, className, referal_user, ...other }) => {
     const [authUrl, setAuthUrl] = useState<string | null>(null)
     useEffect(() => {
         authService.vkAuthUrl({}).then((res) => {

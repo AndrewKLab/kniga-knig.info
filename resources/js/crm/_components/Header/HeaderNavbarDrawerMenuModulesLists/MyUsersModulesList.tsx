@@ -22,7 +22,7 @@ const MyUsersModulesList: FunctionComponent<MyUsersModulesListProps> = ({ dispat
     if(user?.role?.kk_role_level < 3) tabs.push({ key: 3, menuTitle: `Мои Координаторы` });
     if(user?.role?.kk_role_level < 4) tabs.push({ key: 8, menuTitle: `Мои Пасторы` });
     if(user?.role?.kk_role_level < 5) tabs.push({ key: 4, menuTitle: `Мои Учителя` });
-    if(user?.role?.kk_role_level < 6) tabs.push({ key: 5, menuTitle: `Мои Промоутеры` });
+    if(user?.role?.kk_role_level < 6) tabs.push({ key: 5, menuTitle: `Мои Сеятели` });
     if(user?.role?.kk_role_level < 6) tabs.push({ key: 6, menuTitle: `Мои Ученики` });
     if(user?.role?.kk_role_level < 6) tabs.push({ key: 7, menuTitle: `Мои Искатели` });
 

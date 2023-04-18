@@ -37,7 +37,7 @@ class KK_Lessons extends Model
 
                 switch ($part) {
                     case 'lesson_users_progress':
-                        if (!empty(Auth::user()) && !empty($request->kk_user_id)) {
+                        if (!empty(auth('sanctum')->user()) && !empty($request->kk_user_id)) {
                             $parts_queries += array($part => function ($query) use ($request, $part) {
                                 $query->where(function ($query) use ($request) {
                                     $query->where("kk_lup_user_id", $request->kk_user_id);
@@ -47,10 +47,10 @@ class KK_Lessons extends Model
                         }
                         break;
                     case 'course_users_progress':
-                        if (Auth::check()) {
+                        if (auth('sanctum')->check()) {
                             $parts_queries += array($part => function ($query) use ($request, $part) {
                                 $query->where(function ($query) use ($request) {
-                                    $query->where("kk_cup_user_id", Auth::user()->kk_user_id);
+                                    $query->where("kk_cup_user_id", auth('sanctum')->user()->kk_user_id);
                                     if (isset($request->course_users_progress_status)) {
                                         $query->where("kk_cup_status", $request->course_users_progress_status);
                                     }
@@ -92,14 +92,14 @@ class KK_Lessons extends Model
                             if (in_array('answers', $parts)) {
                                
                                 $with += array('answers' => function ($query) use ($request, $parts) {
-                                    if (Auth::check()) {
+                                    if (auth('sanctum')->check()) {
                                         $with = [];
                                         
                                         if (in_array('user_answer', $parts)) {
                                             
                                             $with += array('user_answer' => function ($querys) use ($request, $parts) {
                                                 if(!empty($request->kk_user_id)) $querys->where("kk_qua_user_id", $request->kk_user_id);
-                                                else $querys->where("kk_qua_user_id", Auth::user()->kk_user_id);
+                                                else $querys->where("kk_qua_user_id", auth('sanctum')->user()->kk_user_id);
                                             });
                                         }
                                         $query->with($with);

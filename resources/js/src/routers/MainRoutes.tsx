@@ -21,7 +21,8 @@ import {
   ProfileEditPage,
 
   NoMatchPage,
-  PrivacyPoliticPage
+  PrivacyPoliticPage,
+  HomePageSecond
 } from '../pages';
 
 import { ChatsPage, ChatPage } from '../../public/_components';
@@ -29,7 +30,8 @@ import { ChatsPage, ChatPage } from '../../public/_components';
 const MainRoutes = ({ }) => {
   return (
     <Routes>
-      <Route index path="/" element={<HomePage />} />
+      {/* <Route index path="/" element={<HomePage />} /> */}
+      <Route index path="/" element={<HomePageSecond />} />
       <Route path="/courses/:kk_course_id/:kk_lesson_id" element={<LessonPage />} />
       <Route path="/courses/:kk_course_id" element={<CoursePage />} />
       <Route path="/courses" element={<CoursesPage />} />

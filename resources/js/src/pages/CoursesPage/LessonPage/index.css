@@ -10,7 +10,8 @@
     /* or 55px */
     text-transform: uppercase;
     margin: 0;
-    margin-bottom: 40px;
+    margin: 1.67em 0;
+    word-wrap: break-word;
 }
 
 .lesson_page_description,

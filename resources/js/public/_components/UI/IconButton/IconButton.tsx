@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import './index.css'
 
 export interface IconButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-  children?: React.ReactElement;
+  children?: React.ReactElement | string;
   className?: string;
   icon: React.ReactElement;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation  } from "react-router-dom";
 import { connect } from 'react-redux';
 import { PrivateRoute, Header, HeaderNavbarDrawerMenu, PageAlert } from '../_components';
 
@@ -35,18 +35,23 @@ import {
 
 import { Alert, Col, Drawer, Row } from '../_components/UI';
 import { useWindowWidth } from '../_hooks';
+import { notificationsActions } from '../../public/_actions';
 
 
 
-const MainRoutes = ({ user }) => {
+const MainRoutes = ({dispatch,  user }) => {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const header = document.getElementById('header')
   const width = useWindowWidth();
 
+
   useEffect(() => {
+
     const init = async () => {
       if (!user) navigate(`/login`)
+      if (user) dispatch(notificationsActions.createNotificationPusherToChannel({ channel: `App.Models.KK_User.${user.kk_user_id}` }))
+
       setLoading(false)
     }
     init();

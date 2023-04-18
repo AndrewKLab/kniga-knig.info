@@ -99,8 +99,8 @@ export function lessons(state = initialState, action) {
                 ...state,
                 get_one_by_lesson_id_lessons_loading: false,
                 get_one_by_lesson_id_lessons_message: null,
-                get_one_by_lesson_id_lessons_error: null,
-                get_one_by_lesson_id_lessons: action.error,
+                get_one_by_lesson_id_lessons_error: action.error,
+                get_one_by_lesson_id_lessons: null,
             };
 
         default:

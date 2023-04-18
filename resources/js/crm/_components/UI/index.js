@@ -1,10 +1,4 @@
-export * from './Navbar/Navbar.tsx';
-export * from './Navbar/NavbarBrand.tsx';
-export * from './Navbar/NavbarCollapse.tsx';
-export * from './Navbar/NavbarDesktopMenu.tsx';
-export * from './Navbar/NavbarMenu.tsx';
-export * from './Navbar/NavbarMenuItem.tsx';
-export * from './Navbar/NavbarMobileMenu.tsx';
+export * from './Navbar';
 
 export * from './Container';
 export * from './Divider';

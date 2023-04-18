@@ -44,6 +44,8 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
             searchParams.forEach((value, key) => {
                 params[key] = value;
             });
+            const referal_user = localStorage.getItem('referal_user')
+            if(referal_user) params['referal_user'] = referal_user
             switch (type) {
                 case 'google':
                     dispatch(authActions.googleAuthCallback(params, navigate))

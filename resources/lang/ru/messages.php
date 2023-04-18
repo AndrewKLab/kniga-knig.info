@@ -176,7 +176,7 @@ return [
         'kk_user_admin_id' => 'Администратор Пользователя',
         'kk_user_coordinator_id' => 'Координатор Пользователя',
         'kk_user_teather_id' => 'Учитель Пользователя',
-        'kk_user_promouter_id' => 'Промоутер Пользователя',
+        'kk_user_promouter_id' => 'Сеятель Пользователя',
         
         'kk_user_avatar' => 'Аватар',
         'kk_user_email_verified_at' => 'Дата верификации Email',

@@ -6,9 +6,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   | React.ReactChild
   | React.ReactChild[];
   className?: string;
-  message?:
-  | React.ReactChild
-  | React.ReactChild[];
+  message?: React.ReactElement | React.ReactNode;
   type?: string;
 }
 

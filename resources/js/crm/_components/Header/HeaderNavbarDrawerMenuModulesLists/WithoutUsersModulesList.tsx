@@ -29,7 +29,7 @@ const WithoutUsersModulesList: FunctionComponent<WithoutUsersModulesListProps> =
     if(user?.role?.kk_role_level < 3) tabs.push({ key: 3, menuTitle: `Координаторы` });
     if(user?.role?.kk_role_level < 4) tabs.push({ key: 8, menuTitle: `Пастора` });
     if(user?.role?.kk_role_level < 5) tabs.push({ key: 4, menuTitle: `Учителя` });
-    if(user?.role?.kk_role_level < 6) tabs.push({ key: 5, menuTitle: `Промоутера` });
+    if(user?.role?.kk_role_level < 6) tabs.push({ key: 5, menuTitle: `Сеятели` });
 
 
     if (loading) return <PartLoader />

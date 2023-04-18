@@ -60,7 +60,7 @@ const UserAccordionPlane = ({ className, edit, remove, user, users, progress, us
                                         <strong>Община: </strong>{user.commune}<br />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <strong>Промоутер: </strong>{!user.promouter ? <span className='text-danger'>НЕТ</span> : `${user.promouter.firstname} ${user.promouter.lastname}`}<br />
+                                        <strong>Сеятель: </strong>{!user.promouter ? <span className='text-danger'>НЕТ</span> : `${user.promouter.firstname} ${user.promouter.lastname}`}<br />
                                         <strong>Учитель: </strong>{!user.teather ? <span className='text-danger'>НЕТ</span> : `${user.teather.firstname} ${user.teather.lastname}`}<br />
                                         <strong>Координатор: </strong>{!user.coordinator ? <span className='text-danger'>НЕТ</span> : `${user.coordinator.firstname} ${user.coordinator.lastname}`}<br />
                                         <strong>Администратор: </strong>{!user.admin ? <span className='text-danger'>НЕТ</span> : `${user.admin.firstname} ${user.admin.lastname}`}<br />
@@ -95,9 +95,9 @@ const UserAccordionPlane = ({ className, edit, remove, user, users, progress, us
 
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <Typography component='h5' variant='h5' className={'paper-header-text'}>Промоутеры:</Typography>
+                                        <Typography component='h5' variant='h5' className={'paper-header-text'}>Сеятель:</Typography>
                                         <Divider className={'mb-3'} />
-                                        {users.promouters ? users.promouters.filter(promouter => promouter.teather !== null && promouter.teather.id === teather.id).length === 0 ? <div className='p-3'>У данного учителя нет промоутеров.</div> : users.promouters.filter(promouter => promouter.teather !== null && promouter.teather.id === teather.id).map((promouter, index) => (
+                                        {users.promouters ? users.promouters.filter(promouter => promouter.teather !== null && promouter.teather.id === teather.id).length === 0 ? <div className='p-3'>У данного учителя нет сеятелей.</div> : users.promouters.filter(promouter => promouter.teather !== null && promouter.teather.id === teather.id).map((promouter, index) => (
                                             <UserAccordionPlane key={index} edit={edit} remove={remove} user={promouter} />
                                         )) : 'У данного учителя нет учеников.'}
                                     </Grid>

@@ -1,0 +1,27 @@
+.navbar-brand{
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar-brand h1 {
+    display: none;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 130%;
+    text-transform: uppercase;
+    color: #E5F8E2;
+    margin: 0;
+}
+
+.navbar-brand:hover,
+.navbar-brand:active {
+    color: #E5F8E2;
+}
+
+@media (max-width: 1200px) {
+    .navbar-brand h1 {
+        font-size: 13px;
+        line-height: 83.5%;
+    }
+}

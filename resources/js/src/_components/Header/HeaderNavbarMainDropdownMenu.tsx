@@ -76,25 +76,6 @@ const HeaderNavbarMainDropdownMenu: FunctionComponent<HeaderProps> = ({ dispatch
             link: `${config.crmUrl}`
         })
 
-        // if (user) {
-        //     menu_items.unshift(
-        //         {
-        //             itemAvatar: <UserCircleOutlineIcon size={38} />,
-        //             itemTitle: 'Имя пользователя',
-        //             itemDescription: 'Статус: Искатель',
-        //             itemRightComponent: <IconButton icon={<GearOutlineIcon size={38} />} onClick={(e) => console.log(e)} />,
-        //         },
-        //         {
-        //             itemType: 'divider'
-        //         },
-        //         {
-        //             itemAvatar: <ChatsCircleOutlineIcon size={38} color={'#E5F8E2'} />,
-        //             itemTitle: 'Мои диалоги',
-        //             onClick: () => console.log(123)
-        //         },
-        //     )
-        // }
-
         return menu_items;
     }
     return (
@@ -109,7 +90,7 @@ const HeaderNavbarMainDropdownMenu: FunctionComponent<HeaderProps> = ({ dispatch
                         itemType={item.itemType}
                         itemAvatar={item.itemAvatar}
                         // itemAvatarClassName={`navbar-dropdown-actions-list-item-icon`}
-                        itemTitle={item.itemTitle}
+                        itemTitle={<h2>{item.itemTitle}</h2>}
                         itemTitleClassName={`navbar-mobile-main-menu-item-text${activeLink === item.link ? ' active' : ''}`}
                         itemDescription={item.itemDescription}
                         itemRightComponent={item.itemRightComponent}

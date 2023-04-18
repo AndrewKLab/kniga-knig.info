@@ -35,7 +35,7 @@
     cursor: pointer;
 }
 
-.carusel-item{
+.carusel-item {
     cursor: pointer;
 }
 
@@ -83,6 +83,19 @@
 
 .carusel-next-button {
     position: absolute;
+    right: 20px;
+    padding: 10px !important;
+    height: 50px;
+    /* height: calc(100% - 5px); */
+    /* top: 0; */
+    transition: 0.5s all;
+    border-radius: 50%;
+}
+
+.carusel-next-button:hover {
+    background-color: rgba(var(--text-color), 0.5);
+    color: black !important;
+
 }
 
 @media (max-width: 1200px) {
@@ -101,10 +114,10 @@
     }
 
     .carusel-next-button {
-       display: none;
+        display: none;
     }
 
     .slider-container {
         margin: 0 -10px 0 -10px !important;
-      }
+    }
 }

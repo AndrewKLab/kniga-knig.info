@@ -36,7 +36,7 @@ class LessonsController extends Controller
         $kk_lesson_id = KK_Lessons::insertGetId([
             'kk_lesson_course_id' => $request->kk_lesson_course_id,
             'kk_lesson_autor_id' => Auth::user()->kk_user_id,
-            'kk_lesson_number' => $max_lesson_number+1,
+            'kk_lesson_number' => $max_lesson_number + 1,
             'kk_lesson_published' => 1,
             'kk_lesson_name' => $request->kk_lesson_name,
             'kk_lesson_description' => $request->kk_lesson_description,
@@ -124,10 +124,10 @@ class LessonsController extends Controller
     public function getOneByLessonId(Request $request)
     {
         if (empty($request->kk_lesson_id)) return response()->json(['message' => env('RESPONSE_MISSING_DATA'),], 400);
+
         $params = KK_Lessons::Params($request);
         $lesson = KK_Lessons::with($params->parts)->withCount($params->parts_to_count)->where([['kk_lesson_id', '=', $request->kk_lesson_id]])->where($params->where)->first();
-
+        if (!auth('sanctum')->check() && $lesson->kk_lesson_number > 3) return response()->json(['message' => 'Чтобы получить доступ к остальным урокам, пожалуйста, пройдите регистрацию!',], 400);
         return response()->json(['message' => env('RESPONSE_SUCCESS'), 'lesson' => $lesson], 200);
     }
-
 }

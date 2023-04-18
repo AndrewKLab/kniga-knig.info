@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import "./index.css";
 
 import Carousel from "nuka-carousel";
-import { ArrowSquareRightIcon } from '../Icons';
+import { ArrowSquareRightIcon, ChevronRightIcon } from '../Icons';
 import { IconButton } from '../';
 import { useWindowWidth } from '../../../_hooks';
 
@@ -45,7 +45,7 @@ export const Carusel: FunctionComponent<CaruselProps> = ({ children, className, 
                 wrapAround
                 renderCenterLeftControls={({ previousDisabled, previousSlide }) => null}
                 renderCenterRightControls={({ nextDisabled, nextSlide }) => (
-                    width <= 1200 ? null : <IconButton className={`carusel-next-button`} icon={<ArrowSquareRightIcon />} onClick={nextSlide} disabled={nextDisabled}></IconButton>
+                    width <= 1200 ? null : <IconButton className={`carusel-next-button`} icon={<ChevronRightIcon size={32} />} onClick={nextSlide} disabled={nextDisabled}></IconButton>
                 )}
             >{caruselItems.map(caruselRenderItem)}</Carousel >}
             {children}

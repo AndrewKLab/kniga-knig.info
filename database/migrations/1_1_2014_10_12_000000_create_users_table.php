@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('kk_user_coordinator_id')->nullable(true)->index('kk_user_coordinator_id')->comment('ID Координатора');
             $table->foreignId('kk_user_pastor_id')->nullable(true)->index('kk_user_pastor_id')->comment('ID Пастора');
             $table->foreignId('kk_user_teather_id')->nullable(true)->index('kk_user_teather_id')->comment('ID Учителя');
-            $table->foreignId('kk_user_promouter_id')->nullable(true)->index('kk_user_promouter_id')->comment('ID Промоутера');
+            $table->foreignId('kk_user_promouter_id')->nullable(true)->index('kk_user_promouter_id')->comment('ID Сеятеля');
             $table->tinyInteger('kk_user_active')->default(1)->comment('Опубликованная запись');
             $table->tinyInteger('kk_user_offline_user')->default(0)->comment('Оффлайн пользователь');
             $table->tinyInteger('kk_user_remember_token')->default(0)->comment('Запомнить меня');

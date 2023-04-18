@@ -1,20 +1,19 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { connect } from 'react-redux';
 import { Row, Col, Button, Image, Spoiler } from '../../../public/_components/UI';
 import { FolderOutlineIcon, LockKeyOutlineIcon } from '../../../public/_components/UI/Icons';
-
-import { User } from '../../_interfaces';
+import { CourseUserProgress, Lesson, LessonUserProgress, User } from '../../../public/_interfaces';
 import { coursesActions, coursesUsersProgressActions } from "../../_actions";
 import { useNavigate, useParams } from "react-router-dom";
 import './index.css';
 import { PageLoader } from "../../_components";
 import { getLastInprocessLesson } from "../../_helpers";
-import { DonateModal } from "../../../public/_components";
 import { modalsActions } from "../../../public/_actions";
+import parse from 'html-react-parser';
+import { localCoursesUserProgressHelper } from "../../../public/_helpers";
 
 type CoursePageActionButtonProps = {
     className?: string;
-    user: User;
     add_courses_users_progress_loading: boolean;
     remove_courses_users_progress_loading: boolean;
     get_one_by_course_id_courses: any,
@@ -24,7 +23,6 @@ type CoursePageActionButtonProps = {
 
 export const CoursePageActionButton: FunctionComponent<CoursePageActionButtonProps> = ({
     className,
-    user,
     add_courses_users_progress_loading,
     remove_courses_users_progress_loading,
     get_one_by_course_id_courses,
@@ -32,25 +30,19 @@ export const CoursePageActionButton: FunctionComponent<CoursePageActionButtonPro
     onClick
 }): JSX.Element => {
     let navigate = useNavigate();
-
-    if (get_one_by_course_id_courses_users_progress) {
-        if (get_one_by_course_id_courses_users_progress.kk_cup_status === "finished") {
-            return <Button
-                className={className}
-                disabled={add_courses_users_progress_loading || remove_courses_users_progress_loading}
-                loading={add_courses_users_progress_loading || remove_courses_users_progress_loading}
-                onClick={() => onClick('restart')}>
-                Пройти еще раз
-            </Button>
-        } else if (get_one_by_course_id_courses_users_progress.kk_cup_status === "inprocess") {
-            return <div className={`course_page_action_buttons_container`}>
-                <Button className={className} onClick={() => navigate(`/courses/${get_one_by_course_id_courses.kk_course_id}/${get_one_by_course_id_courses_users_progress?.lessons_users_progress ? getLastInprocessLesson(get_one_by_course_id_courses?.lessons, get_one_by_course_id_courses_users_progress?.lessons_users_progress) : get_one_by_course_id_courses.lessons[0].kk_lesson_id}`)}>Перейти к курсу</Button>
-                {/* <Button className={className} disabled={remove_courses_users_progress_loading} loading={remove_courses_users_progress_loading} onClick={() => onClick('stop')}>Прекратить прохождение курса</Button> */}
-            </div>
-        }
-    } else return <Button className={className} disabled={add_courses_users_progress_loading} loading={add_courses_users_progress_loading} onClick={() => onClick('start')}>Начать изучение</Button>
-
-
+    return (
+        get_one_by_course_id_courses_users_progress ? (
+            get_one_by_course_id_courses_users_progress.kk_cup_status === "finished" ?
+                <Button
+                    className={className}
+                    disabled={add_courses_users_progress_loading || remove_courses_users_progress_loading}
+                    loading={add_courses_users_progress_loading || remove_courses_users_progress_loading}
+                    onClick={() => onClick('restart')}>
+                    Пройти еще раз
+                </Button>
+                : get_one_by_course_id_courses_users_progress.kk_cup_status === "inprocess" ? <Button className={className} onClick={() => navigate(`/courses/${get_one_by_course_id_courses.kk_course_id}/${get_one_by_course_id_courses_users_progress?.lessons_users_progress ? getLastInprocessLesson(get_one_by_course_id_courses?.lessons, get_one_by_course_id_courses_users_progress?.lessons_users_progress) : get_one_by_course_id_courses.lessons[0].kk_lesson_id}`)}>Перейти к курсу</Button> : <React.Fragment></React.Fragment>
+        ) : <Button className={className} disabled={add_courses_users_progress_loading} loading={add_courses_users_progress_loading} onClick={() => onClick('start')}>Начать изучение</Button>
+    );
 }
 
 type CoursePageProps = {
@@ -74,7 +66,7 @@ type CoursePageProps = {
     get_one_by_course_id_courses_users_progress_loading: boolean;
     get_one_by_course_id_courses_users_progress_message: string | null,
     get_one_by_course_id_courses_users_progress_error: string | null,
-    get_one_by_course_id_courses_users_progress: object | null,
+    get_one_by_course_id_courses_users_progress: CourseUserProgress | null,
 }
 
 const CoursePage: FunctionComponent<CoursePageProps> = ({
@@ -132,7 +124,7 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
         }
     }
 
-    interface LessonProgressIconProps { lesson: object, lups?: object[] }
+    interface LessonProgressIconProps { lesson: Lesson, lups?: LessonUserProgress[] }
     const LessonProgressIcon: FunctionComponent<LessonProgressIconProps> = ({ lesson, lups }): JSX.Element => {
 
         if (lups) {
@@ -151,7 +143,7 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
     return (get_one_by_course_id_courses &&
         <div className={`course_page`}>
 
-            <h1 className={`course_page_title`}>КУРС: <span className={`text-primary`}>{get_one_by_course_id_courses.kk_course_name}</span></h1>
+            <h3 className={`course_page_title`}>КУРС: <span className={`text-primary`}>{get_one_by_course_id_courses.kk_course_name}</span></h3>
             <Row g={5} className={`course_page_course_card`}>
                 <Col xs={12} sm={12} md={6}><Image className={`course_page_image`} src={`courses/${get_one_by_course_id_courses.kk_course_image}`} /></Col>
                 <Col xs={12} sm={12} md={6}>
@@ -172,11 +164,10 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
                     <p className={`course_page_description`} dangerouslySetInnerHTML={{ __html: get_one_by_course_id_courses.kk_course_description }}></p>
                     <CoursePageActionButton
                         className={`course_page_button`}
-                        user={user}
                         add_courses_users_progress_loading={add_courses_users_progress_loading}
                         remove_courses_users_progress_loading={remove_courses_users_progress_loading}
                         get_one_by_course_id_courses={get_one_by_course_id_courses}
-                        get_one_by_course_id_courses_users_progress={get_one_by_course_id_courses_users_progress}
+                        get_one_by_course_id_courses_users_progress={get_one_by_course_id_courses_users_progress ? get_one_by_course_id_courses_users_progress : (localCoursesUserProgressHelper.getOneCUPByCourseID(get_one_by_course_id_courses.kk_course_id))}
                         onClick={handdleCourseButton}
                     />
                 </Col>
@@ -185,13 +176,15 @@ const CoursePage: FunctionComponent<CoursePageProps> = ({
             <h2 className={`course_page_second_title`}>Программа курса</h2>
             {get_one_by_course_id_courses.lessons &&
                 <div className={`course_page_lessons_list`}>
-                    {get_one_by_course_id_courses.lessons.map((item, index) => (
+                    {get_one_by_course_id_courses.lessons.map((item: Lesson, index: number) => (
                         <div key={item.kk_lesson_id} className={`course_page_lessons_list_item`}>
-                            <LessonProgressIcon lesson={item} lups={get_one_by_course_id_courses_users_progress?.lessons_users_progress} />
+                            <LessonProgressIcon lesson={item} lups={get_one_by_course_id_courses_users_progress?.lessons_users_progress ? get_one_by_course_id_courses_users_progress?.lessons_users_progress : (
+                                localCoursesUserProgressHelper.getAllLUPByCourseID(item.kk_lesson_course_id)?.length > 0 ? localCoursesUserProgressHelper.getAllLUPByCourseID(item.kk_lesson_course_id) : []
+                            )} />
                             <Spoiler
                                 className={`course_page_lessons_list_item_spoiler`}
                                 spoilerTitle={item.kk_lesson_name}
-                                spoilerContent={<div dangerouslySetInnerHTML={{ __html: item.kk_lesson_description }} ></div>}
+                                spoilerContent={item.kk_lesson_description ? parse(item.kk_lesson_description) : ''}
                             />
                         </div>
                     ))}

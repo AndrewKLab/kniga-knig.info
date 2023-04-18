@@ -117,8 +117,6 @@ const CoursesConstructorLessonQuestionEditor: FunctionComponent<CoursesConstruct
     const actionQuestionSubmit = async (data) => {
         if (question_editor_action === 'add') await dispatch(questionsActions.add({ ...data, kk_question_text: data.kk_question_text.split('\n').join('<br>') }));
         else if (question_editor_action === 'edit') await dispatch(questionsActions.edit({ ...data, kk_question_text: data.kk_question_text.split('\n').join('<br>') }));
-        dispatch(questionsActions.setQuestionEditor(null, null));
-        await dispatch(questionsActions.getAllByLessonId({ kk_question_lesson_id: kk_lesson_id, parts: 'answers' }))
     }
 
 
@@ -184,40 +182,44 @@ const CoursesConstructorLessonQuestionEditor: FunctionComponent<CoursesConstruct
                         {question_editor_action === 'add' && <InputError errors={add_questions_errors} name={'kk_question_type'} />}
                         {question_editor_action === 'edit' && <InputError errors={edit_questions_errors} name={'kk_question_type'} />}
                     </div>
-                    <div>
-                        <Label>Ответы:</Label>
-                        {fields.map((answer, index) => (
-                            <div className="mb-3" key={answer.id}>
-                                <Label htmlFor="kk_qa_text">Текст ответа {index + 1}:</Label>
-                                <InputGroup>
-                                    <TextInput
-                                        {...register(`answers.${index}.kk_qa_text`)}
-                                        className={`courses_constructor_page_input`}
-                                        type={`text`}
-                                        placeholder={`Введите текст ответа...`}
-                                        defaultValue={question_editor_action === 'edit' ? question?.kk_qa_text : null}
-                                    />
-                                    {getValues('kk_question_type') !== 'text' ?
-                                        <React.Fragment>
-                                            <InputGroupText className={`courses_constructor_page_input_group_text`} style={{ width: '120px' }}>
-                                                <IconButton
-                                                    style={{ width: '100%', textAlign: 'center' }}
-                                                    icon={answer.kk_qa_correct === 1 ? <b className={'text-success'}>{'Верный'}</b> : <b className={'text-danger'}>{'Неверный'}</b>}
-                                                    onClick={() => changeCurrectAnswer(index)}
-                                                />
-                                            </InputGroupText>
-                                            <InputGroupText className={`courses_constructor_page_input_group_text`}>
-                                                <IconButton icon={<TrashIcon size={20} />} onClick={() => removeNewAnswer(index)} />
-                                            </InputGroupText>
-                                        </React.Fragment> : <React.Fragment></React.Fragment>
-                                    }
-                                </InputGroup>
-                                {question_editor_action === 'add' && <InputError errors={add_questions_errors} name={`answers.${index}.kk_qa_text`} />}
-                                {question_editor_action === 'edit' && <InputError errors={edit_questions_errors} name={`answers.${index}.kk_qa_text`} />}
-                            </div>
-                        ))}
-                        {getValues('kk_question_type') !== 'text' && <Button className="w-100" onClick={() => addNewAnswer(initialAnswer)}>+</Button>}
-                    </div>
+                    {getValues('kk_question_type') !== 'text' ? (
+                        <div>
+                            <Label>Ответы:</Label>
+                            {fields.map((answer, index) => (
+                                <div className="mb-3" key={answer.id}>
+                                    <Label htmlFor="kk_qa_text">Текст ответа {index + 1}:</Label>
+                                    <InputGroup>
+                                        <TextInput
+                                            {...register(`answers.${index}.kk_qa_text`)}
+                                            className={`courses_constructor_page_input`}
+                                            type={`text`}
+                                            placeholder={`Введите текст ответа...`}
+                                            defaultValue={question_editor_action === 'edit' ? question?.kk_qa_text : null}
+                                        />
+                                        <InputGroupText className={`courses_constructor_page_input_group_text`} style={{ width: '120px' }}>
+                                            <IconButton
+                                                style={{ width: '100%', textAlign: 'center' }}
+                                                icon={answer.kk_qa_correct === 1 ? <b className={'text-success'}>{'Верный'}</b> : <b className={'text-danger'}>{'Неверный'}</b>}
+                                                onClick={() => changeCurrectAnswer(index)}
+                                            />
+                                        </InputGroupText>
+                                        <InputGroupText className={`courses_constructor_page_input_group_text`}>
+                                            <IconButton icon={<TrashIcon size={20} />} onClick={() => removeNewAnswer(index)} />
+                                        </InputGroupText>
+                                    </InputGroup>
+                                    {question_editor_action === 'add' && <InputError errors={add_questions_errors} name={`answers.${index}.kk_qa_text`} />}
+                                    {question_editor_action === 'edit' && <InputError errors={edit_questions_errors} name={`answers.${index}.kk_qa_text`} />}
+                                </div>
+                            ))}
+                            <Button className="w-100" onClick={() => addNewAnswer(initialAnswer)}>+</Button>
+                        </div>
+                    ) : (
+                        <React.Fragment>
+                            <TextInput {...register(`answers.0.kk_qa_text`)} type={`hidden`} value={'Текстовый ответ'} />
+                            <TextInput {...register(`answers.0.kk_qa_correct`)} type={`hidden`} value={1} />
+                        </React.Fragment>
+                    )}
+
 
                 </div>
                 <div className={`courses_constructor_question_editor_from_actions`}>

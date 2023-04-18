@@ -8,3 +8,5 @@ export * from './config';
 export * from './foreach-request-params';
 export * from './actions-helpers';
 export * from './socket-service';
+export * from './text-helpers';
+export * from './LocalCoursesUserProgressHelper';

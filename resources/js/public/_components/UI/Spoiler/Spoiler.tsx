@@ -9,9 +9,7 @@ export interface SpoilerProps extends React.HTMLAttributes<HTMLDivElement> {
     | React.ReactChild[];
     className?: string;
 
-    spoilerTitle?:
-    | React.ReactChild
-    | React.ReactChild[];
+    spoilerTitle?: React.ReactElement | string | null;
     spoilerContent?:
     | React.ReactChild
     | React.ReactChild[];

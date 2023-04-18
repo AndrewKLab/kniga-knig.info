@@ -5,7 +5,7 @@ import { CoursesCard } from '../../_components';
 
 import { User } from '../../_interfaces';
 import { coursesCategoriesActions, coursesActions } from "../../_actions";
-import { useNavigate, useSearchParams  } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import './index.css';
 import { DonateModal } from "../../../public/_components";
 
@@ -42,7 +42,7 @@ const CoursesPage: FunctionComponent<CoursesPageProps> = ({
 
     return (
         <div className={`courses_page`}>
-            <h1 className={`courses_page_title`}>Все <span className={`text-primary`}>Курсы</span></h1>
+            <h3 className={`courses_page_title`}>Все <span className={`text-primary`}>Курсы</span></h3>
             <div className={`courses_page_subtitle`}>Выбирайте любой курс, который Вам нравится</div>
             {get_all_courses_categories &&
                 <React.Fragment>
@@ -56,6 +56,7 @@ const CoursesPage: FunctionComponent<CoursesPageProps> = ({
                                     {item.courses && item.courses.map((item, index) => (
                                         <Col key={item.kk_course_id} xs={12} sm={12} md={6} className={`cursor-pointer`} onClick={() => navigate(`/courses/${item.kk_course_id}`)}>
                                             <CoursesCard
+                                                course={item}
                                                 coursesCardImage={item.kk_course_image}
                                                 coursesCardTitle={item.kk_course_name}
                                                 coursesCardText={item.kk_course_description}

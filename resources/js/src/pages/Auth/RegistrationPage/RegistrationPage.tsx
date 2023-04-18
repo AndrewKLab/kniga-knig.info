@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, { FunctionComponent, useCallback, useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import { Row, Col, Button, Image, Label, TextInput, Checkbox, InputGroup, InputGroupText, InputError, Alert, Form } from '../../../../public/_components/UI';
 import { useForm } from "react-hook-form";
@@ -9,6 +9,8 @@ import { useNavigate, Link, useSearchParams } from "react-router-dom";
 
 import './index.css';
 import { EyeOffOutlineIcon, EyeOutlineIcon } from "../../../../public/_components/UI/Icons";
+import { GoogleAuthButton, OdniklassnikiAuthButton, VKAuthButton } from "../../../../public/_components";
+import { localCoursesUserProgressHelper } from "../../../../public/_helpers";
 
 type RegistrationPageProps = {
     dispatch: any;
@@ -33,7 +35,13 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { executeRecaptcha } = useGoogleReCaptcha();
     const [searchParams] = useSearchParams();
-    let referal_user = searchParams.get('referal_user')
+    let referal_user = searchParams.get('referal_user');
+    let course = searchParams.get('course');
+
+    useEffect(() => {
+        if (referal_user) localStorage.setItem('referal_user', referal_user)
+        if (course) navigate(`/courses/${course}`)
+    }, [])
 
     const handleReCaptchaVerify = useCallback(async () => {
         if (!executeRecaptcha) {
@@ -47,7 +55,13 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
 
     const onSubmitRegistrationForm = async (data) => {
         const token = await handleReCaptchaVerify();
-        await dispatch(authActions.registration({ ...data, "g-recaptcha-response": token }, navigate))
+        await dispatch(authActions.registration({
+            ...data,
+            "g-recaptcha-response": token,
+            'courses_user_progress': JSON.stringify(localCoursesUserProgressHelper.getCUP()),
+            'lessons_user_progress': JSON.stringify(localCoursesUserProgressHelper.getLUP()),
+            'questions_users_answers': JSON.stringify(localCoursesUserProgressHelper.getQUA()),
+        }, navigate))
     }
 
 
@@ -133,7 +147,7 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                                         placeholder={`Введите Номер телефона...`}
                                     />
                                 </InputGroup>
-                                <span>Номер телефона необходимо вводить без страны (8, +7 и тд.).</span><br/>
+                                <span>Номер телефона необходимо вводить без страны (8, +7 и тд.).</span><br />
                                 <InputError errors={registration_errors} name={'kk_user_phonenumber'} />
                             </Col>
                             <Col xs={12} md={6}>
@@ -147,7 +161,7 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                                         placeholder={`Введите Пароль...`}
                                     />
                                     <Button className="w-auto" color="primary" onClick={() => setTogglePasswordShow(!togglePasswordShow)}>
-                                        {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                        {togglePasswordShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon color={'#fff'} />}
                                     </Button>
                                 </InputGroup>
                                 <InputError errors={registration_errors} name={'kk_user_password'} />
@@ -163,7 +177,7 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                                         placeholder={`Введите Пароль еще раз...`}
                                     />
                                     <Button className="w-auto" color="primary" onClick={() => setTogglePasswordConfirmShow(!togglePasswordConfirmShow)}>
-                                        {togglePasswordConfirmShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon  color={'#fff'} />}
+                                        {togglePasswordConfirmShow ? <EyeOffOutlineIcon color={'#fff'} /> : <EyeOutlineIcon color={'#fff'} />}
                                     </Button>
                                 </InputGroup>
                                 <InputError errors={registration_errors} name={'kk_user_password_confirmation'} />
@@ -173,7 +187,7 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                                     {...register('kk_user_password_privacy_politic_confirmation')}
                                     id={`kk_user_password_privacy_politic_confirmation`}
                                     name={`kk_user_password_privacy_politic_confirmation`}
-                                    label={<React.Fragment>Нажимая кнопку «Зарегистрироваться», я даю согласие на обработку своих персональных данных и принимаю <Link to={`/confidential`} target="_blank">Политику конфиденциальности</Link>.</React.Fragment>}
+                                    label={<React.Fragment>Нажимая кнопку «Зарегистрироваться», я даю согласие на обработку своих персональных данных и принимаю <Link to={`/confidential`} target="_blank" className={`link`}>Политику конфиденциальности</Link>.</React.Fragment>}
                                 />
                                 <InputError errors={registration_errors} name={'kk_user_password_privacy_politic_confirmation'} />
                             </Col>
@@ -187,6 +201,11 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                             </Col>
                             <Col xs={12} md={12}>
                                 <Link to={`/login`} className={`registration_page_login_link`}>Уже есть аккаунт? Войти</Link>
+                            </Col>
+                            <Col xs={12} md={12}>
+                                <GoogleAuthButton referal_user={referal_user} className={`mb-3`}>Войти c помощью Google</GoogleAuthButton>
+                                <VKAuthButton referal_user={referal_user} className={`mb-3`}>Войти c помощью VK</VKAuthButton>
+                                <OdniklassnikiAuthButton referal_user={referal_user}>Войти c помощью OK</OdniklassnikiAuthButton>
                             </Col>
                         </Row>
                     </Form>

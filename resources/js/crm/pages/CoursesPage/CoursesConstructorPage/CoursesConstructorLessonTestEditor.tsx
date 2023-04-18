@@ -87,7 +87,7 @@ const CoursesConstructorLessonTestEditor: FunctionComponent<CoursesConstructorLe
             <div className={`courses_constructor_lessons_test_editor_actions`}>
                 <h2 className={`courses_constructor_question_editor_title`}>Тест:</h2>
             </div>
-            {get_all_by_lesson_id_questions?.length === 0 && "Вопросы не найдены."}
+            {get_all_by_lesson_id_questions?.length === 0 && <div>Вопросы не найдены.</div>}
             {get_all_by_lesson_id_questions?.length > 0 && get_all_by_lesson_id_questions?.map(question => (
                 <React.Fragment key={question.kk_question_id}>
                     {question_editor_action === 'edit' && question?.kk_question_id === question_editor_question?.kk_question_id ? (
@@ -101,19 +101,22 @@ const CoursesConstructorLessonTestEditor: FunctionComponent<CoursesConstructorLe
                                     <IconButton icon={<TrashIcon size={20} />} onClick={(event) => openDeleteQuestionModal(event, question)} />
                                 </div>
                             </h5>
-                            Ответы:
-                            <div className={`courses_constructor_questions_answers`}>
-                                {question?.answers && question?.answers.length > 0 && question?.answers?.map(answer => (
-                                    <div key={answer.kk_qa_id} className={`courses_constructor_questions_answer_item`}>
-                                        <div className={`courses_constructor_questions_answer_title`}>
-                                            {question.kk_question_type === 'checkbox' && <Checkbox disabled />}
-                                            {question.kk_question_type === 'radio' && <Radio disabled />}
-                                            {answer.kk_qa_text}
+                            {question.kk_question_type !== 'text' && <React.Fragment>
+                                Ответы:
+                                <div className={`courses_constructor_questions_answers`}>
+                                    {question?.answers && question?.answers.length > 0 && question?.answers?.map(answer => (
+                                        <div key={answer.kk_qa_id} className={`courses_constructor_questions_answer_item`}>
+                                            <div className={`courses_constructor_questions_answer_title`}>
+                                                {question.kk_question_type === 'checkbox' && <Checkbox disabled />}
+                                                {question.kk_question_type === 'radio' && <Radio disabled />}
+                                                {answer.kk_qa_text}
+                                            </div>
+                                            {question.kk_question_type !== 'text' ? answer.kk_qa_correct === 1 ? <b className={'text-success'}>{'Верный'}</b> : <b className={'text-danger'}>{'Неверный'}</b> : null}
                                         </div>
-                                        {question.kk_question_type !== 'text' ? answer.kk_qa_correct === 1 ? <b className={'text-success'}>{'Верный'}</b> : <b className={'text-danger'}>{'Неверный'}</b> : null}
-                                    </div>
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
+                            </React.Fragment>}
+
                         </div>
                     )}
                 </React.Fragment>

@@ -332,7 +332,7 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_teather_id'} />}
                     </Col>}
                     {user?.role?.kk_role_level <= 6 && <Col xs={12} lg={6}>
-                        <Label htmlFor="kk_user_promouter_id">Промоутера Пользователя:</Label>
+                        <Label htmlFor="kk_user_promouter_id">Сеятель Пользователя:</Label>
                         <ControlledSelect
                             control={control}
                             name={`kk_user_promouter_id`}

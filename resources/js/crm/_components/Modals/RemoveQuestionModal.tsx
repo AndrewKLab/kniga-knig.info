@@ -38,7 +38,7 @@ const RemoveQuestionModal: FunctionComponent<RemoveQuestionModalProps> = ({
 
     return isOpen ?
         <Modal centered isOpen={isOpen} setIsOpen={setIsOpen}>
-            <ModalHeader setIsOpen={setIsOpen}>Удалить урок</ModalHeader>
+            <ModalHeader setIsOpen={setIsOpen}>Удалить вопрос</ModalHeader>
             <ModalBody>
                 Вы действительно хотите удалить вопрос "{parse(question?.kk_question_text)}"? Вместе с ним будут удалены все ответы и ответы пользователей связанные с этим вопросом.
             </ModalBody>

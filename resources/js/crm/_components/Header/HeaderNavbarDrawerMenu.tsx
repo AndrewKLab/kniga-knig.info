@@ -36,7 +36,7 @@ const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, chil
     ) user_modules.push({ key: 0, menuTitle: 'Пользователи', module: <AllUsersModulesList /> })
     if (true) user_modules.push({ key: 1, menuTitle: 'Мои Пользователи', module: <MyUsersModulesList /> })
     if (true) user_modules.push({ key: 2, menuTitle: 'Пользователи Без', module: <WithoutUsersModulesList /> })
-    if (true) user_modules.push({ key: 3, menuTitle: 'Древо ваших связей', module: <WithoutUsersModulesList /> })
+    if (true) user_modules.push({ key: 3, menuTitle: 'Древо ваших связей', module: null })
 
     const ActiveCoursesTab = () => {
         let tab = course_page_tab ? course_page_tab : course_modules[0].key;

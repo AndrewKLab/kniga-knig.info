@@ -23,6 +23,7 @@ type CoursesConstructorLessonsListProps = {
     get_all_by_course_id_lessons_message: string | null,
     get_all_by_course_id_lessons_error: string | null,
     get_all_by_course_id_lessons: Array<object> | null,
+    lesson_editor_is_lesson_edit: boolean;
 }
 
 const CoursesConstructorLessonsList: FunctionComponent<CoursesConstructorLessonsListProps> = ({
@@ -34,6 +35,7 @@ const CoursesConstructorLessonsList: FunctionComponent<CoursesConstructorLessons
     get_all_by_course_id_lessons_message,
     get_all_by_course_id_lessons_error,
     get_all_by_course_id_lessons,
+    lesson_editor_is_lesson_edit,
 
 }): JSX.Element => {
     let navigate = useNavigate();
@@ -50,10 +52,16 @@ const CoursesConstructorLessonsList: FunctionComponent<CoursesConstructorLessons
         init();
     }, []);
 
-    const addNewLesson = () => dispatch(lessonsActions.setLessonEditor('add', null));
+    const addNewLesson = () => {
+        if(lesson_editor_is_lesson_edit) dispatch({ type: "OPEN_IS_LESSON_EDIT_MODAL", open:true })
+        else dispatch(lessonsActions.setLessonEditor('add', null));
+    }
     const selectLessonToEdit = (lesson) => {
-        dispatch(lessonsActions.setLessonEditor('edit', lesson.kk_lesson_id))
-    };
+        console.log(lesson_editor_is_lesson_edit);
+        
+        if(lesson_editor_is_lesson_edit) dispatch({ type: "OPEN_IS_LESSON_EDIT_MODAL", open:true })
+        else dispatch(lessonsActions.setLessonEditor('edit', lesson.kk_lesson_id))
+    }
     const openDeleteLessonModal = async (event, lesson) => {
         event.stopPropagation()
         setIsOpenRemoveLessonModal(true);
@@ -110,6 +118,7 @@ function mapStateToProps(state) {
         get_all_by_course_id_lessons_message,
         get_all_by_course_id_lessons_error,
         get_all_by_course_id_lessons,
+        lesson_editor_is_lesson_edit,
     } = state.lessons;
 
     return {
@@ -119,6 +128,7 @@ function mapStateToProps(state) {
         get_all_by_course_id_lessons_message,
         get_all_by_course_id_lessons_error,
         get_all_by_course_id_lessons,
+        lesson_editor_is_lesson_edit
     };
 }
 const connectedCoursesConstructorLessonsList = connect(mapStateToProps)(CoursesConstructorLessonsList);

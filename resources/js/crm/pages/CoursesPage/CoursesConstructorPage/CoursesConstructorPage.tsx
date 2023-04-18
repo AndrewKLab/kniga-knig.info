@@ -13,6 +13,8 @@ import { NoMatchPage } from "../..";
 import { CoursesConstructorLessonsList, CoursesConstructorLessonEditor } from './';
 import moment from 'moment';
 import 'moment/dist/locale/ru';
+import { PromptLessonSaveModal } from "../../../_components/Modals/PromptLessonSaveModal";
+import { Lesson } from "../../../../public/_interfaces";
 
 
 type CoursesConstructorPageProps = {
@@ -52,6 +54,8 @@ type CoursesConstructorPageProps = {
     remove_courses_message: string | null,
     remove_courses_error: string | null,
     remove_courses: object | null,
+
+    get_one_by_lesson_id_lessons: Lesson | null;
 }
 
 const CoursesConstructorPage: FunctionComponent<CoursesConstructorPageProps> = ({
@@ -90,6 +94,8 @@ const CoursesConstructorPage: FunctionComponent<CoursesConstructorPageProps> = (
     remove_courses_message,
     remove_courses_error,
     remove_courses,
+
+    get_one_by_lesson_id_lessons
 }): JSX.Element => {
     let navigate = useNavigate();
     let { action, kk_course_id } = useParams();
@@ -215,27 +221,27 @@ const CoursesConstructorPage: FunctionComponent<CoursesConstructorPageProps> = (
                 </Col>
                 <Col lg={3}>
                     <div className={`courses_constructor_page_lessons_list_container`}>
-                    <div className={`courses_constructor_page_action_buttons`}>
-                        <Button type="submit" form="course_from" loading={add_courses_loading || edit_courses_loading} disabled={add_courses_loading || edit_courses_loading}>Сохранить</Button>
-                        {action === 'edit' && (user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN' || user?.role?.kk_role_type === 'ROLE_ADMIN' || user?.role?.kk_role_type === 'ROLE_COORDINATOR') &&
-                            <React.Fragment>
-                                {get_one_by_course_id_courses?.kk_course_published === 1 ?
-                                    <Button color={`primary`} onClick={unpublishCourse} loading={edit_published_courses_loading} disabled={edit_published_courses_loading}>Снять с публикации</Button>
-                                    :
-                                    <Button color={`primary`} onClick={publishCourse} loading={edit_published_courses_loading} disabled={edit_published_courses_loading}>Опубликовать</Button>
-                                }
+                        <div className={`courses_constructor_page_action_buttons`}>
+                            <Button type="submit" form="course_from" loading={add_courses_loading || edit_courses_loading} disabled={add_courses_loading || edit_courses_loading}>Сохранить</Button>
+                            {action === 'edit' && (user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN' || user?.role?.kk_role_type === 'ROLE_ADMIN' || user?.role?.kk_role_type === 'ROLE_COORDINATOR') &&
+                                <React.Fragment>
+                                    {get_one_by_course_id_courses?.kk_course_published === 1 ?
+                                        <Button color={`primary`} onClick={unpublishCourse} loading={edit_published_courses_loading} disabled={edit_published_courses_loading}>Снять с публикации</Button>
+                                        :
+                                        <Button color={`primary`} onClick={publishCourse} loading={edit_published_courses_loading} disabled={edit_published_courses_loading}>Опубликовать</Button>
+                                    }
 
-                                {/* <Button color={`primary`}>Копировать</Button> */}
-                            </React.Fragment>
-                        }
-                        {action === 'add' && add_courses_error_message && <Alert message={add_courses_error_message} type={'danger'} />}
-                        {action === 'edit' && edit_courses_error_message && <Alert message={edit_courses_error_message} type={'danger'} />}
+                                    {/* <Button color={`primary`}>Копировать</Button> */}
+                                </React.Fragment>
+                            }
+                            {action === 'add' && add_courses_error_message && <Alert message={add_courses_error_message} type={'danger'} />}
+                            {action === 'edit' && edit_courses_error_message && <Alert message={edit_courses_error_message} type={'danger'} />}
 
-                        {action === 'add' && add_courses_message && <Alert message={add_courses_message} type={'success'} />}
-                        {action === 'edit' && edit_courses_message && <Alert message={edit_courses_message} type={'success'} />}
-                    </div>
+                            {action === 'add' && add_courses_message && <Alert message={add_courses_message} type={'success'} />}
+                            {action === 'edit' && edit_courses_message && <Alert message={edit_courses_message} type={'success'} />}
+                        </div>
 
-                    {action === 'edit' && <CoursesConstructorLessonsList kk_course_id={kk_course_id} />}
+                        {action === 'edit' && <CoursesConstructorLessonsList kk_course_id={kk_course_id} />}
                     </div>
                 </Col>
             </Row>
@@ -283,6 +289,7 @@ function mapStateToProps(state) {
         get_one_by_course_id_courses,
 
     } = state.courses;
+    const { get_one_by_lesson_id_lessons } = state.lessons;
     return {
         user,
 
@@ -318,6 +325,8 @@ function mapStateToProps(state) {
         get_one_by_course_id_courses_message,
         get_one_by_course_id_courses_error,
         get_one_by_course_id_courses,
+
+        get_one_by_lesson_id_lessons,
     };
 }
 const connectedCoursesConstructorPage = connect(mapStateToProps)(CoursesConstructorPage);

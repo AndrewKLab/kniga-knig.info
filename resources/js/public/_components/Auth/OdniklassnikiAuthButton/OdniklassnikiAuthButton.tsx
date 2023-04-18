@@ -5,9 +5,10 @@ import './index.css'
 export interface OdniklassnikiAuthButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     children?: React.ReactElement | React.ReactFragment;
     className?: string;
+    referal_user?: string | null;
 }
 
-export const OdniklassnikiAuthButton: FunctionComponent<OdniklassnikiAuthButtonProps> = ({ children, className, ...other }) => {
+export const OdniklassnikiAuthButton: FunctionComponent<OdniklassnikiAuthButtonProps> = ({ children, className, referal_user, ...other }) => {
     const [authUrl, setAuthUrl] = useState<string | null>(null)
     useEffect(() => {
         authService.odnoklassnikiAuthUrl({}).then((res) => {

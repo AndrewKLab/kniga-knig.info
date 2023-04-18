@@ -175,7 +175,7 @@ const UsersPageInfo: FunctionComponent<UsersPageInfoProps> = ({
                                             <td>{get_one_by_user_id_users?.teather?.kk_user_lastname} {get_one_by_user_id_users?.teather?.kk_user_firstname}</td>
                                         </tr>
                                         <tr>
-                                            <th>Промоутер:</th>
+                                            <th>Сеятель:</th>
                                             <td>{get_one_by_user_id_users?.promouter?.kk_user_lastname} {get_one_by_user_id_users?.promouter?.kk_user_firstname}</td>
                                         </tr>
                                         <tr>

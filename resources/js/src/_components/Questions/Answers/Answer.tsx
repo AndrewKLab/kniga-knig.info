@@ -2,11 +2,12 @@ import React, { FunctionComponent } from "react";
 import { Checkbox, Radio, TextInput } from "../../../../public/_components/UI";
 import { DoneCircleIcon, XCircleIcon } from "../../../../public/_components/UI/Icons";
 import './index.css'
+import { Question } from "../../../../public/_interfaces";
 
 export interface AnswerProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactElement
     className?: string;
-    question: object;
+    question: Question;
     answer: object;
     register: any;
 }

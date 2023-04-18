@@ -177,11 +177,11 @@ class UsersController extends Controller
         $params = KK_User::Params($request);
         $users = KK_User::with($params->parts)->withCount($params->parts_to_count)->where(function ($query) use ($request) {
             $query->where([['kk_user_role_id', '=', $request->kk_user_role_id]])->where(function ($query) use ($request) {
-                $query->orWhere([['kk_user_admin_id', '=', Auth::user()->kk_user_id]])
-                    ->orWhere([['kk_user_coordinator_id', '=', Auth::user()->kk_user_id]])
-                    ->orWhere([['kk_user_pastor_id', '=', Auth::user()->kk_user_id]])
-                    ->orWhere([['kk_user_teather_id', '=', Auth::user()->kk_user_id]])
-                    ->orWhere([['kk_user_promouter_id', '=', Auth::user()->kk_user_id]]);
+                $query->orWhere([['kk_user_admin_id', '=', isset($request->kk_user_id) ? $request->kk_user_id : Auth::user()->kk_user_id]])
+                    ->orWhere([['kk_user_coordinator_id', '=', isset($request->kk_user_id) ? $request->kk_user_id : Auth::user()->kk_user_id]])
+                    ->orWhere([['kk_user_pastor_id', '=', isset($request->kk_user_id) ? $request->kk_user_id : Auth::user()->kk_user_id]])
+                    ->orWhere([['kk_user_teather_id', '=', isset($request->kk_user_id) ? $request->kk_user_id : Auth::user()->kk_user_id]])
+                    ->orWhere([['kk_user_promouter_id', '=', isset($request->kk_user_id) ? $request->kk_user_id : Auth::user()->kk_user_id]]);
             });
         })->where($params->where)->orderBy('kk_user_lastname', 'DESC')->get();
 
@@ -233,8 +233,8 @@ class UsersController extends Controller
 
     public function notify(Request $request)
     {
-        $users = KK_User::with([])->whereHas('role', function($query){
-            $query->where([['kk_role_level','<', 6 ]]);
+        $users = KK_User::with([])->whereHas('role', function ($query) {
+            $query->where([['kk_role_level', '<', 6]]);
         })->get();
         foreach ($users as $user) {
             $user_n = KK_User::first();

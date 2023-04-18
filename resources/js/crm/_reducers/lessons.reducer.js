@@ -3,6 +3,8 @@ import { lessonsConstants, lessonsUsersProgressConstants, pagesConstants, questi
 const initialState = {
     lesson_editor_action: null,
     lesson_editor_kk_lesson_id: null,
+    lesson_editor_is_lesson_edit: false,
+    lesson_editor_is_lesson_edit_open_modal: false,
 
     add_lessons_loading: false,
     add_lessons_message: null,
@@ -49,11 +51,22 @@ export function lessons(state = initialState, action) {
             return initialState
         case pagesConstants.CLOSE_PAGE:
             return initialState
+        case lessonsConstants.IS_LESSON_EDIT:
+            return {
+                ...state,
+                lesson_editor_is_lesson_edit: action.edit
+            }
+        case lessonsConstants.OPEN_IS_LESSON_EDIT_MODAL:
+            return {
+                ...state,
+                lesson_editor_is_lesson_edit_open_modal: action.open
+            }
         case lessonsConstants.SET_LESSON_EDITOR:
             return {
                 ...state,
                 lesson_editor_action: action.lesson_editor_action,
                 lesson_editor_kk_lesson_id: action.lesson_editor_kk_lesson_id,
+                lesson_editor_is_lesson_edit: true,
             }
         case lessonsUsersProgressConstants.EDIT_LESSONS_USERS_PROGRESS_SUCCESS:
             return {
@@ -87,6 +100,9 @@ export function lessons(state = initialState, action) {
                 add_lessons_errors: null,
                 add_lessons_error_message: null,
                 add_lessons: null,
+
+                lesson_editor_is_lesson_edit: false,
+                lesson_editor_is_lesson_edit_open_modal: false,
             };
         case lessonsConstants.ADD_LESSONS_FAILURE:
             return {
@@ -116,6 +132,8 @@ export function lessons(state = initialState, action) {
                 edit_lessons_errors: null,
                 edit_lessons_error_message: null,
                 edit_lessons: null,
+                lesson_editor_is_lesson_edit: false,
+                lesson_editor_is_lesson_edit_open_modal: false,
 
                 get_one_by_course_id_lessons: action.res.course,
             };

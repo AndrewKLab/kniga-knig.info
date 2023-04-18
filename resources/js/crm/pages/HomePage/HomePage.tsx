@@ -34,7 +34,7 @@ const HomePage: FunctionComponent<HomePageProps> = ({
     return (
         <div className={`home_page`}>
             <h1>Добро пожаловать в crm панель</h1>
-            <Label>Ваша ссылка промоутера:</Label>
+            <Label>Ваша клиентская ссылка сеятеля:</Label>
             <InputGroup>
                 <TextInput readOnly value={`${config.appUrl}/registration?referal_user=${user.kk_user_id}`} />
                 <InputGroupButton onClick={(event) => navigator.clipboard.writeText(`${config.appUrl}/registration?referal_user=${user.kk_user_id}`)}>копировать</InputGroupButton>

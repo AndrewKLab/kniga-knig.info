@@ -65,6 +65,7 @@ Route::get('/courses_categories/getOneByCategoryId', [CoursesCategoriesControlle
 Route::get('/courses/getOneByCourseId', [CoursesController::class, 'getOneByCourseId']);
 
 Route::get('/lessons/getFirstByCourseId', [LessonsController::class, 'getFirstByCourseId']);
+Route::get('/lessons/getOneByLessonId', [LessonsController::class, 'getOneByLessonId']);
 
 
 
@@ -92,7 +93,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('checkAccess:Уроки,read')->group(function () {
         Route::get('/lessons/getAllByCourseId', [LessonsController::class, 'getAllByCourseId']);
-        Route::get('/lessons/getOneByLessonId', [LessonsController::class, 'getOneByLessonId']);
     });
 
     Route::post('/lessons/questions/add', [QuestionsController::class, 'add'])->middleware('checkAccess:Вопросы,create');

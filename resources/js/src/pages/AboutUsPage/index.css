@@ -100,10 +100,10 @@
         display: block;
     }
 
-    .about_us_first_section_2,
+    /* .about_us_first_section_2,
     .about_us_second_section {
         display: none;
-    }
+    } */
 
     .about_us_first_section_img_bible {
         height: 301px;

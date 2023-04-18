@@ -79,7 +79,7 @@ const filterUser = (state, action) => {
                   } : user)
                 }
                 break;
-              case 'Промоутер':
+              case 'Сеятель':
                 users = {
                   ...users,
                   promouters: users.promouters.map(user => user.id === action.user.id ? {
@@ -141,7 +141,7 @@ const filterUser = (state, action) => {
                   students: result
                 }
                 break;
-              case 'Промоутер':
+              case 'Сеятель':
                 var result = users.promouters.filter(user => user.id !== action.user.id);
                 users = {
                   ...users,
@@ -200,7 +200,7 @@ const filterUser = (state, action) => {
                   students: result
                 }
                 break;
-              case 'Промоутер':
+              case 'Сеятель':
                 var result = users.promouters;
                 result.push({
                   ...users_arr[i][j],
@@ -276,7 +276,7 @@ const filterUser = (state, action) => {
           students: [...users.students, action.user]
         }
         break;
-      case 'Промоутер':
+      case 'Сеятель':
         users = {
           ...users,
           promouters: [...users.promouters, action.user]
@@ -427,7 +427,7 @@ export function users(state = initialState, action) {
           case 'Ученик':
             students.push(action.users.users[i])
             break;
-          case 'Промоутер':
+          case 'Сеятель':
             promouters.push(action.users.users[i])
             break;
           case 'Учитель':
@@ -495,7 +495,7 @@ export function users(state = initialState, action) {
           case 'Ученик':
             students.push(action.students.students[i])
             break;
-          case 'Промоутер':
+          case 'Сеятель':
             promouters.push(action.students.students[i])
             break;
         }
@@ -531,7 +531,7 @@ export function users(state = initialState, action) {
           case 'Ученик':
             students.push(action.students.users[i])
             break;
-          case 'Промоутер':
+          case 'Сеятель':
             promouters.push(action.students.users[i])
             break;
         }

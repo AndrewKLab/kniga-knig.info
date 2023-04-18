@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import './index.css';
 
 import { Button, Col, Dropdown, IconButton, Image, Row } from "../../../../public/_components/UI";
-import { pagesActions, usersActions } from "../../../_actions";
+import { pagesActions, settingsActions, usersActions } from "../../../_actions";
 import { usersService } from "../../../_services";
 import { ChatIcon, PenIcon } from "../../../_components/UI/Icons";
 import { config } from "../../../../public/_helpers";
@@ -42,6 +42,7 @@ const MyUsersTreeModule: FunctionComponent<MyUsersTreeModuleProps> = ({
     useEffect(() => {
         const init = async () => {
             await dispatch(usersActions.getOneByUserId({ kk_user_id: user.kk_user_id, parts: 'admin,coordinator,pastor,teather,promouter' }));
+            await dispatch(settingsActions.getAllUsersRoles());
             setLoading(false)
         }
         init();
@@ -130,7 +131,7 @@ const MyUsersTreeModule: FunctionComponent<MyUsersTreeModuleProps> = ({
                                                         <td>{user_for_tree_info?.teather?.kk_user_lastname} {user_for_tree_info?.teather?.kk_user_firstname}</td>
                                                     </tr>
                                                     <tr>
-                                                        <th>Промоутер:</th>
+                                                        <th>Сеятель:</th>
                                                         <td>{user_for_tree_info?.promouter?.kk_user_lastname} {user_for_tree_info?.promouter?.kk_user_firstname}</td>
                                                     </tr>
                                                     <tr>

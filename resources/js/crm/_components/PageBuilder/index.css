@@ -1,0 +1,9 @@
+/* page builder */
+.pb-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    line-height: 30px;
+    text-align: left;
+}

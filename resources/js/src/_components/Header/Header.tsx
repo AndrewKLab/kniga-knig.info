@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useRef, useState, useEffect } from "react";
 import { connect } from 'react-redux';
-import { Navbar, NavbarBrand, NavbarCollapse, NavbarDesktopMenu, NavbarMenu, NavbarActionsMenu, NavbarMenuItem, Container, InputGroup, InputGroupText, TextInput, IconButton, Dropdown, NavbarMobileMenu } from '../../../public/_components/UI';
+import { Navbar, NavbarBrand, NavbarCollapse, NavbarDesktopMenu, NavbarMenu, NavbarActionsMenu, NavbarMenuItem, Container, InputGroup, InputGroupText, TextInput, IconButton, Dropdown, NavbarMobileMenu, Image } from '../../../public/_components/UI';
 import { User, Themes } from '../../_interfaces';
 import { HeaderNavbarDropdownMenu, HeaderSearchDropdownMenu, HeaderNavbarMainDropdownMenu } from "../";
 import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon, YouTubeIcon, VKIcon, OKIcon } from "../../../public/_components/UI/Icons";
@@ -71,8 +71,8 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                 <Container className="h-100">
                     <NavbarCollapse>
                         <NavbarDesktopMenu>
-                            <NavbarBrand href="/">КНИГА<br />КНИГ</NavbarBrand>
-                            <NavbarMenu>
+                            <NavbarBrand href="/"> КНИГА<br />КНИГ</NavbarBrand>
+                            <NavbarMenu className={`justify-content-around`}>
                                 {/* <NavbarMenuItem href={`/`}>Главная</NavbarMenuItem> */}
                                 {user?.role?.kk_role_level < 7 && <NavbarMenuItem href={`${config.crmUrl}`} toOtherSite>CRM панель</NavbarMenuItem>}
                                 <NavbarMenuItem href={`/courses`}>Курсы</NavbarMenuItem>
@@ -81,7 +81,7 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
                                     (user.role_type === 'ROLE_ADMIN') && <NavbarMenuItem href={`/admin-panel`}>Администратор</NavbarMenuItem>,
                                     (user.role_type === 'ROLE_COORDINATOR') && <NavbarMenuItem href={`/coordinator-panel`}>Панель координатора</NavbarMenuItem>,
                                     (user.role_type === 'ROLE_TEATHER') && <NavbarMenuItem href={`/teather-panel`}>Панель учителя</NavbarMenuItem>,
-                                    (user.role_type === 'ROLE_USER' && user.role_name === 'Промоутер') && <NavbarMenuItem href={`/promouter-panel`}>Панель промоутера</NavbarMenuItem>
+                                    (user.role_type === 'ROLE_USER' && user.role_name === 'Сеятель') && <NavbarMenuItem href={`/promouter-panel`}>Панель Сеятеля</NavbarMenuItem>
                                 )} */}
 
 

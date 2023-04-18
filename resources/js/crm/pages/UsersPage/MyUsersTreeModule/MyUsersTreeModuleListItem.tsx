@@ -1,31 +1,31 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { pluralRoleName } from "../../../../public/_helpers";
 import { usersActions } from "../../../_actions";
 import { usersService } from "../../../_services";
 import { MyUsersTreeModuleList } from "./";
 
 type MyUsersTreeModuleListItemProps = {
     dispatch?: any;
-    title: string;
     user: object;
+    role: object;
 }
-const MyUsersTreeModuleListItem: FunctionComponent<MyUsersTreeModuleListItemProps> = ({ dispatch, title, user }): JSX.Element => {
-    const [userState, setStateUser] = useState(null);
-    const [showUser, setShowUser] = useState(false);
+const MyUsersTreeModuleListItem: FunctionComponent<MyUsersTreeModuleListItemProps> = ({ dispatch, user, role }): JSX.Element => {
+    const [usersState, setStateUsers] = useState(null);
+    const [showUsers, setShowUsers] = useState(false);
     const onClickUser = () => {
-        if (!showUser) usersService.getOneByUserId({ kk_user_id: user.kk_user_id, parts: 'admin,coordinator,pastor,teather,promouter' }).then((res) => {
-            if (res?.user) {
-                setStateUser(res?.user)
-                dispatch(usersActions.setUserForTreeInfo(res?.user))
-                setShowUser(!showUser)
+        if (!showUsers) usersService.getAllMyUsersByRoleId({ kk_user_id: user.kk_user_id, kk_user_role_id: role.kk_role_id, parts: 'admin,coordinator,pastor,teather,promouter', with_all_my_users: 1 }).then((res) => {
+            if (res?.users) {
+                setStateUsers(res?.users)
+                setShowUsers(!showUsers)
             }
         })
-        else setShowUser(!showUser)
+        else setShowUsers(!showUsers)
     }
     return (
         <div className={`my_users_tree_module_list_item`}>
-            <button className={`my_users_tree_module_list_item_button`} onClick={onClickUser}>{showUser ? '-' : '+'} {title}</button>
-            {showUser && <MyUsersTreeModuleList user={userState} />}
+            <button className={`my_users_tree_module_list_item_button`} onClick={onClickUser}>{showUsers ? '-' : '+'} {pluralRoleName(role.kk_role_name)}</button>
+            {usersState && showUsers && (usersState.length > 0 ? usersState.map(user => <MyUsersTreeModuleList key={user.kk_user_id} user={user} />) : <div className="my_users_tree_module_list_item_empty">Список пуст!</div>)}
         </div>
     );
 };

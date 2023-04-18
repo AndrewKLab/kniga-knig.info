@@ -50,20 +50,20 @@ class KK_User extends Authenticatable
         'kk_user_avatar',
     ];
 
-// public static function boot(){
-//     parent::boot();
-//     static::created(function($model){
-//         $users = KK_User::with([])->whereHas('role', function($query){
-//             $query->where([['kk_role_level','<', 6 ]]);
-//         })->get();
-//         foreach ($users as $user) {
-//             $user->notify(new UserRegistered('Hello World'));
-//         }
-        
+    // public static function boot(){
+    //     parent::boot();
+    //     static::created(function($model){
+    //         $users = KK_User::with([])->whereHas('role', function($query){
+    //             $query->where([['kk_role_level','<', 6 ]]);
+    //         })->get();
+    //         foreach ($users as $user) {
+    //             $user->notify(new UserRegistered('Hello World'));
+    //         }
 
-//         // Notification::send($users, new UserRegistered($model));
-//     });
-// }
+
+    //         // Notification::send($users, new UserRegistered($model));
+    //     });
+    // }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -197,11 +197,10 @@ class KK_User extends Authenticatable
                                             if (isset($request->lessons_published)) $query->where("kk_lesson_published", $request->lessons_published);
                                             if (in_array('lesson_users_progress', $parts)) {
                                                 $with += array('lesson_users_progress' => function ($query) use ($request, $with, $parts) {
-                                                    if(!empty($request->kk_user_id)) $query->where(['kk_lup_user_id' => $request->kk_user_id]);
+                                                    if (!empty($request->kk_user_id)) $query->where(['kk_lup_user_id' => $request->kk_user_id]);
                                                 });
                                             }
                                             $query->with($with)->where(function ($query) use ($request, $parts) {
-
                                             });
                                         });
                                     }
@@ -266,7 +265,14 @@ class KK_User extends Authenticatable
             'parts' => $parts_queries,
             'parts_to_count' => $parts_to_count_queries,
             'where' => function ($query) use ($request) {
-                // if (isset($request->lesson_published)) $query->where("kk_lesson_published", $request->lesson_published);
+                if (isset($request->with_all_my_users) && isset($request->kk_user_id)) $query->where(function ($query) use ($request) {
+                    $query->orWhere([['kk_user_admin_id', '=', $request->kk_user_id]])
+                        ->orWhere([['kk_user_coordinator_id', '=', $request->kk_user_id]])
+                        ->orWhere([['kk_user_pastor_id', '=', $request->kk_user_id]])
+                        ->orWhere([['kk_user_teather_id', '=', $request->kk_user_id]])
+                        ->orWhere([['kk_user_promouter_id', '=', $request->kk_user_id]]);
+                });
+
                 // if (isset($request->kk_course_id)) $query->where("kk_lesson_course_id", $request->kk_course_id);
 
             },

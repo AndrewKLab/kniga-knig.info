@@ -6,6 +6,9 @@ use App\Classes\RequestHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
+use App\Models\KK_Courses_Users_Progress;
+use App\Models\KK_Lessons_Users_Progress;
+use App\Models\KK_Questions_Users_Answers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use App\Models\KK_User;
@@ -23,15 +26,8 @@ use TimeHunter\LaravelGoogleReCaptchaV3\Validations\GoogleReCaptchaV3ValidationR
 
 class AuthController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function registration(RegisterFormRequest $request)
+    public static function setReferalUsers($request)
     {
-        if ($request->kk_user_password_privacy_politic_confirmation !== 'true') return response()->json(['message' => 'Пожалуйста примите "Согласие на обработку персональных данных".'], 400);
         $referal = [
             'kk_user_admin_id'          =>  null,
             'kk_user_coordinator_id'    =>  null,
@@ -50,25 +46,25 @@ class AuthController extends Controller
                 $referal['kk_user_pastor_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
-            } else if($referal_user->role->kk_role_level === 3){
+            } else if ($referal_user->role->kk_role_level === 3) {
                 $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
                 $referal['kk_user_coordinator_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_pastor_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
-            }else if($referal_user->role->kk_role_level === 4){
+            } else if ($referal_user->role->kk_role_level === 4) {
                 $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
                 $referal['kk_user_coordinator_id'] = $referal_user->kk_user_coordinator_id;
                 $referal['kk_user_pastor_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
-            }else if($referal_user->role->kk_role_level === 5){
+            } else if ($referal_user->role->kk_role_level === 5) {
                 $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
                 $referal['kk_user_coordinator_id'] = $referal_user->kk_user_coordinator_id;
                 $referal['kk_user_pastor_id'] = $referal_user->kk_user_pastor_id;
                 $referal['kk_user_teather_id'] = $referal_user->kk_user_id;
                 $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
-            }else if($referal_user->role->kk_role_level === 6){
+            } else if ($referal_user->role->kk_role_level === 6) {
                 $referal['kk_user_admin_id'] = $referal_user->kk_user_admin_id;
                 $referal['kk_user_coordinator_id'] = $referal_user->kk_user_coordinator_id;
                 $referal['kk_user_pastor_id'] = $referal_user->kk_user_pastor_id;
@@ -76,7 +72,20 @@ class AuthController extends Controller
                 $referal['kk_user_promouter_id'] = $referal_user->kk_user_id;
             }
         }
+        return $referal;
+    }
 
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function registration(RegisterFormRequest $request)
+    {
+        if ($request->kk_user_password_privacy_politic_confirmation !== 'true') return response()->json(['message' => 'Пожалуйста примите "Согласие на обработку персональных данных".'], 400);
+
+        $referal = self::setReferalUsers($request);
         $user = KK_User::create([
             'kk_user_firstname' => $request['kk_user_firstname'],
             'kk_user_lastname' => $request['kk_user_lastname'],
@@ -88,7 +97,7 @@ class AuthController extends Controller
             'kk_user_commune' => $request['kk_user_commune'],
             'kk_user_password' => Hash::make($request['kk_user_password']),
             'kk_user_offline_user' => $request['kk_user_offline_user'] ? $request['kk_user_offline_user'] : 0,
-            'kk_user_role_id' => $request['kk_user_role_id'] ? $request['kk_user_role_id'] : 7,
+            'kk_user_role_id' => 7,
 
             'kk_user_admin_id' => $referal['kk_user_admin_id'],
             'kk_user_coordinator_id' => $referal['kk_user_coordinator_id'],
@@ -101,9 +110,57 @@ class AuthController extends Controller
 
         ]);
 
+        $created_cup = null;
+        if (!empty($request->courses_user_progress) && $request->courses_user_progress !== 'null') {
+            $courses_user_progress = json_decode($request->courses_user_progress);
+            if ($courses_user_progress) foreach ($courses_user_progress as $key => $cup) {
+                $cup_exist = KK_Courses_Users_Progress::where([['kk_cup_user_id', '=', $user->kk_user_id], ['kk_cup_course_id', '=', $cup->kk_cup_course_id]])->first();
+                if (empty($cup_exist)) $created_cup = KK_Courses_Users_Progress::create([
+                    'kk_cup_user_id' => $user->kk_user_id,
+                    'kk_cup_course_id' => $cup->kk_cup_course_id,
+                    'kk_cup_status' => $cup->kk_cup_status,
+                    'kk_cup_started_at' => $cup->kk_cup_started_at,
+                    'kk_cup_finished_at' => $cup->kk_cup_finished_at,
+                ]);
+            }
+        }
+
+        $created_lup = null;
+        if ($created_cup && !empty($request->lessons_user_progress) && $request->lessons_user_progress !== 'null') {
+            $lessons_user_progress = json_decode($request->lessons_user_progress);
+            if ($lessons_user_progress) foreach ($lessons_user_progress as $key => $lup) {
+                $lup_exist = KK_Lessons_Users_Progress::where([['kk_lup_user_id', '=', $user->kk_user_id], ['kk_lup_course_id', '=', $request->kk_lup_course_id], ['kk_lup_lesson_id', '=', $request->kk_lup_lesson_id]])->first();
+                if (empty($lup_exist)) $created_lup = KK_Lessons_Users_Progress::create([
+                    'kk_lup_cup_id' => $created_cup->kk_cup_id,
+                    'kk_lup_user_id' => $user->kk_user_id,
+                    'kk_lup_course_id' => $lup->kk_lup_course_id,
+                    'kk_lup_lesson_id' => $lup->kk_lup_lesson_id,
+                    'kk_lup_status' => $lup->kk_lup_status,
+                    'kk_lup_checked' => 0,
+                    'kk_lup_started_at' => $lup->kk_lup_started_at,
+                    'kk_lup_finished_at' => $lup->kk_lup_finished_at,
+                ]);
+            }
+        }
+
+        if ($created_lup && !empty($request->questions_users_answers) && $request->questions_users_answers !== 'null') {
+            $questions_users_answers = json_decode($request->questions_users_answers);
+            if ($questions_users_answers) foreach ($questions_users_answers as $key => $qua) {
+                $qua_exist = KK_Questions_Users_Answers::where([['kk_qua_user_id', '=', $user->kk_user_id], ['kk_qua_lup_id', '=', $created_lup->kk_lup_id], ['kk_qua_question_id', '=', $request->kk_qua_question_id]])->first();
+                if (empty($qua_exist)) $created_qua = KK_Questions_Users_Answers::create([
+                    'kk_qua_user_id' => $user->kk_user_id,
+                    'kk_qua_lup_id' => $created_lup->kk_lup_id,
+                    'kk_qua_question_id' => $qua->kk_qua_question_id,
+                    'kk_qua_answer_id' => $qua->kk_qua_answer_id,
+                    'kk_qua_text' => $qua->kk_qua_text,
+                    'kk_qua_correct' => $qua->kk_qua_correct,
+                ]);
+            }
+        }
+
         if (!empty($request->referal_user)) {
             $referal_user = KK_User::where(['kk_user_id' => $request->referal_user])->first();
-            $referal_user->notify(new UserRegistered($user, 'Пользователь ' . $user->kk_user_lastname . ' ' . $user->kk_user_firstname . ' был зарегистрирован по вашей реферальной ссылке.'));
+            $referal_user->notify(new UserRegistered($user, 'Пользователь ' . $user->kk_user_lastname . ' ' . $user->kk_user_firstname . ' был зарегистрирован по вашей клиентской ссылке.'));
         } else {
             $target_users = KK_User::with(['role'])->whereHas('role', function ($query) {
                 $query->where([['kk_role_level', '<', 3]]);
