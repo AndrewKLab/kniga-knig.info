@@ -4,6 +4,7 @@ export * from './UsersPage';
 export * from './SettingsPage';
 export * from './AboutUsPage';
 export * from './ContactsPage';
+export * from './StatisticsPage';
 
 export * from './Auth/RegistrationPage';
 export * from './Auth/LoginPage';
@@ -19,4 +20,6 @@ export * from './Chats';
 export * from './NoMatchPage';
 export * from './PrivacyPoliticPage';
 export * from './TechnicalWorksPage';
+
+export * from './OrganizationsPage';
 

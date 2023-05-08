@@ -8,7 +8,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import './index.css';
 
 import moment from 'moment';
-import { PenIcon, TrashIcon } from "../../_components/UI/Icons";
+import { ChartLineUpOutlineIcon, PenIcon, TrashIcon } from "../../_components/UI/Icons";
 
 
 const CoursesTableActions: FunctionComponent = ({ course, setIsOpenRemoveCourseModal, setSelectedCourseToModal }) => {
@@ -17,6 +17,7 @@ const CoursesTableActions: FunctionComponent = ({ course, setIsOpenRemoveCourseM
         <div>
             <IconButton icon={<PenIcon size={20} color={`rgba(var(--alert-warning-color), 1)`} />} title="Изменить" onClick={() => navigate(`/courses/constructor/edit/${course.kk_course_id}`)} />
             <IconButton icon={<TrashIcon size={20} color={`rgba(var(--alert-danger-color), 1)`} />} title="Удалить" onClick={() => { setIsOpenRemoveCourseModal(true), setSelectedCourseToModal(course) }} />
+            <IconButton icon={<ChartLineUpOutlineIcon size={20}  />} title="Статисика по курсу" onClick={() => { navigate(`/courses/statistic/${course.kk_course_id}`) }} />
         </div>
     )
 }

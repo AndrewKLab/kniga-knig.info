@@ -15,7 +15,7 @@ export interface TableProps extends React.HTMLAttributes<HTMLDivElement> {
     data: Array<object>;
 }
 
-export const Table: FunctionComponent<TableProps> = ({ children, className, disablePagination, columns, data, ...other }) => {
+export const Table: FunctionComponent<TableProps> = ({ children, className, disablePagination = false, columns, data, ...other }) => {
     const {
         getTableProps,
         getTableBodyProps,
@@ -100,8 +100,7 @@ export const Table: FunctionComponent<TableProps> = ({ children, className, disa
             {!disablePagination &&
                 <div className={`table-pagination`}>
                     <div className={`table-pagination-item`}>
-                        <span>
-                            Страница{' '}
+                        <b>Всего:</b>  {rows.length} | <span>Страница{' '}
                             <strong>
                                 {state.pageIndex + 1} из {pageOptions.length}
                             </strong>{' '}

@@ -14,3 +14,6 @@ export * from './support.actions';
 export * from './pages.actions';
 export * from './chats.actions';
 export * from './settings.actions';
+export * from './statistic.actions';
+export * from './organizations.actions';
+export * from './organizations_types.actions';

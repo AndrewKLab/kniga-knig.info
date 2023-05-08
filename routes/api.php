@@ -24,6 +24,9 @@ use App\Http\Api\Users\UsersController;
 use App\Http\Api\Auth\GoogleController;
 use App\Http\Api\Auth\OdniklassnikiController;
 use App\Http\Api\Auth\VKController;
+use App\Http\Api\Organizations\OrganizationsController;
+use App\Http\Api\Organizations\OrganizationsTypesController;
+use App\Http\Api\Statistics\StatisticsController;
 use Illuminate\Support\Facades\Broadcast;
 
 // Broadcast::routes(['middleware' => ['auth:sanctum']]);
@@ -140,6 +143,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/settings/users_roles_access/add', [UsersRolesAccessController::class, 'add']);
     Route::post('/settings/users_roles_access/edit', [UsersRolesAccessController::class, 'edit']);
     Route::post('/settings/users_roles_access/remove', [UsersRolesAccessController::class, 'remove']);
+
+    Route::get('/statistics/users', [StatisticsController::class, 'users'])->middleware('checkAccess:Статистика,read');
+    Route::get('/statistics/courses_users_progress', [StatisticsController::class, 'courses_users_progress'])->middleware('checkAccess:Статистика,read');
+    Route::get('/statistics/getStatisticByCourse', [StatisticsController::class, 'getStatisticByCourse'])->middleware('checkAccess:Статистика,read');
+    Route::get('/statistics/getUsersEmailByLup', [StatisticsController::class, 'getUsersEmailByLup'])->middleware('checkAccess:Статистика,read');
+
+    Route::get('/organizations/getAll', [OrganizationsController::class, 'getAll'])->middleware('checkAccess:Организации,read');
+    Route::get('/organizations/getOneById', [OrganizationsController::class, 'getOneById'])->middleware('checkAccess:Организации,read');
+    Route::post('/organizations/create', [OrganizationsController::class, 'create'])->middleware('checkAccess:Организации,create');
+    Route::post('/organizations/update', [OrganizationsController::class, 'update'])->middleware('checkAccess:Организации,update');
+    Route::post('/organizations/delete', [OrganizationsController::class, 'delete'])->middleware('checkAccess:Организации,delete');
+
+    Route::get('/organizations_types/getAll', [OrganizationsTypesController::class, 'getAll'])->middleware('checkAccess:Типы организаций,read');
 
     Route::get('/notifications/getAll', [NotificationsController::class, 'getAll']);
     Route::post('/notifications/markAsReadOneById', [NotificationsController::class, 'markAsReadOneById']);

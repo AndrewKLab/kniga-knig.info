@@ -42,7 +42,6 @@ class CoursesController extends Controller
         ]);
         $course = KK_Courses::where(['kk_course_id' => $kk_course_id])->first();
 
-
         return response()->json(['message' => env('RESPONSE_CREATE_SUCCESS'), 'course' => $course], 200);
     }
 

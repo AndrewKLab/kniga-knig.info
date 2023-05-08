@@ -164,11 +164,9 @@ return [
         'kk_user_middlename'    => 'Отчество',
         'kk_user_email'         => 'E-Mail адрес',
         'kk_user_phonenumber'   => 'Номер телефона',
-
         'kk_user_country' => 'Страна',
         'kk_user_sity' => 'Город',
         'kk_user_commune' => 'Община',
-
         'kk_user_password' => 'Пароль',
         'kk_user_access' => 'Доступ к курсам',
         'kk_user_offline_user' => 'Оффлайн пользователь',
@@ -177,7 +175,8 @@ return [
         'kk_user_coordinator_id' => 'Координатор Пользователя',
         'kk_user_teather_id' => 'Учитель Пользователя',
         'kk_user_promouter_id' => 'Сеятель Пользователя',
-        
+        'kk_user_avatar' => 'Аватар',
+        'kk_user_email_verified_at' => 'Дата верификации Email',
         'kk_user_avatar' => 'Аватар',
         'kk_user_email_verified_at' => 'Дата верификации Email',
     ],

@@ -182,4 +182,17 @@ class KK_Lessons extends Model
     {
         return $this->hasOne(KK_Lessons_Users_Progress::class, 'kk_lup_lesson_id', 'kk_lesson_id');
     }
+
+    public function lup_started()
+    {
+        return $this->hasMany(KK_Lessons_Users_Progress::class, 'kk_lup_lesson_id', 'kk_lesson_id')->where([['kk_lup_started_at', 'IS NOT', NULL]]);
+    }
+    public function lup_finished()
+    {
+        return $this->hasMany(KK_Lessons_Users_Progress::class, 'kk_lup_lesson_id', 'kk_lesson_id')->where([['kk_lup_finished_at', 'IS NOT', NULL]]);
+    }
+    public function lup_not_finished()
+    {
+        return $this->hasMany(KK_Lessons_Users_Progress::class, 'kk_lup_lesson_id', 'kk_lesson_id')->where([['kk_lup_status', '=', 'inprocess']]);
+    }
 }

@@ -206,6 +206,9 @@ return [
         'kk_question_type' => 'Тип вопроса',
         'kk_question_text' => 'Текст вопроса',
 
-        'answers.*.kk_qa_text' => 'Текст ответа'
+        'answers.*.kk_qa_text' => 'Текст ответа',
+
+        'kk_organization_type_id' => 'Тип организации',
+        'kk_organization_name' => 'Название',
     ],
 ];

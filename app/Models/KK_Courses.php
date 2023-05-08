@@ -130,4 +130,13 @@ class KK_Courses extends Model
     {
         return $this->hasOne(KK_Lessons_Users_Progress::class, 'kk_lup_course_id', 'kk_course_id');
     }
+
+    public function cup_started()
+    {
+        return $this->hasMany(KK_Courses_Users_Progress::class, 'kk_cup_course_id', 'kk_course_id')->where([['kk_cup_started_at', 'IS NOT', NULL]]);
+    }
+    public function cup_finished()
+    {
+        return $this->hasMany(KK_Courses_Users_Progress::class, 'kk_cup_course_id', 'kk_course_id')->where([['kk_cup_finished_at', 'IS NOT', NULL]]);
+    }
 }

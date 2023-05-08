@@ -112,8 +112,8 @@ class KK_Lessons_Users_Progress extends Model
     }
 
 
-    // public function course()
-    // {
-    //     return $this->hasOne(KK_Courses::class, 'kk_course_id', 'kk_lup_course_id');
-    // }
+    public function user()
+    {
+        return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_lup_user_id');
+    }
 }

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Icon } from '../../../_interfaces';
 
-export const ChartLineUpOutlineIcon: FunctionComponent<Icon> = ({ className, size = 22, color = "#271617" }) => {
+export const ChartLineUpOutlineIcon: FunctionComponent<Icon> = ({ className, size = 22, color=`rgba(var(--text-color), 1)` }) => {
 
     return (
         <svg

@@ -57,7 +57,7 @@ const CoursesConstructorLessonsList: FunctionComponent<CoursesConstructorLessons
         else dispatch(lessonsActions.setLessonEditor('add', null));
     }
     const selectLessonToEdit = (lesson) => {
-        console.log(lesson_editor_is_lesson_edit);
+        console.log(lesson);
         
         if(lesson_editor_is_lesson_edit) dispatch({ type: "OPEN_IS_LESSON_EDIT_MODAL", open:true })
         else dispatch(lessonsActions.setLessonEditor('edit', lesson.kk_lesson_id))

@@ -17,6 +17,9 @@ import { questions } from './questions.reducer';
 import { auth } from './auth.reducer';
 import { support } from './support.reducer';
 import { settings } from './settings.reducer';
+import { statistic } from './statistic.reducer';
+import { organizations } from './organizations.reducer';
+import { organizations_types } from './organizations_types.reducer';
 
 import { notifications, chats } from '../../public/_reducers';
 
@@ -24,7 +27,9 @@ const rootReducer = combineReducers({
   users,
   style,
   search,
-
+  statistic,
+  organizations,
+  organizations_types,
   // course_constructor,
 
 

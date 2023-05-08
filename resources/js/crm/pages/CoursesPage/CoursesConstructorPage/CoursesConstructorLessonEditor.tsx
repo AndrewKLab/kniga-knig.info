@@ -75,6 +75,7 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
     useEffect(() => {
         const init = async () => {
             reset()
+            setLoading(true)
             await dispatch(lessonsActions.getOneByLessonId({ kk_lesson_id: lesson_editor_kk_lesson_id }))
             const lesson_editor_start = document.getElementById('lesson_editor_start');
             lesson_editor_start.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
@@ -110,6 +111,7 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
                     id={`kk_lesson_course_id`}
                     name={`kk_lesson_course_id`}
                     defaultValue={kk_course_id}
+                    autoComplete={'false'}
                 />
                 <div className="mb-3">
                     <Label htmlFor="kk_lesson_name">Название:</Label>
@@ -120,7 +122,8 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
                         id={`kk_lesson_name`}
                         name={`kk_lesson_name`}
                         placeholder={`Введите название...`}
-                        defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_name : null}
+                        defaultValue={(lesson_editor_action === 'edit' && get_one_by_lesson_id_lessons) ? get_one_by_lesson_id_lessons?.kk_lesson_name : null}
+                        autoComplete={'false'}
                     />
                     {lesson_editor_action === 'add' && <InputError errors={add_lessons_errors} name={'kk_lesson_name'} />}
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_name'} />}

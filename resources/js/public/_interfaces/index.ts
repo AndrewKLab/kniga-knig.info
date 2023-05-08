@@ -9,3 +9,5 @@ export * from './lesson_user_progress';
 export * from './question';
 export * from './question_answer';
 export * from './question_user_answer';
+export * from './organization';
+export * from './organization_type';

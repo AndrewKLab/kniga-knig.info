@@ -28,3 +28,5 @@ export * from './BellOutlineIcon';
 export * from './EyeOutlineIcon';
 export * from './EyeOffOutlineIcon';
 export * from './ChevronRightIcon';
+export * from './DownloadIcon';
+export * from './OrganizationIcon';

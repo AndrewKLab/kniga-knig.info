@@ -7,6 +7,7 @@ import { setTheme } from '../../_helpers';
 import { StudentOutlineIcon, ChartLineUpOutlineIcon, InfoOutlineIcon, DoubleFoldersOutlineIcon, GearOutlineIcon, FolderOutlineIcon } from "../UI/Icons";
 import { useNavigate } from "react-router-dom";
 import { AllCoursesModulesList, AllUsersModulesList, MyCoursesModulesList, MyUsersModulesList, WithoutUsersModulesList } from "./HeaderNavbarDrawerMenuModulesLists";
+import { OrganizationIcon } from "../../../public/_components/UI/Icons";
 
 type HeaderProps = {
     dispatch: any;
@@ -88,6 +89,12 @@ const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, chil
                 <TabsMenu className={`drawer_dropdown_menu`} activeTab={user_page_tab} setActiveTab={(tab) => dispatch(usersActions.setUsersPageTab(tab))} tabs={user_modules} />
                 <ActiveUsersTab />
             </div>,
+        })
+        if (user?.role?.kk_role_type !== 'ROLE_PROMOUTER') menu_items.push({
+            itemAvatar: <OrganizationIcon size={22} color={location.pathname === '/organizations' ? "rgba(var(--primary-color),1)" : "rgba(var(--text-color), 1)"} />,
+            itemTitle: 'Организации',
+            onClick: () => goToLink('/organizations'),
+            itemLink: '/organizations',
         })
         if (user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN') menu_items.push({
             itemAvatar: <FolderOutlineIcon color={location.pathname === '/files' ? "rgba(var(--primary-color),1)" : "rgba(var(--text-color), 1)"} size={22} />,

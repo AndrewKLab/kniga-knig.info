@@ -30,6 +30,10 @@ import {
   NoMatchPage,
   PrivacyPoliticPage,
   SettingsPage,
+  StatisticsPage,
+  CourseStatisticPage,
+  OrganizationsPage,
+  OrganizationsActionPage
 
 } from '../pages';
 
@@ -84,6 +88,7 @@ const MainRoutes = ({dispatch,  user }) => {
             <Route index path="/courses" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute element={<CoursesPage />} />} />} />
             <Route path="/courses/constructor/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<CoursesConstructorPage />} />} />} />
             <Route path="/courses/constructor/:action/:kk_course_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<CoursesConstructorPage />} />} />} />
+            <Route path="/courses/statistic/:kk_course_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_USER' && user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<CourseStatisticPage />} />} />} />
 
             <Route index path="/users" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute element={<UsersPage />} />} />} />
             <Route path="/users/action/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<UsersPageAction />} />} />} />
@@ -95,6 +100,12 @@ const MainRoutes = ({dispatch,  user }) => {
             <Route path="/chats/:kk_chat_id" element={<PrivateRoute element={<ChatPage />} />} />
 
             <Route index path="/settings" element={<CustomAccessRoute rule={user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN'} element={<PrivateRoute element={<SettingsPage />} />} />} />
+            
+            <Route index path="/statistic" element={<CustomAccessRoute rule={user?.role?.kk_role_type === 'ROLE_SUPER_ADMIN'} element={<PrivateRoute element={<StatisticsPage />} />} />} />
+            
+            <Route index path="/organizations" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute element={<OrganizationsPage />} />} />} />
+            <Route path="/organizations/action/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<OrganizationsActionPage />} />} />} />
+            <Route path="/organizations/action/:action/:kk_organization_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<OrganizationsActionPage />} />} />} />
 
             <Route path="*" element={<NoMatchPage />} />
           </Routes>
