@@ -9,15 +9,24 @@ import './index.css';
 
 import moment from 'moment';
 import { ChartLineUpOutlineIcon, PenIcon, TrashIcon } from "../../_components/UI/Icons";
+import { Share } from "../../../public/_components/UI";
+import { ShareOutlineIcon } from "../../../public/_components/UI/Icons";
+import { config } from "../../../public/_helpers";
 
 
-const CoursesTableActions: FunctionComponent = ({ course, setIsOpenRemoveCourseModal, setSelectedCourseToModal }) => {
+const CoursesTableActions: FunctionComponent = ({ user, course, setIsOpenRemoveCourseModal, setSelectedCourseToModal }) => {
     let navigate = useNavigate();
+    const [showShare, setShowShare] = useState(false);
     return (
-        <div>
+        <div className="d-flex">
             <IconButton icon={<PenIcon size={20} color={`rgba(var(--alert-warning-color), 1)`} />} title="Изменить" onClick={() => navigate(`/courses/constructor/edit/${course.kk_course_id}`)} />
             <IconButton icon={<TrashIcon size={20} color={`rgba(var(--alert-danger-color), 1)`} />} title="Удалить" onClick={() => { setIsOpenRemoveCourseModal(true), setSelectedCourseToModal(course) }} />
-            <IconButton icon={<ChartLineUpOutlineIcon size={20}  />} title="Статисика по курсу" onClick={() => { navigate(`/courses/statistic/${course.kk_course_id}`) }} />
+            <IconButton icon={<ChartLineUpOutlineIcon size={20} />} title="Статисика по курсу" onClick={() => { navigate(`/courses/statistic/${course.kk_course_id}`) }} />
+            <div className={`courses-share-buttons`} onClick={(event) => event.stopPropagation()}>
+                
+                <IconButton icon={<ShareOutlineIcon size={16} />} onClick={(event) => { event.stopPropagation(), setShowShare(!showShare) }} />
+                <Share link={`${config.appUrl}/registration?referal_user=${user?.kk_user_id}%26course=${course.kk_course_id}`} className={`${showShare ? `active` : ``}`} whatsapp viber telegram sms copy />
+            </div>
         </div>
     )
 }
@@ -60,7 +69,7 @@ const CoursesPageTable: FunctionComponent<CoursesPageTableProps> = ({
         },
         {
             Header: 'Действия',
-            accessor: row => <CoursesTableActions course={row} setSelectedCourseToModal={setSelectedCourseToModal} setIsOpenRemoveCourseModal={setIsOpenRemoveCourseModal}  />
+            accessor: row => <CoursesTableActions user={user} course={row} setSelectedCourseToModal={setSelectedCourseToModal} setIsOpenRemoveCourseModal={setIsOpenRemoveCourseModal} />
         },
         {
             Header: 'Дата обновления',

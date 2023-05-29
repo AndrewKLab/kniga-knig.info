@@ -34,7 +34,7 @@ class OrganizationsController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kk_organization_parrent_id' => ['integer'],
+            'kk_organization_parrent_id' => ['nullable', 'integer'],
             'kk_organization_type_id' => ['required', 'integer'],
             'kk_organization_name' => ['required', 'string', 'max:255'],
         ]);
@@ -57,7 +57,7 @@ class OrganizationsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'kk_organization_id' => ['required', 'integer'],
-            'kk_organization_parrent_id' => ['integer', 'nullable'],
+            'kk_organization_parrent_id' => ['nullable', 'integer',],
             'kk_organization_type_id' => ['required', 'integer'],
             'kk_organization_name' => ['required', 'string', 'max:255'],
         ]);

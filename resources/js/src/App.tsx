@@ -11,7 +11,7 @@ import { MainRoutes } from './routers';
 import { TechnicalWorksPage } from './pages';
 import { initLaravelEcho } from '../public/_helpers';
 import { Container } from '../public/_components/UI';
-import { DonateModal } from '../public/_components';
+import { DonateModal, ImageModal, ReferalModal } from '../public/_components';
 import { modalsActions } from '../public/_actions';
 
 
@@ -22,7 +22,8 @@ const App = ({
   get_auth_user_message,
   get_auth_user_error,
 
-  open_donate_modal,
+  open_image_modal,
+  open_referal_modal,
 }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -46,6 +47,9 @@ const App = ({
         {/* <TechnicalWorksPage/> */}
         <Header />
         {/* <Notifications/> */}
+
+        <ImageModal isOpen={open_image_modal} setIsOpen={() => dispatch(modalsActions.openImageModal())} />
+        <ReferalModal isOpen={open_referal_modal} setIsOpen={(open) => dispatch(modalsActions.openReferalModal(open))} />
         <Container>
           <MainRoutes />
         </Container>
@@ -64,7 +68,8 @@ function mapStateToProps(state) {
     get_auth_user_error,
   } = state.auth
   const {
-    open_donate_modal,
+    open_image_modal,
+    open_referal_modal,
   } = state.modals
   return {
     token,
@@ -72,7 +77,8 @@ function mapStateToProps(state) {
     get_auth_user_loading,
     get_auth_user_message,
     get_auth_user_error,
-    open_donate_modal
+    open_image_modal,
+    open_referal_modal,
   };
 }
 

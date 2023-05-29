@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarDesktopMenu, NavbarMenu, NavbarActionsMenu, NavbarMenuItem, Container, InputGroup, InputGroupText, TextInput, IconButton, Dropdown, NavbarMobileMenu, Image } from '../../../public/_components/UI';
 import { User, Themes } from '../../_interfaces';
 import { HeaderNavbarDropdownMenu, HeaderSearchDropdownMenu, HeaderNavbarMainDropdownMenu } from "../";
-import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon, YouTubeIcon, VKIcon, OKIcon } from "../../../public/_components/UI/Icons";
+import { UserCircleOutlineIcon, MagnifyingGlassOutlineIcon, BurgerIcon, YouTubeIcon, VKIcon, OKIcon, TelegramIcon, YandexZenIcon } from "../../../public/_components/UI/Icons";
 import { useDetectOutsideClick } from '../../_hooks';
 import { searchActions } from "../../_actions";
 import { HeaderSearchResults } from "../";
@@ -57,11 +57,18 @@ const Header: FunctionComponent<HeaderProps> = ({ dispatch, children, className,
 
 
 
+
     const SocialIcons = () => {
+        const iconStyle = {
+            padding: "5px",
+            borderRadius: "50%",
+        }
         return <div className={`navbar-social-icons`}>
-            <a href={`https://www.youtube.com/@golosnadezhdi`} target="_blank"><IconButton icon={<YouTubeIcon size={25} />} /></a>
-            <a href={`https://vk.com/golosnadezhdi`} target="_blank"><IconButton icon={<VKIcon size={25} />} /></a>
-            <a href={`https://ok.ru/golosnadezhdi`} target="_blank"><IconButton icon={<OKIcon size={25} />} /></a>
+            <a className={`social_icon_link`} href={`https://t.me/knigaknigcourses`} target="_blank" style={iconStyle}><TelegramIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
+            <a className={`social_icon_link`} href={`https://www.youtube.com/@kniga-knig`} target="_blank" style={iconStyle}><YouTubeIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
+            <a className={`social_icon_link`} href={`https://vk.com/knigaknigcourses`} target="_blank" style={iconStyle}><VKIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
+            <a className={`social_icon_link`} href={`https://ok.ru/group/70000002139641`} target="_blank" style={iconStyle}><OKIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
+            <a className={`social_icon_link`} href={`https://dzen.ru/knigaknig`} target="_blank" style={iconStyle}><YandexZenIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
         </div>
     }
 

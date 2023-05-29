@@ -28,7 +28,7 @@ class RequestHelper
         if ($request->file($field)) {
             $file = $request->file($field);
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path().'/assets/audio/'.$path, $filename);
+            $file->move(public_path().'/assets/audio/', $filename);
             return $filename;
         }
     }

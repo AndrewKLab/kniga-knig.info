@@ -11,6 +11,7 @@ import './index.css';
 import { EyeOffOutlineIcon, EyeOutlineIcon } from "../../../../public/_components/UI/Icons";
 import { GoogleAuthButton, OdniklassnikiAuthButton, VKAuthButton } from "../../../../public/_components";
 import { localCoursesUserProgressHelper } from "../../../../public/_helpers";
+import { modalsActions } from "../../../../public/_actions";
 
 type RegistrationPageProps = {
     dispatch: any;
@@ -39,9 +40,25 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
     let course = searchParams.get('course');
 
     useEffect(() => {
-        if (referal_user) localStorage.setItem('referal_user', referal_user)
-        if (course) navigate(`/courses/${course}`)
+        if (referal_user) {
+            localStorage.setItem('referal_user', referal_user)
+            openReferalModal()
+            navigate(`/courses`)
+        }
+        if (course) {
+            openReferalModal()
+            navigate(`/courses/${course}`)
+        }
     }, [])
+
+    const openReferalModal = () =>{
+        const opened = localStorage.getItem('opened_referal_modal')
+        if(!opened || opened === "false") {
+            localStorage.setItem('opened_referal_modal', "false")
+            dispatch(modalsActions.openReferalModal(true))
+            localStorage.setItem('opened_referal_modal', "true")
+        }
+    }
 
     const handleReCaptchaVerify = useCallback(async () => {
         if (!executeRecaptcha) {

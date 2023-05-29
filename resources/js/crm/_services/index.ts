@@ -17,3 +17,4 @@ export * from './statistic.secvice';
 export * from './questions_users_answers.service';
 export * from './organizations.service';
 export * from './organizations_types.service';
+export * from './organizations_users.service';

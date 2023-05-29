@@ -10,9 +10,7 @@ export interface SpoilerProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;
 
     spoilerTitle?: React.ReactElement | string | null;
-    spoilerContent?:
-    | React.ReactChild
-    | React.ReactChild[];
+    spoilerContent?: React.ReactElement | string | null;
 }
 
 export const Spoiler: FunctionComponent<SpoilerProps> = ({ children, className, spoilerTitle, spoilerContent, ...other }) => {
@@ -21,12 +19,11 @@ export const Spoiler: FunctionComponent<SpoilerProps> = ({ children, className, 
     const toggleSpoiler = () => {
         setOpen(!open)
     }
-
     return (
         <div className={`spoiler${className ? ` ${className}` : ''}`} {...other}>
             <div className={`spoiler-header`}>
                 <div className={`spoiler-title${open ? ` opened` : ''}`}>{spoilerTitle}</div>
-                <IconButton className={`spoiler-title-button${open ? ` opened` : ''}`} icon={<PlusCircleOutlineIcon color={open ? '#65B658' : 'none'} stroke={open ? '#fff' : 'rgba(var(--text-color), 1)'} />} onClick={toggleSpoiler} />
+                {spoilerContent != '' ? <IconButton className={`spoiler-title-button${open ? ` opened` : ''}`} icon={<PlusCircleOutlineIcon color={open ? '#65B658' : 'none'} stroke={open ? '#fff' : 'rgba(var(--text-color), 1)'} />} onClick={toggleSpoiler} /> : null}
             </div>
             <div className={`spoiler-content${open ? ` opened` : ''}`}>
                 {spoilerContent}

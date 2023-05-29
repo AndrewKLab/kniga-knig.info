@@ -1,7 +1,64 @@
 .about_us_page {
     padding: 90px 0px 120px 0px;
-    font-size: 20px;
-    line-height: 145%;
+    font-size: 18px;
+    line-height: 22px;
+    position: relative;
+}
+
+.about_us_page_shadow_1{
+    position: absolute;
+    width: 220.34px;
+    height: 326.97px;
+    right: 0;
+    top: 210px;
+    
+    background: #A1FF92;
+    filter: blur(150px);   
+    z-index: -10000;
+}
+.about_us_page_shadow_2{
+    position: absolute;
+    width: 285.08px;
+    height: 423.05px;
+    right: 0;
+    bottom: 0;
+    
+    background: #A1FF92;
+    filter: blur(150px);
+    z-index: -10000;
+}
+.about_us_page_shadow_3{
+    position: absolute;
+    width: 231.93px;
+    height: 344.17px;
+    right: 250px;
+    top: 453.79px;
+    
+    background: #FF9298;
+    filter: blur(150px);  
+    z-index: -10000;
+}
+.about_us_page_shadow_4{
+    position: absolute;
+    width: 269.62px;
+    height: 400.1px;
+    left: -85px;
+    top: 2533.17px;
+    
+    background: #FF9298;
+    filter: blur(150px);
+    z-index: -10000;
+}
+.about_us_page_shadow_5{
+    position: absolute;
+    width: 285.08px;
+    height: 423.05px;
+    left: -18.32px;
+    top: 2148.85px;
+    
+    background: #A1FF92;
+    filter: blur(150px);
+    z-index: -10000;
 }
 
 .about_us_page p {
@@ -13,22 +70,56 @@
     width: 100%;
 }
 
+.about_us_title_container {
+    margin-bottom: 75px;
+}
+
 .about_us_title {
     font-weight: 700;
     font-size: 128px;
     line-height: 115.5%;
     text-transform: uppercase;
     margin: 0;
-    margin-bottom: 69px;
 }
 
 .about_us_title div:nth-child(2) {
-    margin-left: 277px;
+    text-align: end;
+    white-space: nowrap;
+}
+
+
+.about_us_page_text {
+    padding-right: 165px;
+}
+
+.about_us_page_first_row {
+    margin-bottom: 117px;
+}
+
+.about_us_page_who_we_row {
+    margin-bottom: 80px;
+}
+
+.about_us_page_who_we_image_section {
+    padding-right: 100px;
+}
+
+.about_us_page_who_we_row {
+    flex-wrap: wrap-reverse;
+}
+
+.about_us_page_who_we_image {
+    margin-bottom: 32px;
 }
 
 .about_us_first_section {
     padding-right: 75px;
-    margin-bottom: 97px;
+    margin-bottom: 75px;
+}
+
+.about_us_first_section_image {
+    height: 361px;
+    object-fit: cover;
 }
 
 .about_us_second_section {
@@ -41,11 +132,43 @@
 
 .about_us_section_title {
     font-weight: 700;
-    font-size: 48px;
-    line-height: 115.5%;
+    font-size: 36px;
+    line-height: 40px;
     text-transform: uppercase;
     margin: 0;
-    margin-bottom: 28px;
+    margin-bottom: 30px;
+}
+
+.about_us_page_partners_row {
+    background: rgba(var(--drawer-background-color), 1);
+    border-radius: 10px;
+    padding: 90px 100px;
+    margin-bottom: 92px;
+}
+
+.about_us_page_partner_title {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    margin-top: 23px !important;
+}
+
+.about_us_page_partner_image {
+    height: 100px;
+    object-fit: contain;
+}
+
+.about_us_page_documents_container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 37px;
+}
+
+.about_us_page_documents_image {
+    max-height: 335px;
+    object-fit: contain;
+    width: auto !important;
 }
 
 .about_us_first_section_img_bible,
@@ -54,15 +177,27 @@
     display: none;
 }
 
-.about_us_second_section_2_img_boy{
+.about_us_second_section_2_img_boy {
     padding-bottom: 16px;
 }
 
 @media (max-width: 1200px) {
+
+    .about_us_page_shadow_1{
+        right: 250px;
+    }
+    .about_us_page_shadow_2, .about_us_page_shadow_3{
+        right: 0px;
+    }
     .about_us_page {
         padding: 24px 0px 36px 0px;
         font-size: 14px;
         line-height: 125%;
+        margin-bottom: 15px;
+    }
+
+    .about_us_title_container {
+        margin-bottom: 0px;
     }
 
     .about_us_title {
@@ -72,11 +207,26 @@
         display: flex;
         gap: 5px;
         flex-wrap: wrap;
-        margin-bottom: 16px;
     }
 
     .about_us_title div:nth-child(2) {
         margin-left: 0px;
+    }
+
+    .about_us_page_text {
+        padding-right: 0;
+    }
+
+    .about_us_page_first_row {
+        margin-bottom: 1rem;
+    }
+
+    .about_us_page_who_we_image_section {
+        padding-right: calc(var(--bs-gutter-x) / 2);
+    }
+
+    .about_us_page_partners_row {
+        margin-bottom: 1rem;
     }
 
     .about_us_section_title {
@@ -117,6 +267,11 @@
 
     .about_us_second_section_2 {
         margin-top: 0;
+    }
+
+    .about_us_page_documents_container {
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
 }

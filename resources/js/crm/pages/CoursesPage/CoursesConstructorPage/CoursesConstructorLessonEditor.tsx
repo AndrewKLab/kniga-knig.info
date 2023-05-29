@@ -6,7 +6,7 @@ import { ArrowLeftIcon, ArrowSquareRightIcon, FileOutlineIcon } from '../../../_
 import { User } from '../../../_interfaces';
 import { coursesActions, coursesCategoriesActions, lessonsActions, pagesActions } from "../../../_actions";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import './index.css';
 import { FinishCourseButton, ImageDropzone, PageLoader, PartLoader, Question, TextEditor } from "../../../_components";
 import { CoursesConstructorLessonTestEditor, NoMatchPage } from "../..";
@@ -70,7 +70,7 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
     const [loading, setLoading] = useState(true);
     const [editor, setEditor] = useState(null);
     const [editorDescription, setEditorDescription] = useState(null);
-    const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
+    const { register, handleSubmit, reset, formState: { errors }, setValue, control } = useForm();
 
     useEffect(() => {
         const init = async () => {
@@ -78,7 +78,7 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
             setLoading(true)
             await dispatch(lessonsActions.getOneByLessonId({ kk_lesson_id: lesson_editor_kk_lesson_id }))
             const lesson_editor_start = document.getElementById('lesson_editor_start');
-            lesson_editor_start.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+            lesson_editor_start.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
             setLoading(false)
         }
         init();
@@ -86,9 +86,11 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
     }, [lesson_editor_kk_lesson_id]);
 
     const lessonActionSubmit = async (data) => {
+        console.log(data);
+
         if (lesson_editor_action === 'add') {
-            await dispatch(lessonsActions.add({...data, kk_lesson_description: editorDescription.runCommand('gjs-get-inlined-html'),  kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
-        } else if (lesson_editor_action === 'edit') await dispatch(lessonsActions.edit({...data, kk_lesson_description: editorDescription.runCommand('gjs-get-inlined-html'), kk_lesson_text: editor.runCommand('gjs-get-inlined-html')}))
+            await dispatch(lessonsActions.add({ ...data, kk_lesson_description: editorDescription.runCommand('gjs-get-inlined-html'), kk_lesson_text: editor.runCommand('gjs-get-inlined-html') }))
+        } else if (lesson_editor_action === 'edit') await dispatch(lessonsActions.edit({ ...data, kk_lesson_description: editorDescription.runCommand('gjs-get-inlined-html'), kk_lesson_text: editor.runCommand('gjs-get-inlined-html') }))
         await dispatch(lessonsActions.getAllByCourseId({ kk_lesson_course_id: kk_course_id }))
         // console.log(lesson_editor_action, {...data, kk_lesson_text: editor.runCommand('gjs-get-inlined-html')})
     }
@@ -129,29 +131,45 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_name'} />}
                 </div>
                 <div className="mb-3">
-                    <Label htmlFor="kk_lesson_description">Бот-приветствие:</Label>
-                    <PageBuilder id="kk_lesson_description" editor={editorDescription} setEditor={setEditorDescription} defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_description : null}/>
+                    <Label htmlFor="kk_lesson_description">Описание урока:</Label>
+                    <PageBuilder
+                        id="kk_lesson_description"
+                        height={`calc(60vh - 114px)`}
+                        newsletterBlocks={['divider']}
+                        blocksBasicBlocks={['text']}
+                        editor={editorDescription}
+                        setEditor={setEditorDescription}
+                        defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_description : null}
+                    />
                     {lesson_editor_action === 'add' && <InputError errors={add_lessons_errors} name={'kk_lesson_description'} />}
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_description'} />}
                 </div>
                 <div className="mb-3">
-                    <Label htmlFor="kk_lesson_text">Текст:</Label>
-                    <PageBuilder id="kk_lesson_text" editor={editor} setEditor={setEditor} defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_text : null}/>
+                    <Label htmlFor="kk_lesson_text">Текст урока:</Label>
+                    <PageBuilder
+                        id="kk_lesson_text"
+                        editor={editor}
+                        setEditor={setEditor}
+                        defaultValue={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_text : null}
+                    />
                     {lesson_editor_action === 'add' && <InputError errors={add_lessons_errors} name={'kk_lesson_text'} />}
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_text'} />}
                 </div>
                 <div className="mb-3">
                     <Label htmlFor="kk_lesson_audio">Аудиоверсия:</Label>
                     <FileInput
-                        {...register('kk_lesson_audio')}
+                    control={control}
+                        // {...register('kk_lesson_audio')}
                         className={`courses_constructor_page_input`}
                         id={`kk_lesson_audio`}
                         name={`kk_lesson_audio`}
                         placeholder={`Выберите аудиофаил в формате mp3...`}
                         accept={"audio/mp3"}
                         files={lesson_editor_action === 'edit' ? get_one_by_lesson_id_lessons?.kk_lesson_audio : null}
-                        setValue={setValue}
+                    // setValue={setValue}
                     />
+
+
                     {lesson_editor_action === 'add' && <InputError errors={add_lessons_errors} name={'kk_lesson_audio'} />}
                     {lesson_editor_action === 'edit' && <InputError errors={edit_lessons_errors} name={'kk_lesson_audio'} />}
                 </div>
@@ -165,7 +183,7 @@ const CoursesConstructorLessonEditor: FunctionComponent<CoursesConstructorLesson
                     <Button type="submit" loading={add_lessons_loading || edit_lessons_loading} disabled={add_lessons_loading || edit_lessons_loading}>Сохранить</Button>
                 </div>
             </Form>
-            {lesson_editor_action === 'edit' && <CoursesConstructorLessonTestEditor kk_lesson_id={lesson_editor_kk_lesson_id}/>}
+            {lesson_editor_action === 'edit' && <CoursesConstructorLessonTestEditor kk_lesson_id={lesson_editor_kk_lesson_id} />}
         </div >
     )
     else return <React.Fragment></React.Fragment>;

@@ -1,5 +1,73 @@
 .home_page_second {
     padding-top: 90px;
+    position: relative;
+}
+
+.promo_course_page {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.home_page_second_shadow_1 {
+    position: absolute;
+    width: 206px;
+    height: 289.1px;
+    left: -26px;
+    bottom: 0;
+
+    background: #FF9298;
+    filter: blur(150px);
+    z-index: -10000;
+}
+
+.home_page_second_shadow_2 {
+    position: absolute;
+    width: 217px;
+    height: 304.53px;
+    left: -53px;
+    top: 1168.47px;
+
+    background: #A1FF92;
+    filter: blur(150px);
+    z-index: -10000;
+}
+
+.home_page_second_shadow_3 {
+    position: absolute;
+    width: 206px;
+    height: 289.1px;
+    right: -53px;
+    top: 144px;
+
+    background: #FF9298;
+    filter: blur(150px);
+    z-index: -10000;
+}
+
+.home_page_second_shadow_4 {
+
+    position: absolute;
+    width: 279px;
+    right: -100px;
+    left: 1193px;
+    top: 2910.07px;
+
+    background: #FF9298;
+    filter: blur(200px);
+    z-index: -10000;
+}
+
+.home_page_second_shadow_5 {
+    position: absolute;
+    width: 295px;
+    height: 414px;
+    right: -100px;
+    top: 2533.96px;
+
+    background: #A1FF92;
+    filter: blur(200px);
+    z-index: -10000;
 }
 
 .home_page_second_block {
@@ -34,10 +102,31 @@
     top: 50%;
 }
 
+.home_page_second_main_title {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 60px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
 .home_page_second_title {
     font-weight: 700;
     font-size: 36px;
     line-height: 40px;
+    text-transform: uppercase;
+}
+
+.home_page_second_title_sub_container {
+    display: flex;
+    gap: 1rem;
+}
+
+.home_page_second_sub_title {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: end;
     text-transform: uppercase;
 }
 
@@ -69,16 +158,18 @@
     margin-bottom: 53px;
 }
 
-.home_page_second_course_desciption p  {
+.home_page_second_course_desciption p {
     font-size: 18px !important;
     line-height: 22px !important;
     margin: 0px !important;
 }
-.home_page_second_course_desciption span{
+
+.home_page_second_course_desciption span {
     font-size: 18px !important;
     line-height: 22px !important;
     margin: 0px !important;
 }
+
 .home_page_second_courses_block {
     padding-top: 48px;
     padding-bottom: 48px;
@@ -104,6 +195,15 @@
 
 @media (max-width: 1200px) {
 
+    .home_page_second_shadow_1,
+    .home_page_second_shadow_2,
+    .home_page_second_shadow_3,
+    .home_page_second_shadow_4,
+    .home_page_second_shadow_5 {
+        right: 0;
+        left: 0;
+    }
+
     .home_page_second {
         padding-top: 30px;
     }
@@ -111,6 +211,16 @@
     .home_page_second_block {
         margin-bottom: 30px;
         padding: 0px 7px 15px 7px;
+    }
+
+    .home_page_second_main_title {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    .home_page_second_sub_title {
+        font-size: 16px;
+        margin-bottom: 1rem;
     }
 
     .home_page_second_title {

@@ -48,7 +48,7 @@ const DonateModal: FunctionComponent<DonateModalProps> = ({
 
         widget.charge({ // options
             publicId: 'pk_c7e901dc17201762a41e6c5e5beb6', //id из личного кабинета
-            description: 'Пожертвование на уставную деятельность АНО РТЦ "Голос надежды"', //назначение
+            description: 'Поддержать развите портала \n «Книга-Книг»', //назначение
             amount: amount, //сумма
             currency: 'RUB', //валюта
             // accountId: accountId, //идентификатор плательщика (обязательно для создания подписки)

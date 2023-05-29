@@ -16,8 +16,8 @@ export const paramsObjectToFormData = (params: object) => {
         if (value === null) value = '';
         if (value === false) value = '';
         if (value === undefined) value = '';
-
-        if (typeof value === "object" && value.length > 0) {
+        
+        if (typeof value === "object") {
             for (const file of value) {
                 formData.append(key, file);
             }

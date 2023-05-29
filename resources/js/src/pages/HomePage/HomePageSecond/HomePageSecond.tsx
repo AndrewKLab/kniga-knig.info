@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { connect } from 'react-redux';
 import { Image, Button, Carusel, CaruselItem, Row, Col } from '../../../../public/_components/UI';
-import { CoursesCard } from '../../../_components';
+import { AutorCard, CoursesCard } from '../../../_components';
 
 import { User } from '../../../_interfaces';
 import { coursesCategoriesActions, coursesActions } from "../../../_actions";
@@ -54,30 +54,40 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
 
     return (
         <div className={`home_page_second`}>
-
-            <Row g={3} className={`home_page_second_block home_page_second_green_block`}>
-                <Col xs={12} lg={6} className={`order-lg-1 order-xs-2 `}>
+            <div className="home_page_second_shadow_1"></div>
+            <div className="home_page_second_shadow_2"></div>
+            <div className="home_page_second_shadow_3"></div>
+            <div className="home_page_second_shadow_4"></div>
+            <div className="home_page_second_shadow_5"></div>
+            <Row g={3} className={`home_page_second_block `}>
+                <Col xs={12} lg={7} className={`order-lg-1 order-xs-2 `}>
                     <div className="home_page_second_text_block">
                         <div>
-                            <div className={`home_page_second_title`}>
-                                Исследуйте  <span className={`text-primary`}>ГЛУБИНЫ</span><br />
-                                КНИГИ-КНИГ!<br />
+                            <div className={`home_page_second_main_title`}>Исследуйте</div>
+                            <div className={`home_page_second_title_sub_container`} >
+                                <div className={`home_page_second_sub_title`}>Присоединяйтесь<br /> к нам</div>
+                                <div className={`home_page_second_main_title text-primary`} >ГЛУБИНЫ</div>
                             </div>
 
-                            <div className={`home_page_second_text home_page_second_hello_block_desc`}>Присоединяйтесь к нашим онлайн-курсам и расширьте свои знания о Библии!</div>
+                            <div className={`home_page_second_main_title`}>КНИГИ КНИГ!</div>
+                            <div className={`home_page_second_sub_title text-center`}>И РАСШИРЬТЕ СВОИ<br /> ЗНАНИЯ О БИБЛИИ</div>
+
+                            {/* <div className={`home_page_second_text home_page_second_hello_block_desc`}>Присоединяйтесь к нашим онлайн-курсам и расширьте свои знания о Библии!</div> */}
                         </div>
-                        <Button className={`home_page_second_button home_page_second_button_with_chevron`} onClick={() => navigate('/courses')}>
-                            Смотреть все
-                            <ChevronRightIcon className="home_page_second_button_icon"></ChevronRightIcon>
-                        </Button>
+                        <div className={`d-flex justify-content-center`}>
+                            <Button className={`home_page_second_button home_page_second_button_with_chevron`} onClick={() => navigate('/courses')}>
+                                Смотреть все
+                                <ChevronRightIcon className="home_page_second_button_icon"></ChevronRightIcon>
+                            </Button>
+                        </div>
                     </div>
                 </Col>
-                <Col xs={12} lg={6} className={`order-lg-2 order-xs-1`}>
+                <Col xs={12} lg={5} className={`order-lg-2 order-xs-1`}>
                     <Image src={`site/home_page_image_1.webp`} className={`home_page_second_hello_block_img`} />
                 </Col>
             </Row>
 
-            <Row g={3} className="home_page_second_block">
+            {/* <Row g={3} className="home_page_second_block">
                 <Col xs={12} lg={6} >
                     <div className={`home_page_second_title`}>
                         <span className={`text-primary`}>лучшая онлайн-<br />школа</span> для изучения Библии
@@ -86,40 +96,42 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
                 <Col xs={12} lg={6} >
                     <div className={`home_page_second_text`}>Уникальные библейские курсы богословия, разработанные вместе с экспертами и авторами перевода Библии на русский язык, позволят тебе раскрыть глубины своей веры и узнать больше о богословских темах, а преподаватели Заокского  университета обеспечат качественное обучение.</div>
                 </Col>
-            </Row>
+            </Row> */}
             {get_all_courses_loading && <Row g={3} className="home_page_second_block"><Col xs={12} lg={12} ><PartLoader /></Col></Row>}
-            {get_all_courses && <Row g={3} className="home_page_second_block home_page_second_green_block home_page_second_courses_block">
-                <Carusel
-                    className={`home_page_second_first_carousel`}
-                    caruselTitle={<div className={`home_page_second_title`}><span className={`text-primary`}>Разгадайте тайны</span><br /> КНИГИ-книг</div>}
-                    caruselViewMoreAction={() => navigate('/courses')}
-                    caruselItems={get_all_courses}
-                    caruselSettings={{
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        renderBottomCenterControls: false,
-                        cellAlign: 'left',
-                        cellSpacing: 31,
-                        wrapcenter: true
-                    }}
-                    caruselRenderItem={(item, index) => (
-                        <CaruselItem key={item.kk_course_id} onClick={() => navigate(`/courses/${item.kk_course_id}`)} >
-                            <CoursesCard coursesCardImage={item.kk_course_image} dontShare />
-                        </CaruselItem>
-                    )
-                    }
-                />
+            {
+                get_all_courses && <Row g={3} className="home_page_second_block home_page_second_green_block home_page_second_courses_block">
+                    <Carusel
+                        className={`home_page_second_first_carousel`}
+                        caruselTitle={<div className={`home_page_second_title`}><span className={`text-primary`}>Разгадайте тайны</span> КНИГИ книг</div>}
+                        caruselViewMoreAction={() => navigate('/courses')}
+                        caruselItems={get_all_courses}
+                        caruselSettings={{
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                            renderBottomCenterControls: false,
+                            cellAlign: 'left',
+                            cellSpacing: 31,
+                            wrapcenter: true
+                        }}
+                        caruselRenderItem={(item, index) => (
+                            <CaruselItem key={item.kk_course_id} onClick={() => navigate(`/courses/${item.kk_course_id}`)} >
+                                <CoursesCard coursesCardImage={item.kk_course_image} dontShare />
+                            </CaruselItem>
+                        )
+                        }
+                    />
 
 
-                <Col xs={12} lg={12} >
-                    <div className={`d-flex justify-content-center`}>
-                        <Button className={`home_page_second_button home_page_second_button_with_chevron`} onClick={() => navigate('/courses')}>
-                            Смотреть все
-                            <ChevronRightIcon className="home_page_second_button_icon"></ChevronRightIcon>
-                        </Button>
-                    </div>
-                </Col>
-            </Row>}
+                    <Col xs={12} lg={12} >
+                        <div className={`d-flex justify-content-center`}>
+                            <Button className={`home_page_second_button home_page_second_button_with_chevron`} onClick={() => navigate('/courses')}>
+                                Смотреть все
+                                <ChevronRightIcon className="home_page_second_button_icon"></ChevronRightIcon>
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
+            }
 
             <Row g={3} className="home_page_second_block">
                 <Col xs={12} lg={12} >
@@ -128,63 +140,98 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
                     </div>
                 </Col>
                 <Col xs={12} lg={12} >
-                    <Row g={3}>
-                        <Col xs={12} lg={5} >
-                            <div className={`home_page_second_text home_page_second_course_autor_card`}>
-                                <Row g={3}>
-                                    <Col xs={12} lg={6} >
-                                        <Image src={`site/2 2.png`} />
-                                    </Col>
-                                    <Col xs={12} lg={6} >
-                                        <b>Рустем Мухаметвалеев</b><br />
-                                        Пастор, магистр богословия, директор медиахолдинга “Надежда”
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                        <Col xs={12} lg={5} >
-                            <div className={`home_page_second_text home_page_second_course_autor_card`}>
-                                <Row g={3}>
-                                    <Col xs={12} lg={6} >
-                                        <Image src={`site/Rectangle 3.png`} />
-                                    </Col>
-                                    <Col xs={12} lg={6} >
-                                        <b>Павел Жуков</b><br />
-                                        Пастор, магистр богословия
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
-                    </Row>
+                    <Carusel
+                        className={`home_page_second_first_carousel`}
+                        // caruselTitle={<div className={`home_page_second_title`}><span className={`text-primary`}>Разгадайте тайны</span> КНИГИ-книг</div>}
+                        caruselViewMoreAction={() => navigate('/courses')}
+                        caruselItems={[
+                            {
+                                title: `Рустем Мухаметвалеев`,
+                                desctiption: `Пастор, магистр богословия, директор медиахолдинга “Надежда”`,
+                                img: `site/2 2.png`,
+                            },
+                            {
+                                title: `Павел Жуков`,
+                                desctiption: `Пастор, магистр богословия`,
+                                img: `site/Rectangle 3.png`,
+                            },
+                            {
+                                title: `Евгений Зайцев`,
+                                desctiption: `директор Института Перевода Библии в Заокском`,
+                                img: `site/Group 3(5).png`,
+                            },
+                            {
+                                title: `Иван Лобанов`,
+                                desctiption: `главный редактор Института Перевода Библии в Заокском`,
+                                img: `site/Group 3(3).png`,
+                            },
+                            {
+                                title: `Юрий Волобоев`,
+                                desctiption: `пастор, магистр богословия`,
+                                img: `site/Group 3(4).png`,
+                            },
+                        ]}
+                        caruselSettings={{
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                            renderBottomCenterControls: false,
+                            cellAlign: 'left',
+                            cellSpacing: 31,
+                            wrapcenter: true
+                        }}
+                        caruselRenderItem={(item, index) => (
+                            <AutorCard
+                                className={`home_page_second_text`}
+                                title={item.title}
+                                desctiption={item.desctiption}
+                                img={item.img}
+                            />
+
+                        )
+                        }
+                    />
+
                 </Col>
             </Row>
 
             {get_one_by_course_id_courses_loading && <Row g={3} className="home_page_second_block"><Col xs={12} lg={12} ><PartLoader /></Col></Row>}
 
-            {get_one_by_course_id_courses && <Row g={3} className={`home_page_second_block home_page_second_green_block`}>
-                <Col xs={12} lg={6} className={`order-lg-1 order-xs-2 `}>
-                    <div className="home_page_second_text_block">
+            {
+                get_one_by_course_id_courses && <Row g={3} className={`home_page_second_block home_page_second_green_block`}>
+                    <Col xs={12} lg={6} className={`order-lg-1 order-xs-2 `}>
+                        <div className="home_page_second_text_block">
 
-                        <div className={`home_page_second_title home_page_second_title_margins`}>
-                            <span className={`text-primary`}>{get_one_by_course_id_courses.kk_course_name} </span>
+                            <div className={`home_page_second_title home_page_second_title_margins`}>
+                                <span className={`text-primary`}>{get_one_by_course_id_courses.kk_course_name} </span>
+                            </div>
+
+                            <div className={`home_page_second_text home_page_second_hello_block_desc home_page_second_course_desciption`}>{parse(get_one_by_course_id_courses.kk_course_description)}</div>
+
+                            <Button className={`home_page_second_button`} onClick={() => navigate(`/courses/${get_one_by_course_id_courses.kk_course_id}`)}>Посмотреть курс</Button>
                         </div>
+                    </Col>
+                    <Col xs={12} lg={6} className={`order-lg-2 order-xs-1`}>
+                        <div className="d-flex flex-column justify-content-center h-100">
+                            <Image src={`courses/${get_one_by_course_id_courses.kk_course_image}`} />
+                        </div>
+                    </Col>
+                </Row>
+            }
 
-                        <div className={`home_page_second_text home_page_second_hello_block_desc home_page_second_course_desciption`}>{parse(get_one_by_course_id_courses.kk_course_description)}</div>
 
-                        <Button className={`home_page_second_button`} onClick={() => navigate(`/courses/${get_one_by_course_id_courses.kk_course_id}`)}>Посмотреть курс</Button>
+
+            <Row g={3} className={`home_page_second_block `}>
+                <Col xs={12} lg={6} className={`order-lg-1 order-xs-2`}>
+                    <div className="d-flex flex-column justify-content-center h-100">
+                        {/* <Image src={`site/обложки ТГБ 2-03 2.png`} className={`home_page_second_hello_block_img`} /> */}
+                        <video className={`home_page_second_video`} controls src={`${config.appUrl}/assets/video/site/Книга Книг Туториал.mov`} poster={`${config.appUrl}/assets/img/site/home_page_bible.png`}>
+                            Sorry, your browser doesn't support embedded videos,
+                            but don't worry, you can <a href="videofile.ogg">download it</a>
+                            and watch it with your favorite video player!
+                        </video>
                     </div>
                 </Col>
                 <Col xs={12} lg={6} className={`order-lg-2 order-xs-1`}>
-                    <div className="d-flex flex-column justify-content-center h-100">
-                        <Image src={`courses/${get_one_by_course_id_courses.kk_course_image}`} />
-                    </div>
-                </Col>
-            </Row>}
-
-
-
-            <Row g={3} className={`home_page_second_block home_page_second_green_block`}>
-                <Col xs={12} lg={6} className={`order-lg-1 order-xs-2 `}>
                     <div className="home_page_second_text_block">
 
                         <div className={`home_page_second_title home_page_second_title_margins`}>
@@ -195,16 +242,7 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
 
                     </div>
                 </Col>
-                <Col xs={12} lg={6} className={`order-lg-2 order-xs-1`}>
-                    <div className="d-flex flex-column justify-content-center h-100">
-                        {/* <Image src={`site/обложки ТГБ 2-03 2.png`} className={`home_page_second_hello_block_img`} /> */}
-                        <video className={`home_page_second_video`} controls src={`${config.appUrl}/assets/video/site/Книга Книг Туториал.mov`} poster={`${config.appUrl}/assets/img/site/home_page_bible.png`}>
-                            Sorry, your browser doesn't support embedded videos,
-                            but don't worry, you can <a href="videofile.ogg">download it</a>
-                            and watch it with your favorite video player!
-                        </video>
-                    </div>
-                </Col>
+
             </Row>
 
             <Row g={3} className={`home_page_second_block home_page_second_green_block`}>

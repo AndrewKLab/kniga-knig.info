@@ -23,11 +23,17 @@ class QuestionsController extends Controller
             'kk_question_lesson_id' => ['required', 'string'],
             'kk_question_type' => ['required', 'string', 'max:255'],
             'kk_question_text' => ['required', 'string', 'max:1000'],
-            'answers.*.kk_qa_text' => ['required', 'string', 'max:255'],
-            'answers.*.kk_qa_correct' => ['required', 'max:1'],
         ];
 
-        if (empty($request->answers) || !empty($request->answers) && count($request->answers) === 0) return response()->json(['message' => 'Добавьте хотябы один ответ!'], 400);
+        if (!empty($request->kk_question_type) && $request->kk_question_type !== 'text') {
+            $rules = [
+                ...$rules,
+                'answers.*.kk_qa_text' => ['required', 'string', 'max:255'],
+                'answers.*.kk_qa_correct' => ['required', 'max:1'],
+            ];
+
+            if (empty($request->answers) || !empty($request->answers) && count($request->answers) === 0) return response()->json(['message' => 'Добавьте хотябы один ответ!'], 400);
+        }
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails())  return response()->json(['success' => false, 'message' => 'Ошибка валидации!', 'data' => $validator->errors()], 422);
@@ -38,13 +44,18 @@ class QuestionsController extends Controller
                 'kk_question_type' => $request->kk_question_type,
                 'kk_question_text' => $request->kk_question_text,
             ]);
-            foreach ($request->answers as $key => $answer) {
+            if ($request->kk_question_type !== 'text') foreach ($request->answers as $key => $answer) {
                 KK_Questions_Answers::insert([
                     'kk_qa_question_id' => $kk_question_id,
                     'kk_qa_text' => $answer['kk_qa_text'],
                     'kk_qa_correct' => $answer['kk_qa_correct'],
                 ]);
             }
+            else                 KK_Questions_Answers::insert([
+                'kk_qa_question_id' => $kk_question_id,
+                'kk_qa_text' => '',
+                'kk_qa_correct' => 0,
+            ]);
 
             $question = KK_Questions::where(['kk_question_id' => $kk_question_id])->with(['answers'])->first();
 
@@ -60,18 +71,23 @@ class QuestionsController extends Controller
             'kk_question_lesson_id' => ['required', 'string'],
             'kk_question_type' => ['required', 'string', 'max:255'],
             'kk_question_text' => ['required', 'string', 'max:1000'],
-            'answers.*.kk_qa_text' => ['required', 'string', 'max:255'],
-            'answers.*.kk_qa_correct' => ['required', 'max:1'],
         ];
 
-        if (empty($request->answers) || !empty($request->answers) && count($request->answers) === 0) return response()->json(['message' => 'Добавьте хотябы один ответ!'], 400);
+        if (!empty($request->kk_question_type) && $request->kk_question_type !== 'text') {
+            $rules = [
+                ...$rules,
+                'answers.*.kk_qa_text' => ['required', 'string', 'max:255'],
+                'answers.*.kk_qa_correct' => ['required', 'max:1'],
+            ];
 
+            if (empty($request->answers) || !empty($request->answers) && count($request->answers) === 0) return response()->json(['message' => 'Добавьте хотябы один ответ!'], 400);
+        }
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails())  return response()->json(['success' => false, 'message' => 'Ошибка валидации!', 'data' => $validator->errors()], 422);
 
         return DB::transaction(function () use ($request) {
             $question = KK_Questions::where(['kk_question_id' => $request->kk_question_id])->first();
-            if(empty($question)) return response()->json(['message' => 'Такого вопроса не существует!'], 400);
+            if (empty($question)) return response()->json(['message' => 'Такого вопроса не существует!'], 400);
 
             KK_Questions::where(['kk_question_id' => $request->kk_question_id])->update([
                 'kk_question_type' => $request->kk_question_type,
@@ -79,13 +95,19 @@ class QuestionsController extends Controller
             ]);
             KK_Questions_Answers::where(['kk_qa_question_id' => $request->kk_question_id])->delete();
 
-            foreach ($request->answers as $key => $answer) {
+
+            if ($request->kk_question_type !== 'text') foreach ($request->answers as $key => $answer) {
                 KK_Questions_Answers::insert([
                     'kk_qa_question_id' => $request->kk_question_id,
                     'kk_qa_text' => $answer['kk_qa_text'],
                     'kk_qa_correct' => $answer['kk_qa_correct'],
                 ]);
             }
+            else                 KK_Questions_Answers::insert([
+                'kk_qa_question_id' => $request->kk_question_id,
+                'kk_qa_text' => '',
+                'kk_qa_correct' => 0,
+            ]);
 
             $question = KK_Questions::where(['kk_question_id' => $request->kk_question_id])->with(['answers'])->first();
 

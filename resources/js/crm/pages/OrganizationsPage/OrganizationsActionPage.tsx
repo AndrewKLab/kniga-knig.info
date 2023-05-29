@@ -2,16 +2,18 @@ import React, { FunctionComponent, useEffect, useState, useCallback } from "reac
 import { connect } from 'react-redux';
 import { Button, Col, Form, Image, Row, Label, InputGroup, TextInput, InputError, TextArea, Alert, InputGroupText, ControlledSelect, Checkbox } from '../../_components/UI';
 import { User } from '../../_interfaces';
-import { usersActions, pagesActions, settingsActions, organizationsTypesActions } from "../../_actions";
+import { usersActions, pagesActions, settingsActions, organizationsTypesActions, organizationsUsersActions } from "../../_actions";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import './index.css';
-import { FinishCourseButton, ImageDropzone, PageLoader, Question, TextEditor } from "../../_components";
-import { NoMatchPage } from "../";
+import { CreateOrganizationUserModal, FinishCourseButton, ImageDropzone, PageLoader, Question, TextEditor } from "../../_components";
+import { NoMatchPage, OrganizationsUsersTable } from "../";
 import moment from 'moment';
 import 'moment/dist/locale/ru';
 import { organizationsActions } from "../../_actions/organizations.actions";
 import { Organization, OrganizationType } from "../../../public/_interfaces";
+import { IconButton } from "../../../public/_components/UI";
+import { PlusUserIcon } from "../../../public/_components/UI/Icons";
 
 
 
@@ -80,6 +82,7 @@ const OrganizationsActionPage: FunctionComponent<OrganizationsActionPageProps> =
     let { action, kk_organization_id } = useParams();
     const [loading, setLoading] = useState(true);
     const [noMatch, setNoMatch] = useState(false);
+    const [isOpenCreateOrganizationUserModal, setIsOpenCreateOrganizationUserModal] = useState(false);
     const { register, handleSubmit, formState: { errors }, setValue, control } = useForm();
 
     useEffect(() => {
@@ -88,7 +91,7 @@ const OrganizationsActionPage: FunctionComponent<OrganizationsActionPageProps> =
             await dispatch(organizationsActions.getAll({ parts: `type,parrent` }));
             await dispatch(organizationsTypesActions.getAll({}));
             if (action === 'create') console.log(action)
-            else if (action === 'update') await dispatch(organizationsActions.getOneById({ kk_organization_id: kk_organization_id }));
+            else if (action === 'update') await dispatch(organizationsActions.getOneById({ kk_organization_id: kk_organization_id, parts: 'users' }));
             else setNoMatch(true)
 
             setLoading(false)
@@ -102,6 +105,19 @@ const OrganizationsActionPage: FunctionComponent<OrganizationsActionPageProps> =
             if (create?.res?.organization?.kk_organization_id) navigate(`/organizations/action/update/${create?.res?.organization?.kk_organization_id}`)
         } else if (action === 'update') await dispatch(organizationsActions.update(data))
     }
+
+    const onCreateOrganizationUser = async (data) => {
+        const create = await dispatch(organizationsUsersActions.create(data))
+        if(create?.res){
+            setIsOpenCreateOrganizationUserModal(false)
+            await dispatch(organizationsActions.getOneById({ kk_organization_id: kk_organization_id, parts: 'users' }));
+        }
+    }
+    const onDelteOrganizationUser = async (ou) => {
+        await dispatch(organizationsUsersActions.remove({ kk_ou_id: ou.kk_ou_id }))
+        await dispatch(organizationsActions.getOneById({ kk_organization_id: kk_organization_id, parts: 'users' }));
+    }
+
 
     if (noMatch) return <NoMatchPage />
     if (
@@ -188,12 +204,17 @@ const OrganizationsActionPage: FunctionComponent<OrganizationsActionPageProps> =
             {get_one_by_id_organization ?
                 <Row g={3}>
                     <Col xs={12} lg={12}>
-                        <h5 className={"crm_panel_page_title"}>Члены организации</h5>
+                        <div className={`d-flex aling-items-center gap-3 mb-3`}>
+                            <h5 className={"organization_action_page_title  mb-0"}>Члены организации</h5>
+                            <IconButton icon={<PlusUserIcon color={`rgba(var(--primary-color), 1)`} size={24} />} onClick={() => setIsOpenCreateOrganizationUserModal(true)} />
+                        </div>
+
+                        {get_one_by_id_organization?.users && <OrganizationsUsersTable data={get_one_by_id_organization?.users} onDelete={onDelteOrganizationUser} />}
                     </Col>
                 </Row>
                 : <React.Fragment></React.Fragment>
             }
-
+            <CreateOrganizationUserModal data={get_one_by_id_organization} isOpen={isOpenCreateOrganizationUserModal} setIsOpen={setIsOpenCreateOrganizationUserModal} onCreate={onCreateOrganizationUser} />
         </div>
     )
 }

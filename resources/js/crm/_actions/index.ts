@@ -17,3 +17,4 @@ export * from './settings.actions';
 export * from './statistic.actions';
 export * from './organizations.actions';
 export * from './organizations_types.actions';
+export * from './organizations_users.actions';

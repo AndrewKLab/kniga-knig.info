@@ -22,7 +22,8 @@ import {
 
   NoMatchPage,
   PrivacyPoliticPage,
-  HomePageSecond
+  HomePageSecond,
+  PromoIBeliveCoursePage
 } from '../pages';
 
 import { ChatsPage, ChatPage } from '../../public/_components';
@@ -33,6 +34,7 @@ const MainRoutes = ({ }) => {
       {/* <Route index path="/" element={<HomePage />} /> */}
       <Route index path="/" element={<HomePageSecond />} />
       <Route path="/courses/:kk_course_id/:kk_lesson_id" element={<LessonPage />} />
+      <Route path="/courses_promo/:kk_course_id" element={<PromoIBeliveCoursePage />} />
       <Route path="/courses/:kk_course_id" element={<CoursePage />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/registration" element={<RegistrationPage />} />

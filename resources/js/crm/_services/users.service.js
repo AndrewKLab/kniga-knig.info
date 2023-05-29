@@ -4,6 +4,7 @@ export const usersService = {
     add,
     edit,
     remove,
+    getAll,
     getAllByRoleId,
     getAllMyUsersByRoleId,
     getAllWithoutUserByRoleId,
@@ -25,6 +26,10 @@ async function remove(params) {
     return handleResponse(response);
 }
 
+async function getAll(params) {
+    const response = await fetch(`${config.apiUrl}${api_path}getAll${params ? paramsObjectToString(params) : ''}`, { ...config.GET, headers: { ...authHeader() } });
+    return handleResponse(response);
+}
 async function getAllByRoleId(params) {
     const response = await fetch(`${config.apiUrl}${api_path}getAllByRoleId${params ? paramsObjectToString(params) : ''}`, { ...config.GET, headers: { ...authHeader() } });
     return handleResponse(response);

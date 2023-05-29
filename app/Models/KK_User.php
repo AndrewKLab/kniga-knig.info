@@ -304,6 +304,10 @@ class KK_User extends Authenticatable
     {
         return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_user_promouter_id');
     }
+    public function students()
+    {
+        return $this->hasMany(KK_User::class, 'kk_user_teather_id', 'kk_user_id');
+    }
     public function courses_user_progress()
     {
         return $this->hasMany(KK_Courses_Users_Progress::class, 'kk_cup_user_id', 'kk_user_id');

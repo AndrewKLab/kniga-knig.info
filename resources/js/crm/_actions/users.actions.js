@@ -10,6 +10,7 @@ export const usersActions = {
     add,
     edit,
     remove,
+    getAll,
     getAllByRoleId,
     getAllMyUsersByRoleId,
     getAllWithoutUserByRoleId,
@@ -56,6 +57,14 @@ function remove(params) {
     })
 }
 
+function getAll(params) {
+    return defaultAction(params, {
+        serviceFunc: () => usersService.getAll(params),
+        requestType: usersConstants.GET_ALL_USERS_REQUEST,
+        successType: usersConstants.GET_ALL_USERS_SUCCESS,
+        failureType: usersConstants.GET_ALL_USERS_FAILURE,
+    })
+}
 function getAllByRoleId(params) {
     return defaultAction(params, {
         serviceFunc: () => usersService.getAllByRoleId(params),

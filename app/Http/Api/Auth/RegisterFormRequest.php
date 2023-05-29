@@ -49,7 +49,7 @@ class RegisterFormRequest extends FormRequest
             'kk_user_avatar' => ['string', 'nullable', 'max:255'],
 
             'kk_user_password_privacy_politic_confirmation' => ['required', 'string'],
-            'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('registration')]
+            // 'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('registration')]
         ];
     }
 

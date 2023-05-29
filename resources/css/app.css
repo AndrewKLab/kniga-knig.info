@@ -188,6 +188,10 @@ ul li::marker {
     margin: 0 !important;
 }
 
+.mt-0{
+    margin-top: 0 !important;
+}
+
 .p-0 {
     padding: 0 !important;
 }
@@ -196,6 +200,9 @@ ul li::marker {
     margin-top: 1rem !important;
 }
 
+.mb-0 {
+    margin-bottom: 0 !important;
+}
 .mb-3 {
     margin-bottom: 1rem !important;
 }
@@ -482,20 +489,6 @@ ul li::marker {
         padding: 15px !important;
     }
 
-    .footer-text-title {
-        font-size: 16px !important;
-    }
-
-    .footer-text-description {
-        font-size: 16px !important;
-    }
-
-    .footer-icons-container {
-        flex-direction: column !important;
-        gap: 10px !important;
-        align-items: flex-end !important;
-    }
-
     .navbar-search-results {
         margin-top: 1rem !important;
     }
@@ -691,38 +684,6 @@ ul li::marker {
 
 .list-item-divider {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-.footer {
-    padding: 44px 0px 50px 0px;
-    background: rgba(var(--primary-main-color), 1);
-    color: #E5F8E2;
-}
-
-.footer-text-title {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 130%;
-    text-transform: uppercase;
-}
-
-.footer-text-description {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 130%;
-    color: #E5F8E2;
-}
-
-.footer-text-description:hover {
-    color: rgba(var(--text-color), 1);
-}
-
-.footer-icons-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-direction: row;
-    gap: 15px;
 }
 
 .d-none {
@@ -4319,4 +4280,9 @@ table {
     width: 150px;
     height: 150px;
     object-fit: cover;
+}
+
+.social_icon_link{
+    background-color: #e5f8e2;
+    cursor: pointer;
 }

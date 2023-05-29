@@ -40,7 +40,7 @@ class GoogleController extends Controller
                     'kk_user_lastname' => isset($user_data['family_name']) ? $user_data['family_name'] : null,
                     'kk_user_firstname' => isset($user_data['given_name']) ? $user_data['given_name'] : null,
                     'kk_user_password' => Hash::make('google_' . $googleUser->getId()),
-                    'kk_user_role_id' => 7,
+                    'kk_user_role_id' => 6,
 
                     'kk_user_admin_id' => $referal['kk_user_admin_id'],
                     'kk_user_coordinator_id' => $referal['kk_user_coordinator_id'],
@@ -49,8 +49,8 @@ class GoogleController extends Controller
                     'kk_user_promouter_id' => $referal['kk_user_promouter_id'],
                 ]);
 
-                if (!empty($request->referal_user)) {
-                    $referal_user = KK_User::where(['kk_user_id' => $request->referal_user])->first();
+                if (!empty($referal['referal_user_id'])) {
+                    $referal_user = KK_User::where(['kk_user_id' => $referal['referal_user_id']])->first();
                     $referal_user->notify(new UserRegistered($user, 'Пользователь ' . $user->kk_user_lastname . ' ' . $user->kk_user_firstname . ' был зарегистрирован по вашей клиентской ссылке с помощью Google.'));
                 } else {
                     $target_users = KK_User::with(['role'])->whereHas('role', function ($query) {

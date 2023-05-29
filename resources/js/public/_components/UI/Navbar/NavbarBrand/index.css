@@ -19,6 +19,10 @@
     color: #E5F8E2;
 }
 
+.navbar-brand-mobile img{
+ height: 25px;
+}
+
 @media (max-width: 1200px) {
     .navbar-brand h1 {
         font-size: 13px;

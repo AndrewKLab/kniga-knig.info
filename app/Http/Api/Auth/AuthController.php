@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
 use App\Models\KK_Courses_Users_Progress;
 use App\Models\KK_Lessons_Users_Progress;
+use App\Models\KK_Organizations;
 use App\Models\KK_Questions_Users_Answers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -29,15 +30,34 @@ class AuthController extends Controller
     public static function setReferalUsers($request)
     {
         $referal = [
+            'referal_user_id'          =>  null,
             'kk_user_admin_id'          =>  null,
             'kk_user_coordinator_id'    =>  null,
             'kk_user_pastor_id'         =>  null,
             'kk_user_teather_id'        =>  null,
             'kk_user_promouter_id'      =>  null,
         ];
+        if (!empty($request->referal_user)) $referal['referal_user_id'] = $request->referal_user;
+        else {
+            $organization = KK_Organizations::where(['kk_organization_id' => 396])->with(['users' => function ($query) {
+                $query->with(['user' => function ($query) {
+                    $query->withCount(['students']);
+                }]);
+            }])->first(); //Медиа-холдинг "Надежда"
 
-        if (!empty($request->referal_user)) {
-            $referal_user = KK_User::where(['kk_user_id' => $request->referal_user])->with(['role'])->first();
+            $min_students_count = 0;
+            if(!empty($organization) && count($organization->users) > 0){
+                foreach ($organization->users as $key => $user) {
+                    if($user->students_count <= $min_students_count) {
+                        $min_students_count = $user->user->students_count;
+                        $referal['referal_user_id'] = $user->user->kk_user_id;
+                    }
+                }
+            }
+        }
+
+        if (!empty($referal['referal_user_id'])) {
+            $referal_user = KK_User::where(['kk_user_id' => $referal['referal_user_id']])->with(['role'])->first();
             if (empty($referal_user)) return response()->json(['message' => 'Такой пользователь не найден!'], 400);
             if (empty($referal_user->role)) return response()->json(['message' => 'Такая роль пользователя не найдена!'], 400);
             if ($referal_user->role->kk_role_level === 1 || $referal_user->role->kk_role_level === 2) {
@@ -74,6 +94,7 @@ class AuthController extends Controller
         }
         return $referal;
     }
+    
 
     /**
      * Handle the incoming request.
@@ -97,7 +118,7 @@ class AuthController extends Controller
             'kk_user_commune' => $request['kk_user_commune'],
             'kk_user_password' => Hash::make($request['kk_user_password']),
             'kk_user_offline_user' => $request['kk_user_offline_user'] ? $request['kk_user_offline_user'] : 0,
-            'kk_user_role_id' => 7,
+            'kk_user_role_id' => 6,
 
             'kk_user_admin_id' => $referal['kk_user_admin_id'],
             'kk_user_coordinator_id' => $referal['kk_user_coordinator_id'],
@@ -107,7 +128,6 @@ class AuthController extends Controller
 
             'kk_user_avatar' => $request['kk_user_avatar'],
             'kk_user_email_verified_at' => $request['kk_user_email_verified_at'],
-
         ]);
 
         $created_cup = null;
@@ -158,8 +178,8 @@ class AuthController extends Controller
             }
         }
 
-        if (!empty($request->referal_user)) {
-            $referal_user = KK_User::where(['kk_user_id' => $request->referal_user])->first();
+        if (!empty($referal['referal_user_id'])) {
+            $referal_user = KK_User::where(['kk_user_id' => $referal['referal_user_id']])->first();
             $referal_user->notify(new UserRegistered($user, 'Пользователь ' . $user->kk_user_lastname . ' ' . $user->kk_user_firstname . ' был зарегистрирован по вашей клиентской ссылке.'));
         } else {
             $target_users = KK_User::with(['role'])->whereHas('role', function ($query) {

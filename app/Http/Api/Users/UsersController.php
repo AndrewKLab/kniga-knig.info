@@ -128,7 +128,6 @@ class UsersController extends Controller
         return response()->json(['message' => env('RESPONSE_UPDATE_SUCCESS'), 'user' => $user], 200);
     }
 
-
     public function remove(Request $request)
     {
         if (empty($request->kk_user_id)) return response()->json(['message' => env('RESPONSE_MISSING_DATA')], 400);
@@ -141,10 +140,10 @@ class UsersController extends Controller
 
     public function getAll(Request $request)
     {
-        // $params = KK_User::Params($request);
-        // $courses = KK_User::with($params->parts)->withCount($params->parts_to_count)->where($params->where)->orderBy('kk_course_updated_at', 'DESC')->get();
+        $params = KK_User::Params($request);
+        $users = KK_User::with($params->parts)->withCount($params->parts_to_count)->where($params->where)->get();
 
-        // return response()->json(['message' => env('RESPONSE_SUCCESS'), 'courses' => $courses], 200);
+        return response()->json(['message' => env('RESPONSE_SUCCESS'), 'users' => $users], 200);
     }
 
     public function getAllByRoleId(Request $request)

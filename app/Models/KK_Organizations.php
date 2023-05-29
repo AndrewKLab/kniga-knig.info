@@ -50,6 +50,16 @@ class KK_Organizations extends Model
                             // });
                         });
                         break;
+                    case 'users':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                            // $query->where(function ($query) use ($request) {
+                            //     $query->where("kk_cup_user_id", Auth::user()->kk_user_id);
+                            //     if (isset($request->course_users_progress_status)) {
+                            //         $query->where("kk_cup_status", $request->course_users_progress_status);
+                            //     }
+                            // });
+                        });
+                        break;
                 }
             }
         }
@@ -80,5 +90,9 @@ class KK_Organizations extends Model
     public function parrent()
     {
         return $this->hasOne(KK_Organizations::class, 'kk_organization_id', 'kk_organization_parrent_id');
+    }
+    public function users()
+    {
+        return $this->hasMany(KK_Organizations_Users::class, 'kk_ou_organization_id', 'kk_organization_id')->with('user');
     }
 }

@@ -11,21 +11,32 @@ import Tooltip from 'grapesjs-tooltip';
 // import Carousel from 'grapesjs-carousel';
 import { ru } from './languages';
 import { button, image, link, listItems, quote, text, textBasic, video } from "./components";
-import styles  from '../../../../css/app.css';
+import styles from '../../../../css/app.css';
 
 type PageBuilderProps = {
   id?: string;
   editor: object | null;
   setEditor: any;
   defaultValue: string | null;
+  blocksBasicBlocks?: [];
+  newsletterBlocks?: [];
+  height?: string;
 }
 
-const PageBuilder: FunctionComponent<PageBuilderProps> = ({ id, editor, setEditor, defaultValue }): JSX.Element => {
+const PageBuilder: FunctionComponent<PageBuilderProps> = ({ 
+  id, 
+  editor, 
+  setEditor, 
+  defaultValue, 
+  newsletterBlocks = ['button', 'divider', 'image', 'list-items',], 
+  blocksBasicBlocks = ['text', 'link', 'image', 'video'],
+  height = 'calc(90vh - 114px)'
+}): JSX.Element => {
 
   useEffect(() => {
     const editor = grapesjs.init({
-      container: `#${id ? `${id}_`:``}editor`,
-      height: 'calc(90vh - 114px)',
+      container: `#${id ? `${id}_` : ``}editor`,
+      height: height,
       showOffsets: true,
       selectorManager: { componentFirst: true },
       canvas: {
@@ -340,7 +351,7 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ id, editor, setEdito
       ],
       pluginsOpts: {
         [BlocksBasic]: {
-          blocks: ['text', 'link', 'image', 'video'],
+          blocks: blocksBasicBlocks,
           flexGrid: true,
         },
         [PresetWebpage]: {
@@ -348,7 +359,7 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ id, editor, setEdito
           textCleanCanvas: 'Вы уверены, что хотите очистить холст?'
         },
         [Newsletter]: {
-          blocks: ['button', 'divider', 'image', 'list-items',],
+          blocks: newsletterBlocks,
           updateStyleManager: false,
           modalTitleImport: 'Импортировать шаблон',
           modalBtnImport: 'Импорт',
@@ -373,13 +384,19 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ id, editor, setEdito
 
       //set default styles
       blockManager.get('text').set(text);
-      blockManager.get('link').set(link);
+      let linkBlock = blockManager.get('link')
+      if(linkBlock) linkBlock.set(link);
       blockManager.get('text-basic').set(textBasic);
       blockManager.get('quote').set(quote);
-      blockManager.get('video').set(video);
-      blockManager.get('image').set(image);
-      blockManager.get('button').set(button);
-      blockManager.get('list-items').set(listItems);
+      let videoBlock = blockManager.get('video')
+      if(videoBlock) videoBlock.set(video);
+      let imageBlock = blockManager.get('image')
+      if(imageBlock) imageBlock.set(image);
+      let buttonBlock = blockManager.get('button')
+      if(buttonBlock) buttonBlock.set(button);
+      let listItemsBlock = blockManager.get('list-items')
+      if(listItemsBlock) listItemsBlock.set(listItems);
+
 
       // console.log(components.getType('list-items'));
       // console.log(blockManager.get('list-items'));
@@ -405,9 +422,9 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ id, editor, setEdito
         `<div class="gjs-sm-sector-title"><span class="icon-settings fa fa-cog"></span> <span class="gjs-sm-sector-label">Настройки</span></div>` +
         `<div class="gjs-sm-properties" style="display: none;"></div></div>`);
       var traitsProps = traitsSector.find(`.gjs-sm-properties`);
-      traitsProps.append($(`#${id ? `${id}_editor`:``} .gjs-trt-traits`));
-      $(`#${id ? `${id}_editor`:``} .gjs-sm-sectors`).before(traitsSector);
-      traitsSector.find(`#${id ? `${id}_editor`:``} .gjs-sm-sector-title`).on('click', function () {
+      traitsProps.append($(`#${id ? `${id}_editor` : ``} .gjs-trt-traits`));
+      $(`#${id ? `${id}_editor` : ``} .gjs-sm-sectors`).before(traitsSector);
+      traitsSector.find(`#${id ? `${id}_editor` : ``} .gjs-sm-sector-title`).on('click', function () {
         var traitStyle = traitsProps.get(0).style;
         var hidden = traitStyle.display == 'none';
         if (hidden) {
@@ -433,7 +450,7 @@ const PageBuilder: FunctionComponent<PageBuilderProps> = ({ id, editor, setEdito
   }, []);
 
   return (
-    <div id={`${id ? `${id}_`:``}editor`}></div>
+    <div id={`${id ? `${id}_` : ``}editor`}></div>
   );
 };
 export default PageBuilder;

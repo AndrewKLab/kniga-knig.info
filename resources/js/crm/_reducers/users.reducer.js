@@ -27,10 +27,10 @@ const initialState = {
     remove_users: null,
 
 
-    // get_all_users_loading: false,
-    // get_all_users_message: null,
-    // get_all_users_error: null,
-    // get_all_users: null,
+    get_all_users_loading: false,
+    get_all_users_message: null,
+    get_all_users_error: null,
+    get_all_users: null,
 
     get_all_by_role_id_users_loading: false,
     get_all_by_role_id_users_message: null,
@@ -219,31 +219,31 @@ export function users(state = initialState, action) {
                 remove_users: null,
             };
 
-        // GET_ALL_USERS_CATEGORIES
-        // case usersConstants.GET_ALL_USERS_REQUEST:
-        //     return {
-        //         ...state,
-        //         get_all_users_loading: true,
-        //         get_all_users_message: null,
-        //         get_all_users_error: null,
-        //         get_all_users: null,
-        //     };
-        // case usersConstants.GET_ALL_USERS_SUCCESS:
-        //     return {
-        //         ...state,
-        //         get_all_users_loading: false,
-        //         get_all_users_message: action.res.message,
-        //         get_all_users_error: null,
-        //         get_all_users: action.res.users,
-        //     };
-        // case usersConstants.GET_ALL_USERS_FAILURE:
-        //     return {
-        //         ...state,
-        //         get_all_users_loading: false,
-        //         get_all_users_message: null,
-        //         get_all_users_error: null,
-        //         get_all_users: action.error,
-        //     };
+        // GET_ALL_USERS
+        case usersConstants.GET_ALL_USERS_REQUEST:
+            return {
+                ...state,
+                get_all_users_loading: true,
+                get_all_users_message: null,
+                get_all_users_error: null,
+                get_all_users: null,
+            };
+        case usersConstants.GET_ALL_USERS_SUCCESS:
+            return {
+                ...state,
+                get_all_users_loading: false,
+                get_all_users_message: action.res.message,
+                get_all_users_error: null,
+                get_all_users: action.res.users,
+            };
+        case usersConstants.GET_ALL_USERS_FAILURE:
+            return {
+                ...state,
+                get_all_users_loading: false,
+                get_all_users_message: null,
+                get_all_users_error: null,
+                get_all_users: action.error,
+            };
 
         // GET_ALL_BY_ROLE_ID_USERS
         case usersConstants.GET_ALL_BY_ROLE_ID_USERS_REQUEST:

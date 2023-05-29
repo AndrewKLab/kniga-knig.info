@@ -1,0 +1,28 @@
+.referal-modal {
+    max-width: 60% !important;
+}
+
+.referal-modal .modal-header {
+    border-bottom: none;
+}
+
+.referal-modal .modal-body {
+    padding: 0 2rem;
+}
+
+.referal-modal-title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    text-transform: uppercase;
+}
+.referal-modal-sub-title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+}
+.referal-modal-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}

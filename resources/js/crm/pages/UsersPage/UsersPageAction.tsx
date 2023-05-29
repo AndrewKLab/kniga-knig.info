@@ -192,7 +192,7 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                         {action === 'add' && <InputError errors={add_users_errors} name={'kk_user_email'} />}
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_email'} />}
                     </Col>
-                    <Col xs={12} lg={4}>
+                    <Col xs={12} lg={6}>
                         <Label htmlFor="kk_user_country">Страна:</Label>
                         <TextInput
                             {...register('kk_user_country')}
@@ -206,7 +206,7 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                         {action === 'add' && <InputError errors={add_users_errors} name={'kk_user_country'} />}
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_country'} />}
                     </Col>
-                    <Col xs={12} lg={4}>
+                    <Col xs={12} lg={6}>
                         <Label htmlFor="kk_user_sity">Город:</Label>
                         <TextInput
                             {...register('kk_user_sity')}
@@ -220,20 +220,21 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                         {action === 'add' && <InputError errors={add_users_errors} name={'kk_user_sity'} />}
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_sity'} />}
                     </Col>
-                    <Col xs={12} lg={4}>
-                        <Label htmlFor="kk_user_commune">Организация:</Label>
-                        <TextInput
+                    <TextInput
                             {...register('kk_user_commune')}
                             className={`courses_constructor_page_input`}
-                            type={`text`}
+                            type={`hidden`}
                             id={`kk_user_commune`}
                             name={`kk_user_commune`}
                             placeholder={`Введите организацию...`}
                             defaultValue={action === 'edit' ? get_one_by_user_id_users?.kk_user_commune : null}
                         />
+                    {/* <Col xs={12} lg={4}>
+                        <Label htmlFor="kk_user_commune">Организация:</Label>
+  
                         {action === 'add' && <InputError errors={add_users_errors} name={'kk_user_commune'} />}
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_commune'} />}
-                    </Col>
+                    </Col> */}
                     {action === 'add' ?
                         <React.Fragment>
                             <Col xs={12} lg={6}>

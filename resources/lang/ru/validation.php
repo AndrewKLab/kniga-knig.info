@@ -210,5 +210,7 @@ return [
 
         'kk_organization_type_id' => 'Тип организации',
         'kk_organization_name' => 'Название',
+
+        'kk_ou_user_id' => 'Пользователь',
     ],
 ];

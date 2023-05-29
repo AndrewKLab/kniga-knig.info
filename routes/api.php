@@ -26,6 +26,7 @@ use App\Http\Api\Auth\OdniklassnikiController;
 use App\Http\Api\Auth\VKController;
 use App\Http\Api\Organizations\OrganizationsController;
 use App\Http\Api\Organizations\OrganizationsTypesController;
+use App\Http\Api\Organizations\OrganizationsUsersController;
 use App\Http\Api\Statistics\StatisticsController;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -132,6 +133,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users/remove', [UsersController::class, 'remove'])->middleware('checkAccess:Пользователи,delete');
 
     Route::middleware('checkAccess:Пользователи,full_read')->group(function () {
+        Route::get('/users/getAll', [UsersController::class, 'getAll']);
         Route::get('/users/getAllByRoleId', [UsersController::class, 'getAllByRoleId']);
         Route::get('/users/getAllMyUsersByRoleId', [UsersController::class, 'getAllMyUsersByRoleId']);
         Route::get('/users/getAllWithoutUserByRoleId', [UsersController::class, 'getAllWithoutUserByRoleId']);
@@ -156,6 +158,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/organizations/delete', [OrganizationsController::class, 'delete'])->middleware('checkAccess:Организации,delete');
 
     Route::get('/organizations_types/getAll', [OrganizationsTypesController::class, 'getAll'])->middleware('checkAccess:Типы организаций,read');
+
+    Route::post('/organizations_users/create', [OrganizationsUsersController::class, 'create'])->middleware('checkAccess:Члены организаций,create');
+    Route::post('/organizations_users/delete', [OrganizationsUsersController::class, 'delete'])->middleware('checkAccess:Члены организаций,delete');
 
     Route::get('/notifications/getAll', [NotificationsController::class, 'getAll']);
     Route::post('/notifications/markAsReadOneById', [NotificationsController::class, 'markAsReadOneById']);
