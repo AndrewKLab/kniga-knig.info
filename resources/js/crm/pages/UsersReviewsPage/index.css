@@ -1,0 +1,42 @@
+.users_reviews_list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.users_reviews_list_item {
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    background-color: rgba(var(--background-color-dark), 1);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.users_reviews_list_item_header{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.users_reviews_list_item_description {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: rgba(var(--text-color), 0.5);
+}
+
+.users_reviews_list_item_image {
+    border-radius: 50% !important;
+    height: 50px;
+}
+
+.users_reviews_list_item_stars{
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.users_reviews_list_item_text{
+    margin: 1rem 0 0 0;
+}

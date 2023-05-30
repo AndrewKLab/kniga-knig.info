@@ -10,11 +10,12 @@ import { FinishCourseButton, FinishLessonModal, PageLoader, Question } from "../
 import moment from 'moment';
 import 'moment/dist/locale/ru';
 import { config, getPercentageOfCorrectAnswers, hasTextQuestion } from "../../../_helpers";
-import { modalsActions } from "../../../../public/_actions";
+import { modalsActions, usersReviewsActions } from "../../../../public/_actions";
 import { User, Lesson, LessonUserProgress, CourseUserProgress } from "../../../../public/_interfaces";
 import parse from 'html-react-parser';
 import { localCoursesUserProgressHelper } from "../../../../public/_helpers";
 import { lessonsConstants, lessonsUsersProgressConstants } from "../../../_constants";
+import { UsersReviewsForm } from "../../../_components/UsersReviewForm";
 
 type LessonPlaneProps = {
     dispatch: any;
@@ -136,6 +137,7 @@ const LessonPlane: FunctionComponent<LessonPlaneProps> = ({
         if (lup?.kk_lup_status === "finished") {
             if (get_one_by_lesson_id_lessons?.course?.lessons && get_one_by_lesson_id_lessons.course.lessons.length > 0) {
                 let nextLesson = get_one_by_lesson_id_lessons.course.lessons.filter((item) => item.kk_lesson_number === get_one_by_lesson_id_lessons.kk_lesson_number + 1)[0];
+                dispatch(usersReviewsActions.init({}))
                 navigate(`/courses/${nextLesson.kk_lesson_course_id}/${nextLesson.kk_lesson_id}`)
             }
         } else if (lup?.kk_lup_status === "inprocess") setLocalError("Сначала вам необходимо пройди данный урок!");
@@ -282,17 +284,19 @@ const LessonPlane: FunctionComponent<LessonPlaneProps> = ({
                                 <FinishCourseButton lesson={get_one_by_lesson_id_lessons} lessons_users_progress={get_all_by_cup_id_lessons_users_progress} />
                             </Col>
                         </Row>
-
-                        {get_one_by_lesson_id_lessons_users_progress?.kk_lup_status === 'finished' || (!user && localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id)?.kk_lup_status === 'finished') ?
-                            <Row g={3} >
-                                <Col xs={12} lg={6}><Button className="w-100" onClick={onEdit} loading={remove_lessons_users_progress_loading} disabled={remove_lessons_users_progress_loading || !(get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0) || !user}>Повторить тест</Button></Col>
-                                <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/`)}>Завершить занятие</Button></Col>
-                                <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/contacts`)}>Задать вопрос</Button></Col>
-                                <Col xs={12} lg={6}><Button className="w-100" onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button></Col>
-                                <Col xs={12} lg={12}>Поделиться:<br /><Share className={`mt-3`} link={`${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`} whatsapp viber telegram sms copy /></Col>
-                            </Row> : <React.Fragment></React.Fragment>
-                        }
                     </Form>
+
+                    {get_one_by_lesson_id_lessons_users_progress?.kk_lup_status === 'finished' || (!user && localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id)?.kk_lup_status === 'finished') ?
+                        <Row g={3} >
+                            <Col xs={12} lg={6}><Button className="w-100" onClick={onEdit} loading={remove_lessons_users_progress_loading} disabled={remove_lessons_users_progress_loading || !(get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0) || !user}>Повторить тест</Button></Col>
+                            <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/`)}>Завершить занятие</Button></Col>
+                            <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/contacts`)}>Задать вопрос</Button></Col>
+                            <Col xs={12} lg={6}><Button className="w-100" onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button></Col>
+                            <Col xs={12} lg={12}>Поделиться:<br /><Share className={`mt-3`} link={`${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`} whatsapp viber telegram sms copy /></Col>
+                            <Col xs={12} lg={12}><UsersReviewsForm kk_lesson_id={get_one_by_lesson_id_lessons.kk_lesson_id} /></Col>
+                        </Row> : <React.Fragment></React.Fragment>
+                    }
+
                 </Row>
             </React.Fragment> : <React.Fragment></React.Fragment>
 

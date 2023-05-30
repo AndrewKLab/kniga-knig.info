@@ -23,7 +23,8 @@ import {
   NoMatchPage,
   PrivacyPoliticPage,
   HomePageSecond,
-  PromoIBeliveCoursePage
+  PromoIBeliveCoursePage,
+  OfertaPage
 } from '../pages';
 
 import { ChatsPage, ChatPage } from '../../public/_components';
@@ -53,6 +54,7 @@ const MainRoutes = ({ }) => {
       <Route path="/about-us" element={<AboutUsPage />} />
       <Route path="/contacts" element={<ContactsPage />} />
       <Route path="/confidential" element={<PrivacyPoliticPage />} />
+      <Route path="/oferta" element={<OfertaPage />} />
       <Route path="*" element={<NoMatchPage />} />
     </Routes>
   );

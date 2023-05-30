@@ -7,7 +7,7 @@ import { setTheme } from '../../_helpers';
 import { StudentOutlineIcon, ChartLineUpOutlineIcon, InfoOutlineIcon, DoubleFoldersOutlineIcon, GearOutlineIcon, FolderOutlineIcon } from "../UI/Icons";
 import { useNavigate } from "react-router-dom";
 import { AllCoursesModulesList, AllUsersModulesList, MyCoursesModulesList, MyUsersModulesList, WithoutUsersModulesList } from "./HeaderNavbarDrawerMenuModulesLists";
-import { OrganizationIcon } from "../../../public/_components/UI/Icons";
+import { OrganizationIcon, StarOutlineIcon } from "../../../public/_components/UI/Icons";
 
 type HeaderProps = {
     dispatch: any;
@@ -89,6 +89,12 @@ const HeaderNavbarDrawerMenu: FunctionComponent<HeaderProps> = ({ dispatch, chil
                 <TabsMenu className={`drawer_dropdown_menu`} activeTab={user_page_tab} setActiveTab={(tab) => dispatch(usersActions.setUsersPageTab(tab))} tabs={user_modules} />
                 <ActiveUsersTab />
             </div>,
+        })
+        if (user?.role?.kk_role_type !== 'ROLE_PROMOUTER') menu_items.push({
+            itemAvatar: <StarOutlineIcon size={22} color={location.pathname === '/users_reviews' ? "rgba(var(--primary-color),1)" : "rgba(var(--text-color), 1)"} />,
+            itemTitle: 'Отзывы',
+            onClick: () => goToLink('/users_reviews'),
+            itemLink: '/users_reviews',
         })
         if (user?.role?.kk_role_type !== 'ROLE_PROMOUTER') menu_items.push({
             itemAvatar: <OrganizationIcon size={22} color={location.pathname === '/organizations' ? "rgba(var(--primary-color),1)" : "rgba(var(--text-color), 1)"} />,

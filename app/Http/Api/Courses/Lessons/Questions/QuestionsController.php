@@ -27,7 +27,9 @@ class QuestionsController extends Controller
 
         if (!empty($request->kk_question_type) && $request->kk_question_type !== 'text') {
             $rules = [
-                ...$rules,
+                'kk_question_lesson_id' => ['required', 'string'],
+                'kk_question_type' => ['required', 'string', 'max:255'],
+                'kk_question_text' => ['required', 'string', 'max:1000'],
                 'answers.*.kk_qa_text' => ['required', 'string', 'max:255'],
                 'answers.*.kk_qa_correct' => ['required', 'max:1'],
             ];
@@ -75,7 +77,9 @@ class QuestionsController extends Controller
 
         if (!empty($request->kk_question_type) && $request->kk_question_type !== 'text') {
             $rules = [
-                ...$rules,
+                'kk_question_lesson_id' => ['required', 'string'],
+                'kk_question_type' => ['required', 'string', 'max:255'],
+                'kk_question_text' => ['required', 'string', 'max:1000'],
                 'answers.*.kk_qa_text' => ['required', 'string', 'max:255'],
                 'answers.*.kk_qa_correct' => ['required', 'max:1'],
             ];

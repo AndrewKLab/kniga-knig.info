@@ -22,7 +22,7 @@ import { organizations } from './organizations.reducer';
 import { organizations_types } from './organizations_types.reducer';
 import { organizations_users } from './organizations_users.reducer';
 
-import { notifications, chats } from '../../public/_reducers';
+import { notifications, chats, users_reviews } from '../../public/_reducers';
 
 const rootReducer = combineReducers({
   users,
@@ -33,7 +33,7 @@ const rootReducer = combineReducers({
   organizations_types,
   organizations_users,
   // course_constructor,
-
+  users_reviews,
 
   courses,
   courses_categories,

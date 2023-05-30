@@ -42,7 +42,7 @@ const RemoveLessonModal: FunctionComponent<RemoveLessonModalProps> = ({
                 Вы действительно хотите удалить урок {`"${lesson?.kk_lesson_name}"`}? Вместе с ним будут удалены все вопросы, ответы и ответы пользователей связанные с этим уроком.
             </ModalBody>
             <ModalActions>
-                <Button color={'primary'} onClick={onDelete} loading={remove_lessons_loading} disabled={remove_lessons_loading}>Удалить</Button>
+                <Button color={'primary'} onClick={(event) => onDelete(event, lesson)} loading={remove_lessons_loading} disabled={remove_lessons_loading}>Удалить</Button>
                 <Button onClick={() => setIsOpen(false)}>Закрыть</Button>
             </ModalActions>
         </Modal> : null

@@ -14,5 +14,6 @@ export * from './Profile/ProfileEditPage';
 
 export * from './NoMatchPage';
 export * from './PrivacyPoliticPage';
+export * from './OfertaPage';
 export * from './TechnicalWorksPage';
 

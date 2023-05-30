@@ -16,12 +16,12 @@ import { lessons_users_progress } from './lessons_users_progress.reducer';
 import { auth } from './auth.reducer';
 import { support } from './support.reducer';
 
-import { notifications, chats, modals } from '../../public/_reducers';
+import { notifications, chats, modals, users_reviews } from '../../public/_reducers';
 const rootReducer = combineReducers({
   users,
   style,
   search,
-
+  users_reviews,
   // course_constructor,
 
 

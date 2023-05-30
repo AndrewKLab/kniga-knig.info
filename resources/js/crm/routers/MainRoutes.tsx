@@ -40,6 +40,7 @@ import {
 import { Alert, Col, Drawer, Row } from '../_components/UI';
 import { useWindowWidth } from '../_hooks';
 import { notificationsActions } from '../../public/_actions';
+import { UsersReviewsPage } from '../pages/UsersReviewsPage';
 
 
 
@@ -106,6 +107,8 @@ const MainRoutes = ({dispatch,  user }) => {
             <Route index path="/organizations" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute element={<OrganizationsPage />} />} />} />
             <Route path="/organizations/action/:action" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<OrganizationsActionPage />} />} />} />
             <Route path="/organizations/action/:action/:kk_organization_id" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute backButton element={<OrganizationsActionPage />} />} />} />
+
+            <Route index path="/users_reviews" element={<CustomAccessRoute rule={user?.role?.kk_role_type !== 'ROLE_PROMOUTER'} element={<PrivateRoute element={<UsersReviewsPage />} />} />} />
 
             <Route path="*" element={<NoMatchPage />} />
           </Routes>

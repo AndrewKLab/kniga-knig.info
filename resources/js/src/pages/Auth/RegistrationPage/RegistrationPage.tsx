@@ -32,28 +32,37 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
 }): JSX.Element => {
     const [togglePasswordShow, setTogglePasswordShow] = useState(false);
     const [togglePasswordConfirmShow, setTogglePasswordConfirmShow] = useState(false);
+    const [referalUser, setReferalUser] = useState(null);
     let navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { executeRecaptcha } = useGoogleReCaptcha();
     const [searchParams] = useSearchParams();
+
     let referal_user = searchParams.get('referal_user');
     let course = searchParams.get('course');
 
     useEffect(() => {
+
         if (referal_user) {
             localStorage.setItem('referal_user', referal_user)
             openReferalModal()
             navigate(`/courses`)
+        } else {
+            
+            
+            let ru = localStorage.getItem('referal_user');
+            if(ru) setReferalUser(ru)
         }
+
         if (course) {
             openReferalModal()
             navigate(`/courses/${course}`)
         }
     }, [])
 
-    const openReferalModal = () =>{
+    const openReferalModal = () => {
         const opened = localStorage.getItem('opened_referal_modal')
-        if(!opened || opened === "false") {
+        if (!opened || opened === "false") {
             localStorage.setItem('opened_referal_modal', "false")
             dispatch(modalsActions.openReferalModal(true))
             localStorage.setItem('opened_referal_modal', "true")
@@ -89,12 +98,12 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
                     <Form className={`registration_page_form`} onSubmit={handleSubmit(onSubmitRegistrationForm)}>
                         <Row g={3}>
 
-                            {referal_user && <TextInput
+                            {referalUser && <TextInput
                                 {...register('referal_user')}
                                 type={`hidden`}
                                 id={`referal_user`}
                                 name={`referal_user`}
-                                value={referal_user}
+                                value={referalUser}
                             />}
                             <Col xs={12} md={12}><h1 className={`registration_title text-primary`}>Регистрация</h1></Col>
                             <Col xs={12} md={6}>

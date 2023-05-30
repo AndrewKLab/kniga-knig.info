@@ -28,6 +28,7 @@ use App\Http\Api\Organizations\OrganizationsController;
 use App\Http\Api\Organizations\OrganizationsTypesController;
 use App\Http\Api\Organizations\OrganizationsUsersController;
 use App\Http\Api\Statistics\StatisticsController;
+use App\Http\Api\Users\UsersReviewsController;
 use Illuminate\Support\Facades\Broadcast;
 
 // Broadcast::routes(['middleware' => ['auth:sanctum']]);
@@ -166,4 +167,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/markAsReadOneById', [NotificationsController::class, 'markAsReadOneById']);
     Route::post('/notifications/markAsReadAll', [NotificationsController::class, 'markAsReadAll']);
     Route::post('/notifications/sendNotifications', [NotificationsController::class, 'sendNotifications'])->middleware('checkAccess:Уведомления,create');
+
+    Route::get('/users_reviews/getAll', [UsersReviewsController::class, 'getAll'])->middleware('checkAccess:Отзывы пользователей,read');
+    Route::get('/users_reviews/getOneById', [UsersReviewsController::class, 'getOneById'])->middleware('checkAccess:Отзывы пользователей,read');
+    Route::post('/users_reviews/create', [UsersReviewsController::class, 'create'])->middleware('checkAccess:Отзывы пользователей,create');
+    Route::post('/users_reviews/update', [UsersReviewsController::class, 'update'])->middleware('checkAccess:Отзывы пользователей,update');
+    Route::post('/users_reviews/delete', [UsersReviewsController::class, 'delete'])->middleware('checkAccess:Отзывы пользователей,delete');
 });

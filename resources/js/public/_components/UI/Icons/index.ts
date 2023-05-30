@@ -32,6 +32,8 @@ export * from './PlusUserIcon';
 export * from './PartnerIcon1';
 export * from './PartnerIcon2';
 export * from './PartnerIcon3';
+export * from './StarIcon';
+export * from './StarOutlineIcon';
 
 export * from './TelegramIcon';
 export * from './YouTubeIcon';

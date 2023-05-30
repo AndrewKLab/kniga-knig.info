@@ -16,6 +16,7 @@ const initialState = {
             // 'primary-dark-color': '253, 223, 89',
             'background-color': '255, 255, 255',
             'background-color-light': '255, 255, 255',
+            'background-color-dark': '246, 246, 246',
 
             'list-circle-url': 'url("https://kniga-knig.info/assets/icons/EllipseDark.svg")',
 
@@ -44,6 +45,7 @@ const initialState = {
             // 'primary-dark-color': '255, 255, 255',
             'background-color': '9, 21, 7',
             'background-color-light': '42, 51, 41',
+            'background-color-dark': '36, 44, 35',
 
             'list-circle-url': 'url("https://kniga-knig.info/assets/icons/EllipseLight.svg")',
 

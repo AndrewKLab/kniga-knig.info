@@ -16,6 +16,7 @@ const initialState = {
             // 'primary-dark-color': '253, 223, 89',
             'background-color': '255, 255, 255',
             'background-color-light': '255, 255, 255',
+            'background-color-dark': '246, 246, 246',
 
             'list-circle-url': 'url("https://kniga-knig.info/assets/icons/EllipseDark.svg")',
 
@@ -26,13 +27,13 @@ const initialState = {
             'alert-danger-text-color': '97, 26, 21',
             'alert-danger-icon-color': '244, 67, 54',
 
+            'drawer-background-color': '229, 248, 226',
+
             // 'background-color-light': '245, 245, 245',
             // 'background-color-dark': '238, 238, 238',
             // 'background-color-disabled': '228, 231, 234',
 
             // 'border-color': '232, 232, 232'
-
-            'drawer-background-color': '229, 248, 226',
         },
         dark: {
             // 'primary-light-color': '253, 223, 89',
@@ -44,6 +45,7 @@ const initialState = {
             // 'primary-dark-color': '255, 255, 255',
             'background-color': '9, 21, 7',
             'background-color-light': '42, 51, 41',
+            'background-color-dark': '36, 44, 35',
 
             'list-circle-url': 'url("https://kniga-knig.info/assets/icons/EllipseLight.svg")',
 
@@ -54,13 +56,13 @@ const initialState = {
             'alert-danger-text-color': '255, 255, 255',
             'alert-danger-icon-color': '255, 255, 255',
 
+            'drawer-background-color': '39, 22, 23',
+
             // 'background-color-light': '52, 86, 104',
             // 'background-color-dark': '33, 66, 85',
             // 'background-color-disabled': '89, 89, 89',
 
             // 'border-color': '10, 43, 62',
-
-            'drawer-background-color': '39, 22, 23',
         }
     }
 };
