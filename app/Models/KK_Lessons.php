@@ -17,6 +17,7 @@ class KK_Lessons extends Model
 
     protected $fillable = [
         'kk_lesson_course_id',
+        'kk_lesson_number',
         'kk_lesson_autor_id',
         'kk_lesson_published',
         'kk_lesson_name',
@@ -62,7 +63,10 @@ class KK_Lessons extends Model
                         $parts_queries += array($part => function ($query) use ($request, $parts, $parts_to_count) {
                             $with = [];
                             if (in_array('lessons', $parts)) {
+
                                 $with += array('lessons' => function ($query) use ($request) {
+                                    $query->select('kk_lesson_id', 'kk_lesson_course_id', 'kk_lesson_autor_id', 'kk_lesson_number', 'kk_lesson_published', 'kk_lesson_name', 'kk_lesson_description', 'kk_lesson_image', 'kk_lesson_audio', 'kk_lesson_video', 'kk_lesson_created_at', 'kk_lesson_updated_at',);
+
                                     if (isset($request->lessons_published)) {
                                         $query->where("kk_lesson_published", $request->lessons_published);
                                     }
@@ -88,17 +92,17 @@ class KK_Lessons extends Model
                     case 'questions':
                         $parts_queries += array($part => function ($query) use ($request, $parts) {
                             $with = [];
-                            
+
                             if (in_array('answers', $parts)) {
-                               
+
                                 $with += array('answers' => function ($query) use ($request, $parts) {
                                     if (auth('sanctum')->check()) {
                                         $with = [];
-                                        
+
                                         if (in_array('user_answer', $parts)) {
-                                            
+
                                             $with += array('user_answer' => function ($querys) use ($request, $parts) {
-                                                if(!empty($request->kk_user_id)) $querys->where("kk_qua_user_id", $request->kk_user_id);
+                                                if (!empty($request->kk_user_id)) $querys->where("kk_qua_user_id", $request->kk_user_id);
                                                 else $querys->where("kk_qua_user_id", auth('sanctum')->user()->kk_user_id);
                                             });
                                         }

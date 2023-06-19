@@ -11,5 +11,5 @@ export interface NavbarBrandProps extends React.HTMLProps<HTMLAnchorElement> {
 }
 
 export const NavbarBrand: FunctionComponent<NavbarBrandProps> = ({ children, className, ...other }) => {
-  return <Link to={other.href} className={`navbar-brand${className ? ` ${className}` : ''}`}><Image src={`site/лого КНИГА КНИГ.svg`} height={'45px'} width={`100%`} /><h1>{children}</h1></Link>
+  return <Link to={other.href} className={`navbar-brand${className ? ` ${className}` : ''}`}><Image src={`site/лого КНИГА КНИГ-02 (2).svg`} height={'45px'} width={`100%`} /><h1>{children}</h1></Link>
 } 

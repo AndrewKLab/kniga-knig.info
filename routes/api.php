@@ -115,6 +115,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/courses_users_progress/remove', [CoursesUsersProgressController::class, 'remove']);
     Route::get('/courses_users_progress/getAll', [CoursesUsersProgressController::class, 'getAll']);
     Route::get('/courses_users_progress/getOneByCourseId', [CoursesUsersProgressController::class, 'getOneByCourseId']);
+    Route::post('/courses_users_progress/update_cup_need_notify', [CoursesUsersProgressController::class, 'update_cup_need_notify']);
+    Route::post('/courses_users_progress/send_course_diplom_to_email', [CoursesUsersProgressController::class, 'send_course_diplom_to_email']);
+    Route::post('/courses_users_progress/send_course_diplom_order', [CoursesUsersProgressController::class, 'send_course_diplom_order']);
+    Route::post('/courses_users_progress/send_reminder', [CoursesUsersProgressController::class, 'send_reminder']);
 
 
     Route::post('/lessons_users_progress/add', [LessonsUsersProgressController::class, 'add']);

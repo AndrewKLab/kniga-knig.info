@@ -31,8 +31,8 @@ function registration(params, navigate) {
                         localStorage.removeItem('questions_users_answers')
                     }
                     dispatch(success(res))
+                    ym(93153491,'reachGoal','success_reg')
                     navigate('/login')
-
                 },
                 error => dispatch(failure(error))
             );

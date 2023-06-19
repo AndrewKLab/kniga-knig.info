@@ -98,7 +98,7 @@ const PromoIBeliveCoursePage: FunctionComponent<PromoIBeliveCoursePageProps> = (
 
     useEffect(() => {
         const init = async () => {
-            await dispatch(coursesActions.getOneByCourseId({ kk_course_id: kk_course_id, parts: 'category,lessons', parts_to_count: 'lessons', category_published: 1, courses_published: 1, lessons_published: 1 }))
+            await dispatch(coursesActions.getOneByCourseId({ kk_course_id: kk_course_id, parts: 'category,lessons', parts_to_count: 'lessons', category_published: 1, courses_published: 1, lessons_published: 1, }))
             if (user) await dispatch(coursesUsersProgressActions.getOneByCourseId({ kk_cup_course_id: kk_course_id, parts: 'lessons_users_progress' }))
         }
         init();
@@ -316,7 +316,7 @@ const PromoIBeliveCoursePage: FunctionComponent<PromoIBeliveCoursePageProps> = (
                             <span className={`text-primary`}>Поддержите </span> проект
                         </div>
 
-                        <div className={`home_page_second_text home_page_second_hello_block_desc`}>Ваше пожертвование - это поддержка нашего проекта и вклад в общее благо. Вы помогаете нам продолжать делиться ценными знаниями Библии со всеми желающими.Вместе мы создаем сообщество, в котором каждый может получить поддержку и помощь в своем духовном развитии.</div>
+                        <div className={`home_page_second_text home_page_second_hello_block_desc`}>Ваши пожертвования помогают нам продолжать делиться знаниями Библии со всеми желающими познать глубины Книги книг. Пусть Бог обильно благословит вас, мы регулярно молимся о наших спонсорах.</div>
 
                         <Button className={`home_page_second_button`} onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать</Button>
                     </div>

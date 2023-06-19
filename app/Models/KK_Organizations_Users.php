@@ -66,4 +66,8 @@ class KK_Organizations_Users extends Model
     {
         return $this->hasOne(KK_User::class, 'kk_user_id', 'kk_ou_user_id')->with('role');
     }
+    public function organization()
+    {
+        return $this->hasOne(KK_Organizations::class, 'kk_organization_id', 'kk_ou_organization_id');
+    }
 }

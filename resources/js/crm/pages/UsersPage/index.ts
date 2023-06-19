@@ -6,3 +6,4 @@ export * from './UsersPageCourseProgress';
 export * from './AllUsersModule';
 export * from './MyUsersModule';
 export * from './WithoutUsersModule';
+export * from './UsersOrganizationsTable';

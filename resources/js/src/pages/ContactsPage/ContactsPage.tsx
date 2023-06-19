@@ -53,7 +53,7 @@ const ContactsPage: FunctionComponent<ContactsPageProps> = ({
             <Row g={3} className={`contacts_page_row`}>
                 <Col xs={12} xl={7} className={`contacts_page_first_section`}>
                     <Image src={`site/up_contact.png`} className={`contacts_page_first_section_img`} />
-                    <p className={`contacts_page_first_section_text`}>Если у вас возникли вопросы, отправьте его через данную форму и мы вам ответим</p>
+                    <p className={`contacts_page_first_section_text`}>Если у вас возник вопрос, отправьте его через данную форму и мы вам ответим</p>
                     <Form className={`contacts_page_first_section_form`} onSubmit={handleSubmit(onSubmitContactForm)}>
                         {user &&
                             <TextInput

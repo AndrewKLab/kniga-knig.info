@@ -4,14 +4,16 @@ import { Button, Col, Form, Image, Row, Label, InputGroup, TextInput, InputError
 import { ArrowLeftIcon, ArrowSquareRightIcon, FileOutlineIcon } from '../../_components/UI/Icons';
 
 import { User } from '../../_interfaces';
-import { usersActions, pagesActions, settingsActions } from "../../_actions";
+import { usersActions, pagesActions, settingsActions, organizationsUsersActions, organizationsActions } from "../../_actions";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import './index.css';
-import { FinishCourseButton, ImageDropzone, PageLoader, Question, TextEditor } from "../../_components";
-import { NoMatchPage } from "../";
+import { CreateOrganizationUserModal, CreateUserOrganizationModal, FinishCourseButton, ImageDropzone, PageLoader, Question, TextEditor } from "../../_components";
+import { NoMatchPage, UsersOrganizationsTable } from "../";
 import moment from 'moment';
 import 'moment/dist/locale/ru';
+import { PlusUserIcon } from "../../../public/_components/UI/Icons";
+import { IconButton } from "../../../public/_components/UI";
 
 
 
@@ -79,6 +81,7 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
     let { action, kk_user_id } = useParams();
     const [loading, setLoading] = useState(true);
     const [noMatch, setNoMatch] = useState(false);
+    const [isOpenCreateOrganizationUserModal, setIsOpenCreateOrganizationUserModal] = useState(false);
     const { register, handleSubmit, formState: { errors }, setValue, control } = useForm();
 
 
@@ -88,7 +91,7 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
             await dispatch(pagesActions.openPage())
             await dispatch(settingsActions.getAllUsersRoles({ parts: 'users' }));
             if (action === 'add') console.log(action)
-            else if (action === 'edit') await dispatch(usersActions.getOneByUserId({ kk_user_id: kk_user_id }));
+            else if (action === 'edit') await dispatch(usersActions.getOneByUserId({ kk_user_id: kk_user_id, parts: 'organizations' }));
             else setNoMatch(true)
 
             setLoading(false)
@@ -100,6 +103,19 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
         if (action === 'add') { await dispatch(usersActions.add(data, navigate)) }
         else if (action === 'edit') await dispatch(usersActions.edit(data))
         console.log(action, data)
+    }
+
+    const onCreateOrganizationUser = async (data) => {
+        const create = await dispatch(organizationsUsersActions.create(data))
+        if (create?.res) {
+            setIsOpenCreateOrganizationUserModal(false)
+            await dispatch(usersActions.getOneByUserId({ kk_user_id: kk_user_id, parts: 'organizations' }));
+        }
+    }
+
+    const onDelteOrganizationUser = async (ou) => {
+        await dispatch(organizationsUsersActions.remove({ kk_ou_id: ou.kk_ou_id }))
+        await dispatch(usersActions.getOneByUserId({ kk_user_id: kk_user_id, parts: 'organizations' }));
     }
 
     if (noMatch) return <NoMatchPage />
@@ -221,14 +237,14 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_sity'} />}
                     </Col>
                     <TextInput
-                            {...register('kk_user_commune')}
-                            className={`courses_constructor_page_input`}
-                            type={`hidden`}
-                            id={`kk_user_commune`}
-                            name={`kk_user_commune`}
-                            placeholder={`Введите организацию...`}
-                            defaultValue={action === 'edit' ? get_one_by_user_id_users?.kk_user_commune : null}
-                        />
+                        {...register('kk_user_commune')}
+                        className={`courses_constructor_page_input`}
+                        type={`hidden`}
+                        id={`kk_user_commune`}
+                        name={`kk_user_commune`}
+                        placeholder={`Введите организацию...`}
+                        defaultValue={action === 'edit' ? get_one_by_user_id_users?.kk_user_commune : null}
+                    />
                     {/* <Col xs={12} lg={4}>
                         <Label htmlFor="kk_user_commune">Организация:</Label>
   
@@ -306,7 +322,7 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                         {action === 'add' && <InputError errors={add_users_errors} name={'kk_user_coordinator_id'} />}
                         {action === 'edit' && <InputError errors={edit_users_errors} name={'kk_user_coordinator_id'} />}
                     </Col>}
-                    {user?.role?.kk_role_level <= 4 &&<Col xs={12} lg={4}>
+                    {user?.role?.kk_role_level <= 4 && <Col xs={12} lg={4}>
                         <Label htmlFor="kk_user_pastor_id">Пастор Пользователя:</Label>
                         <ControlledSelect
                             control={control}
@@ -370,6 +386,25 @@ const UsersPageAction: FunctionComponent<UsersPageActionProps> = ({
                     </Col>
                 </Row>
             </Form>
+            {get_one_by_user_id_users ?
+                <React.Fragment>
+                    <Row g={3}>
+                        <Col xs={12} lg={12}>
+                            <div className={`d-flex aling-items-center gap-3 mb-3`}>
+                                <h5 className={"organization_action_page_title  mb-0"}>Организации</h5>
+                                <IconButton icon={<PlusUserIcon color={`rgba(var(--primary-color), 1)`} size={24} />} onClick={() => setIsOpenCreateOrganizationUserModal(true)} />
+                            </div>
+
+                            {get_one_by_user_id_users?.organizations && <UsersOrganizationsTable data={get_one_by_user_id_users?.organizations} onDelete={onDelteOrganizationUser} />}
+                        </Col>
+
+                    </Row>
+                    <CreateUserOrganizationModal data={get_one_by_user_id_users} isOpen={isOpenCreateOrganizationUserModal} setIsOpen={setIsOpenCreateOrganizationUserModal} onCreate={onCreateOrganizationUser} />
+                </React.Fragment>
+                : <React.Fragment></React.Fragment>
+
+            }
+
         </div>
     )
 }

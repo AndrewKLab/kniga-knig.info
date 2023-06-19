@@ -7,6 +7,7 @@
 .env
 .conf
 /public/assets
+/public/logs
 .env.backup
 .phpunit.result.cache
 Homestead.json

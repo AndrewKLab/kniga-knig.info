@@ -93,6 +93,9 @@ class KK_User extends Authenticatable
         if (count($parts) > 0) {
             foreach ($parts as $part_key => $part) {
                 switch ($part) {
+                    case 'organizations':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                        });
                     case 'role':
                         $parts_queries += array($part => function ($query) use ($request, $part) {
                         });
@@ -315,5 +318,11 @@ class KK_User extends Authenticatable
     public function course_user_progress()
     {
         return $this->hasOne(KK_Courses_Users_Progress::class, 'kk_cup_user_id', 'kk_user_id');
+    }
+    public function organizations()
+    {
+        return $this->hasMany(KK_Organizations_Users::class, 'kk_ou_user_id', 'kk_user_id')->with('organization', function ($query) {
+            $query->with('type');
+        });
     }
 }

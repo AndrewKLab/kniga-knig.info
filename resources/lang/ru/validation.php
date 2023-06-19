@@ -213,6 +213,12 @@ return [
 
         'kk_ou_user_id' => 'Пользователь',
 
-        'kk_ur_assessment' => 'Оценка'
+        'kk_ur_assessment' => 'Оценка',
+
+        'region' => 'Регион',
+        'city' => 'Город',
+        'street' => 'Улица',
+        'house' => 'Дом',
+        'apartment' => 'Номер квартиры',
     ],
 ];

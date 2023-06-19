@@ -28,6 +28,23 @@ const initialState = {
     get_one_by_course_id_courses_users_progress_message: null,
     get_one_by_course_id_courses_users_progress_error: null,
     get_one_by_course_id_courses_users_progress: null,
+
+    send_course_diplom_loading: false,
+    send_course_diplom_message: null,
+    send_course_diplom_error: null,
+    send_course_diplom: null,
+
+    send_course_diplom_order_loading: false,
+    send_course_diplom_order_message: null,
+    send_course_diplom_order_errors: null,
+    send_course_diplom_order_error_message: null,
+    send_course_diplom_order: null,
+
+    update_cup_need_notify_loading: false,
+    update_cup_need_notify_message: null,
+    update_cup_need_notify_errors: null,
+    update_cup_need_notify_error_message: null,
+    update_cup_need_notify: null,
 }
 
 const sortByStatus = (state, courses) => {
@@ -197,6 +214,90 @@ export function courses_users_progress(state = initialState, action) {
                 get_one_by_course_id_courses_users_progress_message: null,
                 get_one_by_course_id_courses_users_progress_error: action.error,
                 get_one_by_course_id_courses_users_progress: null,
+            };
+
+        //SEND_COURSE_DIPLOM_TO_EMAIL_COURSES_USERS_PROGRESS
+        case coursesUsersProgressConstants.SEND_COURSE_DIPLOM_TO_EMAIL_COURSES_USERS_PROGRESS_REQUEST:
+            return {
+                ...state,
+                send_course_diplom_loading: true,
+                send_course_diplom_message: null,
+                send_course_diplom_error: null,
+                send_course_diplom: null,
+            };
+        case coursesUsersProgressConstants.SEND_COURSE_DIPLOM_TO_EMAIL_COURSES_USERS_PROGRESS_SUCCESS:
+            return {
+                ...state,
+                send_course_diplom_loading: false,
+                send_course_diplom_message: action.res.message,
+                send_course_diplom_error: null,
+                send_course_diplom: null,
+            };
+        case coursesUsersProgressConstants.SEND_COURSE_DIPLOM_TO_EMAIL_COURSES_USERS_PROGRESS_FAILURE:
+            return {
+                ...state,
+                send_course_diplom_loading: false,
+                send_course_diplom_message: null,
+                send_course_diplom_error: action.error,
+                send_course_diplom: null,
+            };
+
+        //SEND_COURSE_DIPLOM_ORDER_COURSES_USERS_PROGRESS
+        case coursesUsersProgressConstants.SEND_COURSE_DIPLOM_ORDER_COURSES_USERS_PROGRESS_REQUEST:
+            return {
+                ...state,
+                send_course_diplom_order_loading: true,
+                send_course_diplom_order_message: null,
+                send_course_diplom_order_error_message: null,
+                send_course_diplom_order_errors: null,
+                send_course_diplom_order: null,
+            };
+        case coursesUsersProgressConstants.SEND_COURSE_DIPLOM_ORDER_COURSES_USERS_PROGRESS_SUCCESS:
+            return {
+                ...state,
+                send_course_diplom_order_loading: false,
+                send_course_diplom_order_message: action.res.message,
+                send_course_diplom_order_error_message: null,
+                send_course_diplom_order_errors: null,
+                send_course_diplom_order: null,
+            };
+        case coursesUsersProgressConstants.SEND_COURSE_DIPLOM_ORDER_COURSES_USERS_PROGRESS_FAILURE:
+            return {
+                ...state,
+                send_course_diplom_order_loading: false,
+                send_course_diplom_order_message: null,
+                send_course_diplom_order_error_message: action.error,
+                send_course_diplom_order_errors: action.error,
+                send_course_diplom_order: null,
+            };
+
+        //UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS
+        case coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_REQUEST:
+            return {
+                ...state,
+                update_cup_need_notify_loading: true,
+                update_cup_need_notify_message: null,
+                update_cup_need_notify_error_message: null,
+                update_cup_need_notify_errors: null,
+                update_cup_need_notify: null,
+            };
+        case coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_SUCCESS:
+            return {
+                ...state,
+                update_cup_need_notify_loading: false,
+                update_cup_need_notify_message: action.res.message,
+                update_cup_need_notify_error_message: null,
+                update_cup_need_notify_errors: null,
+                update_cup_need_notify: null,
+            };
+        case coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_FAILURE:
+            return {
+                ...state,
+                update_cup_need_notify_loading: false,
+                update_cup_need_notify_message: null,
+                update_cup_need_notify_error_message: action.error,
+                update_cup_need_notify_errors: action.error,
+                update_cup_need_notify: null,
             };
 
         default:

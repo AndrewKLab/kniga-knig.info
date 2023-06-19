@@ -7,7 +7,10 @@ export const coursesUsersProgressActions = {
     edit,
     remove,
     getAll,
-    getOneByCourseId
+    getOneByCourseId,
+    update_cup_need_notify,
+    send_course_diplom_to_email,
+    send_course_diplom_order,
 };
 
 function add(params) {
@@ -48,5 +51,29 @@ function getOneByCourseId(params) {
         requestType: coursesUsersProgressConstants.GET_ONE_BY_COURSE_ID_COURSES_USERS_PROGRESS_REQUEST,
         successType: coursesUsersProgressConstants.GET_ONE_BY_COURSE_ID_COURSES_USERS_PROGRESS_SUCCESS,
         failureType: coursesUsersProgressConstants.GET_ONE_BY_COURSE_ID_COURSES_USERS_PROGRESS_FAILURE,
+    })
+}
+function update_cup_need_notify(params) {
+    return defaultAction(params, {
+        serviceFunc: () => coursesUsersProgressService.update_cup_need_notify(params),
+        requestType: coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_REQUEST,
+        successType: coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_SUCCESS,
+        failureType: coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_FAILURE,
+    })
+}
+function send_course_diplom_to_email(params) {
+    return defaultAction(params, {
+        serviceFunc: () => coursesUsersProgressService.send_course_diplom_to_email(params),
+        requestType: coursesUsersProgressConstants.SEND_COURSE_DIPLOM_TO_EMAIL_COURSES_USERS_PROGRESS_REQUEST,
+        successType: coursesUsersProgressConstants.SEND_COURSE_DIPLOM_TO_EMAIL_COURSES_USERS_PROGRESS_SUCCESS,
+        failureType: coursesUsersProgressConstants.SEND_COURSE_DIPLOM_TO_EMAIL_COURSES_USERS_PROGRESS_FAILURE,
+    })
+}
+function send_course_diplom_order(params) {
+    return defaultAction(params, {
+        serviceFunc: () => coursesUsersProgressService.send_course_diplom_order(params),
+        requestType: coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_REQUEST,
+        successType: coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_SUCCESS,
+        failureType: coursesUsersProgressConstants.UPDATE_CUP_NEED_NOTIFY_COURSES_USERS_PROGRESS_FAILURE,
     })
 }

@@ -201,6 +201,13 @@ z-index: -100;
     filter: blur(150px);
 }
 
+.home_page_qr_code_container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
 @media (max-width: 1200px) {
     .home_page_title_container {
         display: flex;

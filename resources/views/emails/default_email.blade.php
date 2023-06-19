@@ -1,3 +1,0 @@
-<div>
-    {{ $mail->body }}
-</div>

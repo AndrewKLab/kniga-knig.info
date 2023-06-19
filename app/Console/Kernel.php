@@ -2,8 +2,14 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SendCUPRemindEmails;
+use App\Http\Api\Courses\CoursesUsersProgressController;
+use App\Mail\Reminder;
+use App\Models\KK_Lessons;
+use App\Models\KK_User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,7 +21,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(new SendCUPRemindEmails)->dailyAt('18:00')->emailOutputOnFailure('glas.keys@gmail.com');
     }
 
     /**
@@ -25,7 +31,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

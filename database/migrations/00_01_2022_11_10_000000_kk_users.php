@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kk_users', function (Blueprint $table) {
-            $table->bigIncrements('kk_user_id')->nullable(true)->comment('ID записи');
+            $table->bigIncrements('kk_user_id')->comment('ID записи');
             $table->foreignId('kk_user_role_id')->nullable(true)->index('kk_user_role_id')->comment('ID Роли Пользователя');
             $table->foreignId('kk_user_admin_id')->nullable(true)->index('kk_user_admin_id')->comment('ID Администратора');
             $table->foreignId('kk_user_coordinator_id')->nullable(true)->index('kk_user_coordinator_id')->comment('ID Координатора');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('kk_user_firstname')->nullable(true)->comment('Имя');
             $table->string('kk_user_lastname')->nullable(true)->comment('Фамилия');
             $table->string('kk_user_middlename')->nullable(true)->comment('Отчетво');
-            $table->bigInteger('kk_user_phonenumber')->comment('Номер телефона');
+            $table->bigInteger('kk_user_phonenumber')->nullable(true)->comment('Номер телефона');
             $table->string('kk_user_email')->nullable(true)->comment('E-mail');
             $table->string('kk_user_country')->nullable(true)->comment('Страна');
             $table->string('kk_user_sity')->nullable(true)->comment('Город');

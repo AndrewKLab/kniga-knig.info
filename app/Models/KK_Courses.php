@@ -58,6 +58,8 @@ class KK_Courses extends Model
                         break;
                     case 'lessons':
                         $parts_queries += array($part => function ($query) use ($request, $part) {
+                            $query->select('kk_lesson_id', 'kk_lesson_course_id', 'kk_lesson_autor_id', 'kk_lesson_number', 'kk_lesson_published', 'kk_lesson_name', 'kk_lesson_description', 'kk_lesson_image', 'kk_lesson_audio', 'kk_lesson_video', 'kk_lesson_created_at', 'kk_lesson_updated_at',);
+
                             $query->where(function ($query) use ($request) {
                                 if (isset($request->lessons_published)) {
                                     $query->where("kk_lesson_published", $request->lessons_published);

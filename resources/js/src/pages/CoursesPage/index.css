@@ -102,7 +102,7 @@
     padding-bottom: 120px;
 }
 
-.promo_course_page_button{
+.promo_course_page_button {
     padding-left: 34px;
 }
 
@@ -156,6 +156,7 @@
 .course_page_button {
     padding: 25px;
 }
+
 .course_page_button.mobile {
     display: none;
 }
@@ -197,14 +198,37 @@
     border: none;
 }
 
-.course_page_action_buttons_container{
+.course_page_action_buttons_container {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
+.courses_diplom_page {
+    padding-top: 90px;
+    padding-bottom: 120px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.courses_diplom_form {}
+
+.courses_diplom_page_title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 44px;
+    margin-bottom: 73px;
+}
+
+.courses_diplom_page_button {
+    margin-bottom: 31px;
+}
+
 @media (max-width: 1200px) {
-    .course_page {
+
+    .course_page,
+    .courses_diplom_page {
         padding-top: 24px;
         padding-bottom: 36px;
     }
@@ -251,8 +275,13 @@
         font-size: 14px;
         line-height: 125%;
     }
+
     .course_page_button.mobile {
         display: block;
         margin-top: 48px;
+    }
+
+    .courses_diplom_form {
+        max-width: 100%;
     }
 }

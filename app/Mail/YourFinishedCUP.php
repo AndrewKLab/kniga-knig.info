@@ -12,31 +12,23 @@ class YourFinishedCUP extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $user;
+    public $course;
+
     /**
      * Create a new message instance.
+     *
+     * @return void
      */
-    public function __construct(
-        public $mail,
-    ) {
+    public function __construct($user, $course)
+    {
+        $this->user = $user;
+        $this->course = $course;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Вы прошли курс!',
-        );
+        return $this->markdown('emails.finish_course')->subject("Проздравляем с прохождением курса!");
     }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.default_email',
-        );
-    }
 }

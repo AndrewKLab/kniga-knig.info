@@ -48,10 +48,10 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
             openReferalModal()
             navigate(`/courses`)
         } else {
-            
-            
+
+
             let ru = localStorage.getItem('referal_user');
-            if(ru) setReferalUser(ru)
+            if (ru) setReferalUser(ru)
         }
 
         if (course) {
@@ -81,13 +81,13 @@ const RegistrationPage: FunctionComponent<RegistrationPageProps> = ({
 
     const onSubmitRegistrationForm = async (data) => {
         const token = await handleReCaptchaVerify();
-        await dispatch(authActions.registration({
+        const reg = await dispatch(authActions.registration({
             ...data,
             "g-recaptcha-response": token,
             'courses_user_progress': JSON.stringify(localCoursesUserProgressHelper.getCUP()),
             'lessons_user_progress': JSON.stringify(localCoursesUserProgressHelper.getLUP()),
             'questions_users_answers': JSON.stringify(localCoursesUserProgressHelper.getQUA()),
-        }, navigate))
+        },navigate))
     }
 
 

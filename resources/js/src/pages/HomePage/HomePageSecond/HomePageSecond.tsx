@@ -47,7 +47,7 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
     useEffect(() => {
         const init = async () => {
             await dispatch(coursesActions.getAll({ parts: 'category', parts_to_count: 'lessons', course_published: 1, category_published: 1, lessons_published: 1 }))
-            await dispatch(coursesActions.getOneByCourseId({ kk_course_id: 197, parts: 'category', parts_to_count: 'lessons', course_published: 1, category_published: 1, lessons_published: 1 }))
+            await dispatch(coursesActions.getOneByCourseId({ kk_course_id: 237, parts: 'category', parts_to_count: 'lessons', course_published: 1, category_published: 1, lessons_published: 1 }))
         }
         init();
     }, []);
@@ -133,7 +133,7 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
                 </Row>
             }
 
-            <Row g={3} className="home_page_second_block">
+            <Row g={3} className="home_page_second_block home_page_second_white_block">
                 <Col xs={12} lg={12} >
                     <div className={`home_page_second_title`}>
                         <span className={`text-primary`}>Авторы</span> курсов
@@ -181,7 +181,7 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
                         }}
                         caruselRenderItem={(item, index) => (
                             <AutorCard
-                                className={`home_page_second_text`}
+                                className={`home_page_second_text home_page_autor_card`}
                                 title={item.title}
                                 desctiption={item.desctiption}
                                 img={item.img}
@@ -198,21 +198,23 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
 
             {
                 get_one_by_course_id_courses && <Row g={3} className={`home_page_second_block home_page_second_green_block`}>
-                    <Col xs={12} lg={6} className={`order-lg-1 order-xs-2 `}>
+                    <Col xs={12} lg={7} className={`order-lg-1 order-xs-2 `}>
                         <div className="home_page_second_text_block">
 
                             <div className={`home_page_second_title home_page_second_title_margins`}>
                                 <span className={`text-primary`}>{get_one_by_course_id_courses.kk_course_name} </span>
                             </div>
 
-                            <div className={`home_page_second_text home_page_second_hello_block_desc home_page_second_course_desciption`}>{parse(get_one_by_course_id_courses.kk_course_description)}</div>
+                            <div className={`home_page_second_text home_page_second_hello_block_desc home_page_second_course_desciption`}>
+                                Откройте для себя смысл молитвы и позвольте на личном опыте испытать действенность и силу Божьих обещаний.
+                            </div>
 
-                            <Button className={`home_page_second_button`} onClick={() => navigate(`/courses/${get_one_by_course_id_courses.kk_course_id}`)}>Посмотреть курс</Button>
+                            <Button className={`home_page_second_button home_page_second_course_button`} onClick={() => navigate(`/courses/${get_one_by_course_id_courses.kk_course_id}`)}>Посмотреть<br />курс</Button>
                         </div>
                     </Col>
-                    <Col xs={12} lg={6} className={`order-lg-2 order-xs-1`}>
+                    <Col xs={12} lg={5} className={`order-lg-2 order-xs-1`}>
                         <div className="d-flex flex-column justify-content-center h-100">
-                            <Image src={`courses/${get_one_by_course_id_courses.kk_course_image}`} />
+                            <Image src={`site/Mask group(1).png`} />
                         </div>
                     </Col>
                 </Row>
@@ -220,7 +222,7 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
 
 
 
-            <Row g={3} className={`home_page_second_block `}>
+            <Row g={3} className={`home_page_second_block home_page_second_white_block`}>
                 <Col xs={12} lg={6} className={`order-lg-1 order-xs-2`}>
                     <div className="d-flex flex-column justify-content-center h-100">
                         {/* <Image src={`site/обложки ТГБ 2-03 2.png`} className={`home_page_second_hello_block_img`} /> */}
@@ -253,7 +255,9 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
                             <span className={`text-primary`}>Поддержите </span> проект
                         </div>
 
-                        <div className={`home_page_second_text home_page_second_hello_block_desc`}>Ваше пожертвование - это поддержка нашего проекта и вклад в общее благо. Вы помогаете нам продолжать делиться ценными знаниями Библии со всеми желающими.Вместе мы создаем сообщество, в котором каждый может получить поддержку и помощь в своем духовном развитии.</div>
+                        <div className={`home_page_second_text home_page_second_hello_block_desc`}>
+                            Ваши пожертвования помогают нам продолжать делиться знаниями Библии со всеми желающими познать глубины Книги книг. Пусть Бог обильно благословит вас, мы регулярно молимся о наших спонсорах.
+                        </div>
 
                         <Button className={`home_page_second_button`} onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать</Button>
                     </div>

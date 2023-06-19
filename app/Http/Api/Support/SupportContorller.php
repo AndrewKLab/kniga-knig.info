@@ -55,14 +55,15 @@ class SupportContorller extends Controller
         if (!empty($request->kk_support_type_id)) $support_type = KK_Support_Types::where(['kk_st_id' => $request->kk_support_type_id])->first();
 
         $mail = (object) [
-            'user'=>$user,
-            'support_type'=>$support_type,
+            'user' => $user,
+            'support_type' => $support_type,
             'kk_support_name' => $request->kk_support_name,
             'kk_support_email' => $request->kk_support_email,
             'kk_support_subject' => $request->kk_support_subject,
             'kk_support_message' => $request->kk_support_message,
         ];
-         Mail::to('glas.keys@gmail.com')->send(new Support($mail));
+
+        Mail::to(config('mail.from.address'))->send(new Support($mail));
 
         return response()->json(['message' => "Ваше сообщение отправлено успешно!",], 200);
     }

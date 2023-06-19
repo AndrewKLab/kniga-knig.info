@@ -23,6 +23,7 @@ class KK_Courses_Users_Progress extends Model
         'kk_cup_course_id',
         'kk_cup_status',
         'kk_cup_assessment',
+        'kk_cup_need_notify',
         'kk_cup_started_at',
         'kk_cup_finished_at',
     ];
@@ -61,7 +62,7 @@ class KK_Courses_Users_Progress extends Model
                                     if (isset($request->lessons_users_progress_status)) {
                                         $query->where("kk_lup_status", $request->lessons_users_progress_status);
                                     }
-                                    $query->where(['kk_lup_user_id'=>Auth::user()->kk_user_id]);
+                                    $query->where(['kk_lup_user_id' => Auth::user()->kk_user_id]);
                                 });
                             }
                             if (in_array('lessons_users_progress', $parts_to_count)) {
@@ -69,7 +70,7 @@ class KK_Courses_Users_Progress extends Model
                                     if (isset($request->lessons_users_progress_status)) {
                                         $query->where("kk_lup_status", $request->lessons_users_progress_status);
                                     }
-                                    $query->where(['kk_lup_user_id'=>Auth::user()->kk_user_id]);
+                                    $query->where(['kk_lup_user_id' => Auth::user()->kk_user_id]);
                                 });
                             }
 
@@ -81,23 +82,21 @@ class KK_Courses_Users_Progress extends Model
                                 if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
                                 $query->orderBy('kk_course_updated_at', 'ASC');
                             });
-
                         });
                         break;
-                        case 'lessons_users_progress':
-                            $parts_queries += array($part => function ($query) use ($request, $parts, $parts_to_count) {
-
-                            });
+                    case 'lessons_users_progress':
+                        $parts_queries += array($part => function ($query) use ($request, $parts, $parts_to_count) {
+                        });
                         break;
-                    // case 'lessons':
-                    //     $parts_queries += array($part => function ($query) use ($request, $part) {
-                    //         $query->where(function ($query) use ($request) {
-                    //             if (isset($request->lessons_published)) {
-                    //                 $query->where("kk_lesson_published", $request->lessons_published);
-                    //             }
-                    //         });
-                    //     });
-                    //     break;
+                        // case 'lessons':
+                        //     $parts_queries += array($part => function ($query) use ($request, $part) {
+                        //         $query->where(function ($query) use ($request) {
+                        //             if (isset($request->lessons_published)) {
+                        //                 $query->where("kk_lesson_published", $request->lessons_published);
+                        //             }
+                        //         });
+                        //     });
+                        //     break;
                         // default:
                         //     # code...
                         //     break;
@@ -153,5 +152,9 @@ class KK_Courses_Users_Progress extends Model
     public function lessons_users_progress()
     {
         return $this->hasMany(KK_Lessons_Users_Progress::class, 'kk_lup_cup_id', 'kk_cup_id');
+    }
+    public function last_finished_lup()
+    {
+        return $this->hasOne(KK_Lessons_Users_Progress::class, 'kk_lup_cup_id', 'kk_cup_id')->where([['kk_lup_status', '=', 'finished']])->orderByDesc('kk_lup_finished_at');
     }
 }

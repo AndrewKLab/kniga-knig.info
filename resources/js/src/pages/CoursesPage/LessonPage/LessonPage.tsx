@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { lessonsActions, lessonsUsersProgressActions, pagesActions } from "../../../_actions";
-import { useParams } from "react-router-dom";
+import { coursesUsersProgressActions, lessonsActions, lessonsUsersProgressActions, pagesActions } from "../../../_actions";
+import { useParams, useSearchParams } from "react-router-dom";
 import './index.css';
 import { PageLoader, } from "../../../_components";
 import { LessonPlane, NoMatchPage } from "../../";
@@ -41,14 +41,19 @@ const LessonPage: FunctionComponent<LessonPageProps> = ({
     get_one_by_lesson_id_lessons_users_progress,
 
 }): JSX.Element => {
-    let { kk_course_id, kk_lesson_id } = useParams();
     const [loading, setLoading] = useState(true);
+
+    let { kk_course_id, kk_lesson_id } = useParams();
+    const [searchParams] = useSearchParams();
+
+    let cup_need_notify = searchParams.get('cup_need_notify');
+
 
     useEffect(() => {
         const init = async () => {
             await dispatch(pagesActions.openPage());
             if (user) {
-                await dispatch(lessonsActions.getOneByLessonId({
+                const lesson = await dispatch(lessonsActions.getOneByLessonId({
                     kk_lesson_id: kk_lesson_id,
                     kk_course_id: kk_course_id,
                     parts: 'course,lessons,course_users_progress,questions,answers,user_answer',
@@ -57,6 +62,7 @@ const LessonPage: FunctionComponent<LessonPageProps> = ({
                     lessons_published: 1,
                     parts_to_count: 'lessons'
                 }))
+                if(cup_need_notify && lesson?.type === 'GET_ONE_BY_LESSONS_ID_LESSONS_SUCCESS' && lesson?.res?.lesson?.course_users_progress) await dispatch(coursesUsersProgressActions.update_cup_need_notify({kk_cup_id: lesson?.res?.lesson?.course_users_progress?.kk_cup_id, kk_cup_need_notify: 1}));
                 await dispatch(lessonsUsersProgressActions.getOneByLessonId({ kk_lup_course_id: kk_course_id, kk_lup_lesson_id: kk_lesson_id }))
             } else {
                 localCoursesUserProgressHelper.createCUP(kk_course_id);

@@ -128,7 +128,7 @@ const DonateModal: FunctionComponent<DonateModalProps> = ({
                                 {...register('privacy_politic_confirmation')}
                                 id={`privacy_politic_confirmation`}
                                 name={`privacy_politic_confirmation`}
-                                label={<React.Fragment>Нажимая кнопку «Поддержать», я даю согласие на обработку своих персональных данных, принимаю <Link to={`/confidential`} target="_blank" className={`link`}>Политику конфиденциальности</Link>, <Link to={`/oferta`} target="_blank" className={`link`}>Договор оферты</Link> и являюсь гражданином РФ</React.Fragment>}
+                                label={<React.Fragment>Нажимая кнопку "Поддержать", я принимаю <Link to={`/confidential`} target="_blank" className={`link`}>Политику конфиденциальности</Link> и <Link to={`/oferta`} target="_blank" className={`link`}>Договор оферты</Link>, даю согласие на обработку персональных данных и подтверждаю, что являюсь гражданином РФ</React.Fragment>}
                             />
                         </Col>
                     </Row>

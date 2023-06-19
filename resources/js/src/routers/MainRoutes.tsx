@@ -24,6 +24,7 @@ import {
   PrivacyPoliticPage,
   HomePageSecond,
   PromoIBeliveCoursePage,
+  СourseDiplomFormPage,
   OfertaPage
 } from '../pages';
 
@@ -36,6 +37,7 @@ const MainRoutes = ({ }) => {
       <Route index path="/" element={<HomePageSecond />} />
       <Route path="/courses/:kk_course_id/:kk_lesson_id" element={<LessonPage />} />
       <Route path="/courses_promo/:kk_course_id" element={<PromoIBeliveCoursePage />} />
+      <Route path="/courses_diplom_form" element={<PrivateRoute element={<СourseDiplomFormPage />} />} />
       <Route path="/courses/:kk_course_id" element={<CoursePage />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/registration" element={<RegistrationPage />} />
@@ -45,11 +47,11 @@ const MainRoutes = ({ }) => {
       <Route path="/password/verify/pin" element={<VerifyPinPasswordPage />} />
       <Route path="/password/reset" element={<ResetPasswordPage />} />
 
-      <Route path="/profile" element={<PrivateRoute element={<ProfilePage />}/>} />
-      <Route path="/profile/edit" element={<PrivateRoute element={<ProfileEditPage />}/>} />
+      <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
+      <Route path="/profile/edit" element={<PrivateRoute element={<ProfileEditPage />} />} />
 
-      <Route path="/chats" element={<PrivateRoute element={<ChatsPage />}/>} />
-      <Route path="/chats/:kk_chat_id" element={<PrivateRoute element={<ChatPage />}/>} />
+      <Route path="/chats" element={<PrivateRoute element={<ChatsPage />} />} />
+      <Route path="/chats/:kk_chat_id" element={<PrivateRoute element={<ChatPage />} />} />
 
       <Route path="/about-us" element={<AboutUsPage />} />
       <Route path="/contacts" element={<ContactsPage />} />

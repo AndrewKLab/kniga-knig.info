@@ -32,6 +32,7 @@ const ProfilePageCourseItem: FunctionComponent<ProfilePageCourseItemProps> = ({ 
     return item && item.course &&
         <Col key={item.kk_cup_id} xs={12} lg={6} className={`profile-page-course-item`}>
             <CoursesCard
+                dontShare
                 coursesCardImage={item.course.kk_course_image}
                 coursesCardTitle={item.course.kk_course_name}
                 coursesCardText={item.course.kk_course_description}
@@ -212,7 +213,7 @@ const ProfilePage: FunctionComponent<ProfilePageProps> = ({
                         contentComponent: <ProfilePageCoursesList courses={auth_user_finished_courses} />
                     },
                 ]} />
-            : null}
+                : null}
         </div>
     )
 }

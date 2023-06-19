@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('kk_cup_course_id')->index('kk_cup_course_id')->comment('ID Курса')->references('kk_course_id')->on('kk_courses')->onUpdate('cascade')->onDelete('cascade');
             $table->string('kk_cup_status')->nullable(true)->comment('Статус');
             $table->integer('kk_cup_assessment')->nullable(true)->comment('Оценка');
+            $table->tinyInteger('kk_cup_need_notify')->default(1)->comment('Необходимость в уведомлении');
             $table->timestamp('kk_cup_started_at')->useCurrent()->comment('Дата страта');
             $table->timestamp('kk_cup_finished_at')->nullable(true)->comment('Дата финиша');
             $table->timestamp('kk_cup_created_at')->useCurrent()->comment('Дата создания');

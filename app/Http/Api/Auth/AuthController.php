@@ -5,6 +5,7 @@ namespace App\Http\Api\Auth;
 use App\Classes\RequestHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\RegistraionMail;
 use App\Mail\ResetPassword;
 use App\Models\KK_Courses_Users_Progress;
 use App\Models\KK_Lessons_Users_Progress;
@@ -46,9 +47,9 @@ class AuthController extends Controller
             }])->first(); //Медиа-холдинг "Надежда"
 
             $min_students_count = 0;
-            if(!empty($organization) && count($organization->users) > 0){
+            if (!empty($organization) && count($organization->users) > 0) {
                 foreach ($organization->users as $key => $user) {
-                    if($user->students_count <= $min_students_count) {
+                    if ($user->students_count <= $min_students_count) {
                         $min_students_count = $user->user->students_count;
                         $referal['referal_user_id'] = $user->user->kk_user_id;
                     }
@@ -94,7 +95,7 @@ class AuthController extends Controller
         }
         return $referal;
     }
-    
+
 
     /**
      * Handle the incoming request.
@@ -107,6 +108,7 @@ class AuthController extends Controller
         if ($request->kk_user_password_privacy_politic_confirmation !== 'true') return response()->json(['message' => 'Пожалуйста примите "Согласие на обработку персональных данных".'], 400);
 
         $referal = self::setReferalUsers($request);
+        $password_hash = Hash::make($request['kk_user_password']);
         $user = KK_User::create([
             'kk_user_firstname' => $request['kk_user_firstname'],
             'kk_user_lastname' => $request['kk_user_lastname'],
@@ -116,7 +118,7 @@ class AuthController extends Controller
             'kk_user_country' => $request['kk_user_country'],
             'kk_user_sity' => $request['kk_user_sity'],
             'kk_user_commune' => $request['kk_user_commune'],
-            'kk_user_password' => Hash::make($request['kk_user_password']),
+            'kk_user_password' => $password_hash,
             'kk_user_offline_user' => $request['kk_user_offline_user'] ? $request['kk_user_offline_user'] : 0,
             'kk_user_role_id' => 6,
 
@@ -190,6 +192,12 @@ class AuthController extends Controller
             }
         }
 
+        if ($user->kk_user_email) Mail::to($user->kk_user_email)->send(new RegistraionMail($user));
+        if (!empty($referal['referal_user_id'])) {
+            $referal_user_email = KK_User::where(['kk_user_id' => $referal['referal_user_id']])->first();
+            Mail::to($referal_user_email->kk_user_email)->send(new RegistraionMail($user));
+        }
+
         return response()->json([
             'user' => $user,
             'message' => 'Вы успешно зарегистрированы. Используйте свой адрес электронной почты и пароль для входа.'
@@ -204,13 +212,13 @@ class AuthController extends Controller
     public function login(LoginFormRequest $request)
     {
         $credentials = $request->only('kk_user_email_or_kk_user_phone', 'kk_user_password');
-        $user = KK_User::where('kk_user_email', $credentials['kk_user_email_or_kk_user_phone'])->orWhere('kk_user_phonenumber', $credentials['kk_user_email_or_kk_user_phone'])->with(['role'])->first();
+        $user = KK_User::where([['kk_user_email', 'LIKE', $credentials['kk_user_email_or_kk_user_phone']]])->orWhere([['kk_user_phonenumber', 'LIKE', $credentials['kk_user_email_or_kk_user_phone']]])->with(['role'])->first();
         if ($user) {
 
             if (!Hash::check($credentials['kk_user_password'], $user->kk_user_password)) {
                 return response()->json([
                     'message' => 'Вы ввели не верный логин или пароль',
-                    'errors' => 'Unauthorised'
+                    'errors' => 'Unauthorised',
                 ], 401);
             }
 
