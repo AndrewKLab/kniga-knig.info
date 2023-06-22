@@ -46,7 +46,7 @@ const UsersReviewsForm: FunctionComponent<UsersReviewsFormProps> = ({
             <div className={`users_reviews_form_title`}>Оставить отзыв</div>
             {create_users_reviews_message ? <Alert className="mt-3" type={`success`} message={create_users_reviews_message} /> : (
                 <React.Fragment>
-                    <div className={`users_reviews_form_text`}>Если у вас есть вопросы или вы столкнулись с трудностями при прохождении урока будем благодарны вам за ваш отзыв.</div>
+                    <div className={`users_reviews_form_text`}>ЕСЛИ У ВАС ЕСТЬ ВОПРОСЫ ИЛИ ВЫ СТОЛКНУЛИСЬ С ТРУДНОСТЯМИ ПРИ ПРОХОЖДЕНИИ УРОКА - БУДЕМ БЛАГОДАРНЫ ВАМ ЗА ОБРАТНУЮ СВЯЗЬ.</div>
                     <div className={`users_reviews_form_stars`}>
                         {stars.map((star, index) => <React.Fragment>
                             <input type={'radio'}

@@ -4,7 +4,7 @@ import { Image, Button, InputError, IconButton, TextInput, Label, Form, Loading,
 import { PenOutlineIcon, LockKeyOutlineIcon } from "../../../../public/_components/UI/Icons";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { User } from '../../../_interfaces';
-import { authActions, coursesUsersProgressActions } from "../../../_actions";
+import { authActions, coursesUsersProgressActions, pagesActions } from "../../../_actions";
 import { useNavigate } from "react-router-dom";
 import './index.css';
 import { config, getLastInprocessLesson } from "../../../_helpers";
@@ -29,7 +29,7 @@ type ProfilePageCourseItemProps = {
 
 const ProfilePageCourseItem: FunctionComponent<ProfilePageCourseItemProps> = ({ item }): JSX.Element => {
     let navigate = useNavigate();
-    return item && item.course &&
+    return item && item.course ?
         <Col key={item.kk_cup_id} xs={12} lg={6} className={`profile-page-course-item`}>
             <CoursesCard
                 dontShare
@@ -55,7 +55,7 @@ const ProfilePageCourseItem: FunctionComponent<ProfilePageCourseItemProps> = ({ 
                     </React.Fragment>
                 }
             />
-        </Col>
+        </Col> : <React.Fragment></React.Fragment>
 }
 
 type ProfilePageProps = {
@@ -97,6 +97,7 @@ const ProfilePage: FunctionComponent<ProfilePageProps> = ({
 
     useEffect(() => {
         const init = async () => {
+            await dispatch(pagesActions.openPage())
             await dispatch(coursesUsersProgressActions.getAll({
                 parts: 'course,lessons,lessons_users_progress',
                 parts_to_count: 'lessons,lessons_users_progress',

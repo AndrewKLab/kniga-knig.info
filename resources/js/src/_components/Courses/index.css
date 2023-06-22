@@ -1,4 +1,9 @@
-.courses-card {}
+.courses-card {
+    position: relative;
+}
+.courses-card-image-container {
+    position: relative;
+}
 
 .courses-card-image {
 
@@ -68,4 +73,18 @@
 .courses-card-share-buttons .share.active{
     opacity: 1;
     visibility: visible;
+}
+
+.courses-card-countinue-button{
+    position: absolute;
+    width: max-content;
+    padding: 16px 40px;
+    left: 24px;
+    bottom: 24px;
+    transition: all 0.25s;
+    background: rgba(var(--primary-color), 0.80);
+}
+
+.courses-card-countinue-button:hover{
+    background: rgba(var(--primary-color), 1);
 }

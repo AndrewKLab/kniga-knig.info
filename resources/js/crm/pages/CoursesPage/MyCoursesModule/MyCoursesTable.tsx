@@ -38,7 +38,7 @@ const MyCoursesTable: FunctionComponent<MyCoursesTableProps> = ({
 
     useEffect(() => {
         const init = async () => {
-            await dispatch(coursesActions.getAllByCategoryId({ parts_to_count: 'lessons', kk_course_categoty_id: kk_course_categoty_id , kk_course_autor_id: user.kk_user_id }))
+            await dispatch(coursesActions.getAllByCategoryId({parts: 'course_promo',  parts_to_count: 'lessons', kk_course_categoty_id: kk_course_categoty_id , kk_course_autor_id: user.kk_user_id }))
             setLoading(false)
         }
         init();
@@ -46,7 +46,7 @@ const MyCoursesTable: FunctionComponent<MyCoursesTableProps> = ({
 
     const onDeleteCourse = async () => {
         await dispatch(coursesActions.remove({ kk_course_id: selectedCourseToModal?.kk_course_id }))
-        await dispatch(coursesActions.getAllByCategoryId({ parts_to_count: 'lessons', kk_course_categoty_id: selectedCourseToModal?.kk_course_categoty_id, kk_course_autor_id: user.kk_user_id }))
+        await dispatch(coursesActions.getAllByCategoryId({parts: 'course_promo',  parts_to_count: 'lessons', kk_course_categoty_id: selectedCourseToModal?.kk_course_categoty_id, kk_course_autor_id: user.kk_user_id }))
         setIsOpenRemoveCourseModal(false);
         setSelectedCourseToModal(null);
     }

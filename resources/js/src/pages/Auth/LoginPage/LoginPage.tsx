@@ -45,7 +45,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                 params[key] = value;
             });
             const referal_user = localStorage.getItem('referal_user')
-            if(referal_user) params['referal_user'] = referal_user
+            if (referal_user) params['referal_user'] = referal_user
             switch (type) {
                 case 'google':
                     dispatch(authActions.googleAuthCallback(params, navigate))
@@ -86,11 +86,11 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                 {/* <Col xs={12} sm={12} md={6} >
                     <Image src={`/site/signin.png`} className={`registration_page_image`} style={{ minHeight: '600px' }} alt="sign-up" />
                 </Col> */}
-                <Col xs={12} sm={12} md={12} >
+                <Col xs={12} sm={12} lg={12} >
                     <Form className={`login_page_form`} onSubmit={handleSubmit(onSubmitLoginForm)}>
                         <Row g={3}>
-                            <Col xs={12} md={12}><h1 className={`registration_title text-primary`}>Вход</h1></Col>
-                            <Col xs={12} md={12}>
+                            <Col xs={12} lg={12}><h1 className={`registration_title text-primary`}>Вход</h1></Col>
+                            <Col xs={12} lg={12}>
                                 <Label htmlFor="kk_user_email_or_kk_user_phone">E-mail или Номер телефона:</Label>
                                 <TextInput
                                     {...register('kk_user_email_or_kk_user_phone')}
@@ -101,7 +101,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                                 />
                                 <InputError errors={login_errors} name={'kk_user_email_or_kk_user_phone'} />
                             </Col>
-                            <Col xs={12} md={12}>
+                            <Col xs={12} lg={12}>
                                 <Label htmlFor="kk_user_password">Пароль:</Label>
 
                                 <InputGroup>
@@ -119,7 +119,7 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
 
                                 <InputError errors={login_errors} name={'kk_user_password'} />
                             </Col>
-                            <Col xs={12} md={12}>
+                            <Col xs={12} lg={12}>
                                 <Checkbox
                                     {...register('kk_user_remember_token')}
                                     id={`kk_user_remember_token`}
@@ -128,21 +128,26 @@ const LoginPage: FunctionComponent<LoginPageProps> = ({
                                 />
                             </Col>
 
-                            <Col xs={12} md={12}>
+                            <Col xs={12} lg={6}>
                                 <InputError errors={login_errors} name={'g-recaptcha-response'} />
                                 {login_error_messge && <Alert message={login_error_messge} type={'danger'} />}
-                                <Button type={`submit`} className={`registration_page_button`} loading={login_loading} disabled={login_loading}>Войти</Button>
+                                <Button type={`submit`} className={`login_page_button`} loading={login_loading} disabled={login_loading}>Войти</Button>
                             </Col>
-                            <Col xs={12} md={6}>
+                            <Col xs={12} lg={6}>
+                                <Button className={`login_page_button`} onClick={() => navigate(`/registration`)}>Регистрация</Button>
+                            </Col>
+                            <Col xs={12} lg={6}>
                                 <Link to={`/password/forgot`}>Забыли пароль?</Link>
                             </Col>
-                            <Col xs={12} md={6}>
-                                <Link to={`/registration`} className={`registration_page_login_link`}>Регистрация</Link>
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <GoogleAuthButton className={`mb-3`}>Войти c помощью Google</GoogleAuthButton>
-                                <VKAuthButton className={`mb-3`}>Войти c помощью VK</VKAuthButton>
-                                <OdniklassnikiAuthButton>Войти c помощью OK</OdniklassnikiAuthButton>
+                            <Col xs={12} lg={6}>
+                                <div className="login_page_social_login">
+                                    <div>Войти через:</div>
+                                    <div className="login_page_social_login">
+                                        <GoogleAuthButton />
+                                        <VKAuthButton />
+                                        <OdniklassnikiAuthButton />
+                                    </div>
+                                </div>
                             </Col>
                         </Row>
                     </Form>

@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { authService } from "../../../_services";
 import './index.css'
+import { Image } from "../../UI";
 
 export interface GoogleAuthButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     children?: React.ReactElement | React.ReactFragment;
@@ -16,5 +17,5 @@ export const GoogleAuthButton: FunctionComponent<GoogleAuthButtonProps> = ({ chi
         })
     }, [])
 
-    return <a className={`google_auth_button${className ? ` ${className}` : ''}`} {...other} href={authUrl}>{children}</a>
+    return <a className={`google_auth_button${className ? ` ${className}` : ''}`} {...other} href={authUrl}><Image src={`icons/google_login_icon.svg`} /></a>
 } 

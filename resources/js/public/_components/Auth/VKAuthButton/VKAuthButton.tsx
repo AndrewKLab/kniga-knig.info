@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { authService } from "../../../_services";
 import './index.css'
+import { Image } from "../../UI";
 
 export interface VKAuthButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     children?: React.ReactElement | React.ReactFragment;
     className?: string;
-    referal_user?: string|null;
+    referal_user?: string | null;
 }
 
 export const VKAuthButton: FunctionComponent<VKAuthButtonProps> = ({ children, className, referal_user, ...other }) => {
@@ -16,5 +17,5 @@ export const VKAuthButton: FunctionComponent<VKAuthButtonProps> = ({ children, c
         })
     }, [])
 
-    return <a className={`vk_auth_button${className ? ` ${className}` : ''}`} {...other} href={authUrl}>{children}</a>
+    return <a className={`vk_auth_button${className ? ` ${className}` : ''}`} {...other} href={authUrl}><Image src={`icons/vk_login_icon.svg`} /></a>
 } 

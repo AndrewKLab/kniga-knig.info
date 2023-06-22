@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { Row, Col, Button, AudioPlayer, Form, IconButton, Alert, Share } from "../../../../public/_components/UI";
+import { Row, Col, Button, AudioPlayer, Form, IconButton, Alert, Share, Image } from "../../../../public/_components/UI";
 import { ArrowLeftIcon, ArrowSquareRightIcon, FileOutlineIcon } from '../../../../public/_components/UI/Icons';
 import { lessonsActions, lessonsUsersProgressActions, pagesActions } from "../../../_actions";
 import { useNavigate, useParams } from "react-router-dom";
@@ -223,13 +223,13 @@ const LessonPlane: FunctionComponent<LessonPlaneProps> = ({
                 />
 
                 <Row g={5}>
-                    <Col xs={12} lg={10} className={`lesson_page_description`}>{typeof get_one_by_lesson_id_lessons.kk_lesson_description === 'string' ? parse(get_one_by_lesson_id_lessons.kk_lesson_description) : <React.Fragment></React.Fragment>}</Col>
-                    <Col xs={12} lg={2} className={`lesson_page_sub_info_container`}>
+                    <Col xs={12} lg={12} className={`lesson_page_description`}>{typeof get_one_by_lesson_id_lessons.kk_lesson_description === 'string' ? parse(get_one_by_lesson_id_lessons.kk_lesson_description) : <React.Fragment></React.Fragment>}</Col>
+                    {/* <Col xs={12} lg={2} className={`lesson_page_sub_info_container`}>
                         <div className={`lesson_page_sub_info`}>
                             <div className={`lesson_page_sub_info_item`}><FileOutlineIcon /><b>Урок {get_one_by_lesson_id_lessons.kk_lesson_number}</b></div>
-                            {/* <div className={`lesson_page_sub_info_item`}><FileOutlineIcon /><b>Урок {get_one_by_lesson_id_lessons.kk_lesson_number}</b></div> */}
+                            <div className={`lesson_page_sub_info_item`}><FileOutlineIcon /><b>Урок {get_one_by_lesson_id_lessons.kk_lesson_number}</b></div>
                         </div>
-                    </Col>
+                    </Col> */}
                     {get_one_by_lesson_id_lessons.kk_lesson_audio ?
                         <React.Fragment>
                             <Col xs={12} lg={7}>
@@ -255,45 +255,70 @@ const LessonPlane: FunctionComponent<LessonPlaneProps> = ({
                         {localError ? <Alert message={localError} type={'danger'} className={`lesson_page_actions_error_alert`} /> : <React.Fragment></React.Fragment>}
                         {edit_lessons_users_progress_error_message ? <Alert message={edit_lessons_users_progress_error_message} type={'danger'} className={`lesson_page_actions_error_alert`} /> : <React.Fragment></React.Fragment>}
                         <Row g={3} className={`mb-3`}>
-                            <Col xs={12} lg={6}>
-                                <div className="lesson_page_actions_container">
-                                    <IconButton type={`button`} className={`lesson_page_actions_prev_lesson`} icon={<ArrowSquareRightIcon />} onClick={prefLesson} disabled={get_one_by_lesson_id_lessons.kk_lesson_number <= 1 || add_lessons_users_progress_loading}>Предыдущий урок</IconButton>
-                                    <IconButton type={`button`} className={`lesson_page_actions_next_lesson`} icon={<ArrowSquareRightIcon />} onClick={nextLesson} disabled={get_one_by_lesson_id_lessons.kk_lesson_number === get_one_by_lesson_id_lessons.course?.lessons_count || add_lessons_users_progress_loading || (!user && get_one_by_lesson_id_lessons.kk_lesson_number >= 3)}>Следующий урок</IconButton>
-                                </div>
-                            </Col>
-                            <Col xs={12} lg={6}>
+                            <Col xs={12} lg={12}>
                                 {(get_one_by_lesson_id_lessons_users_progress?.kk_lup_status === 'finished') || (!user && localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id)?.kk_lup_status === 'finished') ?
                                     <div className={`lesson_page_finished_lesson_plane`}>
                                         <h5 className={`lesson_page_finished_lesson_plane_title`}>Урок пройден</h5>
-                                        Дата и время прохождения: {get_one_by_lesson_id_lessons_users_progress ? moment(get_one_by_lesson_id_lessons_users_progress?.kk_lup_finished_at).locale('ru').format('Do MMMM YYYY, HH:mm') : (
-                                            !user && localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id) ? moment(localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id)?.kk_lup_finished_at).locale('ru').format('Do MMMM YYYY, HH:mm') : null
-                                        )}
-
-                                        {get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0 && !hasTextQuestion(get_one_by_lesson_id_lessons.questions) && <p>Верных ответов: {getPercentageOfCorrectAnswers(get_one_by_lesson_id_lessons.questions)}</p>}
+                                        <div className={`lesson_page_finished_lesson_plane_text`} style={{ marginTop: '18px', marginBottom: '16px', }}>
+                                            Дата и время прохождения: {get_one_by_lesson_id_lessons_users_progress ? moment(get_one_by_lesson_id_lessons_users_progress?.kk_lup_finished_at).locale('ru').format('Do MMMM YYYY, HH:mm') : (
+                                                !user && localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id) ? moment(localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id)?.kk_lup_finished_at).locale('ru').format('Do MMMM YYYY, HH:mm') : null
+                                            )}
+                                        </div>
+                                        {get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0 && !hasTextQuestion(get_one_by_lesson_id_lessons.questions) && <div className={`lesson_page_finished_lesson_plane_text`}>Верных ответов: <span className="text-primary">{getPercentageOfCorrectAnswers(get_one_by_lesson_id_lessons.questions)}</span></div>}
                                     </div>
-                                    :
-                                    <Button
-                                        type="submit"
-                                        loading={edit_lessons_users_progress_loading}
-                                        disabled={edit_lessons_users_progress_loading}
-                                        className={`lesson_page_submit_button`}
-                                    >
-                                        {get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0 ? `Отправить на проверку` : `Пройти урок`}
-                                    </Button>
+                                    : <React.Fragment></React.Fragment>
+
                                 }
-                                <FinishCourseButton lesson={get_one_by_lesson_id_lessons} lessons_users_progress={get_all_by_cup_id_lessons_users_progress} />
+                            </Col>
+                            <Col xs={12} lg={12}>
+                                <Row g={3}>
+                                    <Col xs={12} lg={3}><Button className={`lesson_page_button`} onClick={prefLesson} disabled={get_one_by_lesson_id_lessons.kk_lesson_number <= 1 || add_lessons_users_progress_loading}>Предыдущий урок</Button></Col>
+                                    <Col xs={12} lg={3}><Button className={`lesson_page_button`} onClick={onEdit} loading={remove_lessons_users_progress_loading} disabled={remove_lessons_users_progress_loading || !(get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0) || !user}>Повторить тест</Button></Col>
+                                    <Col xs={12} lg={6}>
+                                        {(get_one_by_lesson_id_lessons_users_progress?.kk_lup_status === 'finished') || (!user && localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id)?.kk_lup_status === 'finished') ? (
+                                            <React.Fragment>
+                                                {get_all_by_cup_id_lessons_users_progress && get_all_by_cup_id_lessons_users_progress.length > 0 && get_all_by_cup_id_lessons_users_progress.filter(lup => lup.kk_lup_status === "finished").length === get_one_by_lesson_id_lessons?.course?.lessons_count ? (
+                                                    <FinishCourseButton color="primary" className={`lesson_page_button`} lesson={get_one_by_lesson_id_lessons} lessons_users_progress={get_all_by_cup_id_lessons_users_progress} />
+                                                ) : (
+                                                    <Button className={`lesson_page_button`} color="primary" onClick={nextLesson} disabled={get_one_by_lesson_id_lessons.kk_lesson_number === get_one_by_lesson_id_lessons.course?.lessons_count || add_lessons_users_progress_loading || (!user && get_one_by_lesson_id_lessons.kk_lesson_number >= 3)}>Следующий урок</Button>
+                                                )}
+                                            </React.Fragment>
+
+                                        ) : (
+                                            <Button
+                                                color="primary"
+                                                type="submit"
+                                                loading={edit_lessons_users_progress_loading}
+                                                disabled={edit_lessons_users_progress_loading}
+                                                className={`lesson_page_button`}
+                                            >
+                                                {get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0 ? `Отправить на проверку` : `Пройти урок`}
+                                            </Button>
+                                        )}
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                     </Form>
 
                     {get_one_by_lesson_id_lessons_users_progress?.kk_lup_status === 'finished' || (!user && localCoursesUserProgressHelper.getOneLUPByCourseIDAndLessonID(get_one_by_lesson_id_lessons.kk_lesson_course_id, get_one_by_lesson_id_lessons.kk_lesson_id)?.kk_lup_status === 'finished') ?
                         <Row g={3} >
-                            <Col xs={12} lg={6}><Button className="w-100" onClick={onEdit} loading={remove_lessons_users_progress_loading} disabled={remove_lessons_users_progress_loading || !(get_one_by_lesson_id_lessons.questions && get_one_by_lesson_id_lessons.questions.length > 0) || !user}>Повторить тест</Button></Col>
-                            <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/`)}>Завершить занятие</Button></Col>
-                            <Col xs={12} lg={6}><Button className="w-100" onClick={() => navigate(`/contacts`)}>Задать вопрос</Button></Col>
-                            <Col xs={12} lg={6}><Button className="w-100" onClick={() => dispatch(modalsActions.openDonateModal(true))}>Поддержать сайт</Button></Col>
-                            <Col xs={12} lg={12}>Поделиться:<br /><Share className={`mt-3`} link={`${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`} whatsapp viber telegram sms copy /></Col>
-                            <Col xs={12} lg={12}><UsersReviewsForm kk_lesson_id={get_one_by_lesson_id_lessons.kk_lesson_id} /></Col>
+                            <Col xs={12} lg={12} style={{ marginBottom: 30 }}>
+                                <UsersReviewsForm kk_lesson_id={get_one_by_lesson_id_lessons.kk_lesson_id} />
+                            </Col>
+                            <Col xs={12} lg={12}>
+                                <div className={'lesson_page_share'}>
+                                    <div style={{ marginBottom: 23 }}>Поделиться</div>
+                                    <div>
+                                        <a role="button" className="cursor-pointer" onClick={() => window.open(`https://t.me/share/url?url=${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`, 'share-tg', 'width=800, height=400')}><Image src={`icons/telegram_icon.svg`} /></a>
+                                        <a role="button" className="cursor-pointer" href={`https://vk.com/share.php?url=${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`} target={'_blank'}><Image src={`icons/vk_icon.svg`} /></a>
+                                        <a role="button" className="cursor-pointer" href={`https://connect.ok.ru/offer?url=${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`} target={'_blank'}><Image src={`icons/ok_icon.svg`} /></a>
+                                        <a role="button" className="cursor-pointer" onClick={() => window.open(`viber://forward?text=${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`, 'share-viber', 'width=800, height=400')} target={'_blank'}><Image src={`icons/viber_icon.svg`} /></a>
+                                        <a role="button" className="cursor-pointer" onClick={() => window.open(`https://api.whatsapp.com/send?text=${config.appUrl}/courses/${get_one_by_lesson_id_lessons.kk_lesson_course_id}`, 'share-whatsapp', 'width=800, height=400')} data-action="share/whatsapp/share" target={'_blank'}><Image src={`icons/whatsup_icon.svg`} /></a>
+                                    </div>
+                                </div>
+                            </Col>
+
                         </Row> : <React.Fragment></React.Fragment>
                     }
 

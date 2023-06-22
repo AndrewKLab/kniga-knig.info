@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\KK_Courses;
 use Illuminate\Database\Eloquent\Model;
 use App\Classes\RequestHelper;
+use Illuminate\Support\Facades\Auth;
 
 class KK_Courses_Categories extends Model
 {
@@ -35,16 +36,29 @@ class KK_Courses_Categories extends Model
             foreach ($parts as $part_key => $part) {
                 switch ($part) {
                     case 'courses':
-                        $parts_queries += array($part => function ($query) use ($request, $part, $parts_to_count) {
-                            $withCount = [];
+                        $parts_queries += array($part => function ($query) use ($request, $parts, $parts_to_count) {
+
+                            $with = [];
                             if (in_array('lessons', $parts_to_count)) {
-                                $withCount += array('lessons' => function ($query) use ($request, $withCount) {
+                                $with += array('lessons' => function ($query) use ($request, $with) {
+                                    $query->select('kk_lesson_id', 'kk_lesson_course_id', 'kk_lesson_autor_id', 'kk_lesson_number', 'kk_lesson_published', 'kk_lesson_name', 'kk_lesson_description', 'kk_lesson_image', 'kk_lesson_audio', 'kk_lesson_video', 'kk_lesson_created_at', 'kk_lesson_updated_at',);
+
                                     if (isset($request->lessons_published)) {
                                         $query->where("kk_lesson_published", $request->lessons_published);
                                     }
                                 });
                             }
-                            $query->withCount($withCount)->where(function ($query) use ($request, $parts_to_count) {
+
+                            $withCount = [];
+                            if (in_array('lessons', $parts_to_count)) {
+                                $withCount += array('lessons' => function ($query) use ($request, $withCount) {
+
+                                    if (isset($request->lessons_published)) {
+                                        $query->where("kk_lesson_published", $request->lessons_published);
+                                    }
+                                });
+                            }
+                            $query->with($with)->withCount($withCount)->where(function ($query) use ($request, $parts_to_count) {
                                 if (isset($request->courses_published)) $query->where("kk_course_published", $request->courses_published);
                                 $query->orderBy('kk_course_updated_at', 'ASC');
                             });

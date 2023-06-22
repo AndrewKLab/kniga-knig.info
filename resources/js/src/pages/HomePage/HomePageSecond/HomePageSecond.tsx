@@ -46,7 +46,7 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
 
     useEffect(() => {
         const init = async () => {
-            await dispatch(coursesActions.getAll({ parts: 'category', parts_to_count: 'lessons', course_published: 1, category_published: 1, lessons_published: 1 }))
+            await dispatch(coursesActions.getAll({ parts: 'category', parts_to_count: 'lessons', course_published: 1, category_published: 1, lessons_published: 1}))
             await dispatch(coursesActions.getOneByCourseId({ kk_course_id: 237, parts: 'category', parts_to_count: 'lessons', course_published: 1, category_published: 1, lessons_published: 1 }))
         }
         init();
@@ -181,7 +181,7 @@ const HomePageSecond: FunctionComponent<HomePageSecondProps> = ({
                         }}
                         caruselRenderItem={(item, index) => (
                             <AutorCard
-                                className={`home_page_second_text home_page_autor_card`}
+                                className={`home_page_second_text`}
                                 title={item.title}
                                 desctiption={item.desctiption}
                                 img={item.img}

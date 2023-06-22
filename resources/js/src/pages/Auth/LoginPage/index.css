@@ -1,9 +1,34 @@
 .login_page {
-    padding: 50px 0px;
+    padding: 70px  0px 200px 0px;
 }
 
 .login_page_form {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.login_page_button {
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 34px;
+    margin-bottom: 34px;
+}
+
+.login_page_social_login{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (max-width: 1200px) {
+    .login_page_button{
+        margin: 0;
+    }
+
+
+    
 }

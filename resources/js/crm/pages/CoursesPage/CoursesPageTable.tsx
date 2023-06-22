@@ -23,7 +23,7 @@ const CoursesTableActions: FunctionComponent = ({ user, course, setIsOpenRemoveC
             <IconButton icon={<TrashIcon size={20} color={`rgba(var(--alert-danger-color), 1)`} />} title="Удалить" onClick={() => { setIsOpenRemoveCourseModal(true), setSelectedCourseToModal(course) }} />
             <IconButton icon={<ChartLineUpOutlineIcon size={20} />} title="Статисика по курсу" onClick={() => { navigate(`/courses/statistic/${course.kk_course_id}`) }} />
             <div className={`courses-share-buttons`} onClick={(event) => event.stopPropagation()}>
-                
+
                 <IconButton icon={<ShareOutlineIcon size={16} />} onClick={(event) => { event.stopPropagation(), setShowShare(!showShare) }} />
                 <Share link={`${config.appUrl}/registration?referal_user=${user?.kk_user_id}%26course=${course.kk_course_id}`} className={`${showShare ? `active` : ``}`} whatsapp viber telegram sms copy />
             </div>
@@ -66,6 +66,10 @@ const CoursesPageTable: FunctionComponent<CoursesPageTableProps> = ({
         {
             Header: 'Статус',
             accessor: row => row.kk_course_published === 1 ? `Опубликован` : `Не опубликован`,
+        },
+        {
+            Header: 'Промо страница',
+            accessor: row => row.course_promo ? <a className={`link`} target="_blank" href={`${config.appUrl}/courses_promo/${row.course_promo.kk_cp_id}`}>Перейти</a> : null,
         },
         {
             Header: 'Действия',

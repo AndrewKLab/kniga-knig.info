@@ -9,6 +9,7 @@ import { CourseUserProgress, Lesson, LessonUserProgress } from "../../../public/
 export interface FinishCourseButtonProps extends React.HTMLAttributes<HTMLDivElement> {
     dispatch: any;
     children?: React.ReactElement;
+    color?: string;
 
     className?: string;
     lesson: null | Lesson;
@@ -24,6 +25,7 @@ const FinishCourseButton: FunctionComponent<FinishCourseButtonProps> = ({
     dispatch,
     children,
     className,
+    color,
     lesson,
     lessons_users_progress,
     edit_courses_users_progress_loading,
@@ -40,7 +42,7 @@ const FinishCourseButton: FunctionComponent<FinishCourseButtonProps> = ({
         }
     }
     return (lessons_users_progress && lessons_users_progress.length > 0 && lessons_users_progress.filter(lup => lup.kk_lup_status === "finished").length === lesson?.course?.lessons_count ?
-        <Button className={`finish-course-button${className ? ` ${className}` : ''}`} loading={edit_courses_users_progress_loading} disabled={edit_courses_users_progress_loading} onClick={finishCourse}>Завершить курс</Button> : null
+        <Button color={color} className={`finish-course-button${className ? ` ${className}` : ''}`} loading={edit_courses_users_progress_loading} disabled={edit_courses_users_progress_loading} onClick={finishCourse}>Завершить курс</Button> : null
     )
 }
 function mapStateToProps(state) {

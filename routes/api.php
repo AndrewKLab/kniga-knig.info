@@ -24,6 +24,7 @@ use App\Http\Api\Users\UsersController;
 use App\Http\Api\Auth\GoogleController;
 use App\Http\Api\Auth\OdniklassnikiController;
 use App\Http\Api\Auth\VKController;
+use App\Http\Api\Courses\CoursesPromoController;
 use App\Http\Api\Organizations\OrganizationsController;
 use App\Http\Api\Organizations\OrganizationsTypesController;
 use App\Http\Api\Organizations\OrganizationsUsersController;
@@ -60,10 +61,10 @@ Route::get('/auth/odnoklassniki/callback', [OdniklassnikiController::class, 'aut
 
 
 Route::get('/courses/getAll', [CoursesController::class, 'getAll']);
-
-
 Route::get('/courses/getAllByCategotyId', [CoursesController::class, 'getAllByCategotyId']);
 // Route::get('/courses/cutImageText', [CoursesController::class, 'cutImageText'])->name('cutImageText');
+
+Route::get('/courses_promo/getOneById', [CoursesPromoController::class, 'getOneById']);
 
 Route::get('/courses_categories/getAll', [CoursesCategoriesController::class, 'getAll']);
 Route::get('/courses_categories/getOneByCategoryId', [CoursesCategoriesController::class, 'getOneByCategoryId']);
@@ -92,6 +93,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/courses/edit', [CoursesController::class, 'edit'])->middleware('checkAccess:Курсы,update');
     Route::post('/courses/remove', [CoursesController::class, 'remove'])->middleware('checkAccess:Курсы,delete');
 
+    Route::post('/courses_users_progress/add', [CoursesUsersProgressController::class, 'add']);
+    Route::post('/courses_users_progress/edit', [CoursesUsersProgressController::class, 'edit']);
+    Route::post('/courses_users_progress/remove', [CoursesUsersProgressController::class, 'remove']);
+    Route::get('/courses_users_progress/getAll', [CoursesUsersProgressController::class, 'getAll']);
+    Route::get('/courses_users_progress/getOneByCourseId', [CoursesUsersProgressController::class, 'getOneByCourseId']);
+    Route::post('/courses_users_progress/update_cup_need_notify', [CoursesUsersProgressController::class, 'update_cup_need_notify']);
+    Route::post('/courses_users_progress/send_course_diplom_to_email', [CoursesUsersProgressController::class, 'send_course_diplom_to_email']);
+    Route::post('/courses_users_progress/send_course_diplom_order', [CoursesUsersProgressController::class, 'send_course_diplom_order']);
+    Route::post('/courses_users_progress/send_reminder', [CoursesUsersProgressController::class, 'send_reminder']);
+
     Route::post('/lessons/add', [LessonsController::class, 'add'])->middleware('checkAccess:Уроки,create');
     Route::post('/lessons/edit', [LessonsController::class, 'edit'])->middleware('checkAccess:Уроки,update');
     Route::post('/lessons/remove', [LessonsController::class, 'remove'])->middleware('checkAccess:Уроки,delete');
@@ -109,16 +120,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::post('/lessons/questions/questions_users_answers/edit', [QuestionsUsersAnswersController::class, 'edit']);
-
-    Route::post('/courses_users_progress/add', [CoursesUsersProgressController::class, 'add']);
-    Route::post('/courses_users_progress/edit', [CoursesUsersProgressController::class, 'edit']);
-    Route::post('/courses_users_progress/remove', [CoursesUsersProgressController::class, 'remove']);
-    Route::get('/courses_users_progress/getAll', [CoursesUsersProgressController::class, 'getAll']);
-    Route::get('/courses_users_progress/getOneByCourseId', [CoursesUsersProgressController::class, 'getOneByCourseId']);
-    Route::post('/courses_users_progress/update_cup_need_notify', [CoursesUsersProgressController::class, 'update_cup_need_notify']);
-    Route::post('/courses_users_progress/send_course_diplom_to_email', [CoursesUsersProgressController::class, 'send_course_diplom_to_email']);
-    Route::post('/courses_users_progress/send_course_diplom_order', [CoursesUsersProgressController::class, 'send_course_diplom_order']);
-    Route::post('/courses_users_progress/send_reminder', [CoursesUsersProgressController::class, 'send_reminder']);
 
 
     Route::post('/lessons_users_progress/add', [LessonsUsersProgressController::class, 'add']);

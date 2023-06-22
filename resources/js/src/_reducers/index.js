@@ -5,8 +5,6 @@ import { users } from './users.reducer';
 import { style } from './styles.reducer';
 import { search } from './search.reducer';
 
-// import { course_constructor } from './course_constructor.reducer';
-
 
 import { courses } from './courses.reducer';
 import { courses_categories } from './courses_categories.reducer';
@@ -17,14 +15,16 @@ import { auth } from './auth.reducer';
 import { support } from './support.reducer';
 
 import { notifications, chats, modals, users_reviews } from '../../public/_reducers';
+import coursesPromoSlice from '../../public/_store/courses_promo.slice';
+
 const rootReducer = combineReducers({
   users,
   style,
   search,
   users_reviews,
-  // course_constructor,
 
 
+  courses_promo: coursesPromoSlice,
   courses,
   courses_categories,
   courses_users_progress,

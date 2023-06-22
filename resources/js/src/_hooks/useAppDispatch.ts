@@ -1,0 +1,3 @@
+import { useDispatch } from 'react-redux'
+import type { AppDispatch } from '../_helpers'
+export const useAppDispatch: () => AppDispatch = useDispatch

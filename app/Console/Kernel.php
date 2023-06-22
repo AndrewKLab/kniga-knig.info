@@ -4,12 +4,14 @@ namespace App\Console;
 
 use App\Console\Commands\SendCUPRemindEmails;
 use App\Http\Api\Courses\CoursesUsersProgressController;
-use App\Mail\Reminder;
+use App\Mail\Error;
 use App\Models\KK_Lessons;
 use App\Models\KK_User;
+use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Stringable;
 
 class Kernel extends ConsoleKernel
 {
@@ -21,7 +23,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(new SendCUPRemindEmails)->dailyAt('18:00')->emailOutputOnFailure('glas.keys@gmail.com');
+        $schedule->call(new SendCUPRemindEmails)
+        // ->everyMinute()
+        ->dailyAt('18:00');
+
     }
 
     /**

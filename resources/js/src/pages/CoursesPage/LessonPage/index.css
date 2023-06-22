@@ -110,16 +110,44 @@
 .lesson_page_finished_lesson_plane {
     border: 1px solid rgba(var(--border-color), 1);
     border-radius: 10px;
-    padding: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(var(--border-color), 0.25);
+    padding: 30px;
     background-color: rgba(var(--background-color), 1);
+    text-align: center;
+    margin-bottom: 42px;
 }
 
 .lesson_page_finished_lesson_plane_title {
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 15px 0px;
+    font-size: 36px;
     font-weight: 700;
+    line-height: 29px;
+    text-transform: uppercase;
+}
+
+.lesson_page_finished_lesson_plane_text {
     font-size: 20px;
-    line-height: 145%;
+    font-weight: 700;
+    line-height: 29px;
+    text-transform: uppercase;
+}
+
+.lesson_page_button {
+    margin: 0;
+    padding: 25px 0px;
+    font-size: 20px;
+    font-family: 'Montserrat';
+    font-weight: 700;
+    line-height: 29px;
+    text-transform: uppercase;
+}
+
+.lesson_page_share {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 29px;
+    text-transform: uppercase;
 }
 
 @media (max-width: 1200px) {
@@ -147,7 +175,26 @@
         display: none;
     }
 
-    .lesson_page_submit_button_container, .lesson_page_actions_container {
+    .lesson_page_submit_button_container,
+    .lesson_page_actions_container {
         flex: 1 0 auto;
-      }
+    }
+
+    .lesson_page_finished_lesson_plane {
+        padding: 13px;
+        margin-bottom: 10px;
+    }
+    .lesson_page_finished_lesson_plane_title {
+        font-size: 16px; 
+        margin: 0px;
+    }
+    .lesson_page_finished_lesson_plane_text {
+        font-size: 12px; 
+        margin: 0 !important;
+    }
+    .lesson_page_button {
+        font-size: 16px; 
+        line-height: 29px; 
+        padding: 10px 0px;
+    }
 }

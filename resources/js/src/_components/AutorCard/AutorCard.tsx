@@ -19,8 +19,10 @@ export const AutorCard: FunctionComponent<AutorCardProps> = ({ className, title,
                     <Image src={img} />
                 </Col>
                 <Col xs={12} lg={6} >
-                    <b>{title}</b><br />
-                    {desctiption}
+                    <div className={`autor_card_body`}>
+                        <div className={`autor_card_title`}>{title}</div>
+                        <div className={`autor_card_text`}>{desctiption}</div>
+                    </div>
                 </Col>
             </Row>
         </div>

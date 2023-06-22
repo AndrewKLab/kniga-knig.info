@@ -3,6 +3,7 @@ export * from './themes';
 export * from './icon';
 
 export * from './course';
+export * from './course_promo';
 export * from './course_user_progress';
 export * from './lesson';
 export * from './lesson_user_progress';

@@ -15,17 +15,18 @@ export const Footer: FunctionComponent<FooterProps> = ({ children, className }):
     let navigate = useNavigate();
     const SocialIcons = () => {
         const iconStyle = {
-            padding: "10px",
-            borderRadius: "10px",
+            padding: "5px",
+            borderRadius: "50%",
         }
-        return <React.Fragment>
+        return <div className={`navbar-social-icons`}>
             <a className={`social_icon_link`} href={`https://t.me/knigaknigcourses`} target="_blank" style={iconStyle}><TelegramIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
             <a className={`social_icon_link`} href={`https://www.youtube.com/@kniga-knig`} target="_blank" style={iconStyle}><YouTubeIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
             <a className={`social_icon_link`} href={`https://vk.com/knigaknigcourses`} target="_blank" style={iconStyle}><VKIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
             <a className={`social_icon_link`} href={`https://ok.ru/group/70000002139641`} target="_blank" style={iconStyle}><OKIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
             <a className={`social_icon_link`} href={`https://dzen.ru/knigaknig`} target="_blank" style={iconStyle}><YandexZenIcon size={20} color={`rgba(var(--primary-color), 1)`} /></a>
-        </React.Fragment>
+        </div>
     }
+
     return (
         <footer id="footer" className={`footer${className ? ` ${className}` : ''}`}>
             <Container>

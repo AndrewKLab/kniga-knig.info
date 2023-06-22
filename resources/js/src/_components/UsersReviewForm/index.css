@@ -1,4 +1,4 @@
-.users_reviews_form{
+.users_reviews_form {
     background-color: rgba(var(--background-color-dark), 1);
     border-radius: 1rem;
     padding: 1rem;
@@ -14,9 +14,10 @@
 }
 
 .users_reviews_form_text {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 130%;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    text-transform: uppercase;
     margin-bottom: 1rem;
 }
 
@@ -29,7 +30,7 @@
     transition: all 0.25s;
 }
 
-.users_reviews_form_stars .label{
+.users_reviews_form_stars .label {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     margin: 0;
@@ -39,8 +40,8 @@
     display: none;
 }
 
-.users_reviews_form_stars > input:checked ~ label svg,
-.users_reviews_form_stars > input:checked ~ label ~ label svg {
+.users_reviews_form_stars>input:checked~label svg,
+.users_reviews_form_stars>input:checked~label~label svg {
     fill: #fbb201;
     transition: all 0.25s;
 }
@@ -52,6 +53,13 @@
     transition: all 0.25s;
 }
 
-.users_reviews_form_button{
+.users_reviews_form_button {
     margin-top: 1rem;
+}
+
+
+@media (max-width: 1200px) {
+    .users_reviews_form_title {
+        font-size: 16px;
+    }
 }

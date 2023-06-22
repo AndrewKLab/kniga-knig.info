@@ -17,13 +17,15 @@ import {
   VerifyPinPasswordPage,
   ResetPasswordPage,
 
+  MyTrainingPage,
+
   ProfilePage,
   ProfileEditPage,
 
   NoMatchPage,
   PrivacyPoliticPage,
   HomePageSecond,
-  PromoIBeliveCoursePage,
+  CoursesPromoPage,
   СourseDiplomFormPage,
   OfertaPage
 } from '../pages';
@@ -36,7 +38,7 @@ const MainRoutes = ({ }) => {
       {/* <Route index path="/" element={<HomePage />} /> */}
       <Route index path="/" element={<HomePageSecond />} />
       <Route path="/courses/:kk_course_id/:kk_lesson_id" element={<LessonPage />} />
-      <Route path="/courses_promo/:kk_course_id" element={<PromoIBeliveCoursePage />} />
+      <Route path="/courses_promo/:kk_cp_id" element={<CoursesPromoPage />} />
       <Route path="/courses_diplom_form" element={<PrivateRoute element={<СourseDiplomFormPage />} />} />
       <Route path="/courses/:kk_course_id" element={<CoursePage />} />
       <Route path="/courses" element={<CoursesPage />} />
@@ -46,6 +48,8 @@ const MainRoutes = ({ }) => {
       <Route path="/password/forgot" element={<ForgotPasswordPage />} />
       <Route path="/password/verify/pin" element={<VerifyPinPasswordPage />} />
       <Route path="/password/reset" element={<ResetPasswordPage />} />
+
+      <Route path="/my_training" element={<PrivateRoute element={<MyTrainingPage />} />} />
 
       <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
       <Route path="/profile/edit" element={<PrivateRoute element={<ProfileEditPage />} />} />

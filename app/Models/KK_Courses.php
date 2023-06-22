@@ -56,6 +56,15 @@ class KK_Courses extends Model
                             });
                         });
                         break;
+                    case 'course_promo':
+                        $parts_queries += array($part => function ($query) use ($request, $part) {
+                            $query->where(function ($query) use ($request) {
+                                if (isset($request->course_promo_published)) {
+                                    $query->where("kk_cp_published", $request->course_promo_published);
+                                }
+                            });
+                        });
+                        break;
                     case 'lessons':
                         $parts_queries += array($part => function ($query) use ($request, $part) {
                             $query->select('kk_lesson_id', 'kk_lesson_course_id', 'kk_lesson_autor_id', 'kk_lesson_number', 'kk_lesson_published', 'kk_lesson_name', 'kk_lesson_description', 'kk_lesson_image', 'kk_lesson_audio', 'kk_lesson_video', 'kk_lesson_created_at', 'kk_lesson_updated_at',);
@@ -108,8 +117,8 @@ class KK_Courses extends Model
             'where' => function ($query) use ($request) {
                 if (isset($request->course_published)) $query->where("kk_course_published", $request->course_published);
                 if (isset($request->kk_course_autor_id)) $query->where("kk_course_autor_id", $request->kk_course_autor_id);
-
             },
+
         );
         return $params;
     }
@@ -118,6 +127,10 @@ class KK_Courses extends Model
     public function category()
     {
         return $this->hasOne(KK_Courses_Categories::class, 'kk_cc_id', 'kk_course_categoty_id');
+    }
+    public function course_promo()
+    {
+        return $this->hasOne(KK_Courses_Promo::class, 'kk_cp_course_id', 'kk_course_id');
     }
 
     public function course_users_progress()

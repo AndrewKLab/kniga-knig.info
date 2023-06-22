@@ -1,0 +1,65 @@
+.course_promo_page {
+    padding: 90px 0px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 400;
+}
+
+.course_promo_page_block {
+    padding: 42px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    background-color: rgba(var(--background-color-light), 1);
+}
+
+.course_promo_page_green_block {
+    background-color: rgba(var(--drawer-background-color), 1);
+}
+
+
+.course_promo_page_title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    text-transform: uppercase;
+}
+
+.course_promo_page_sub_title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+}
+
+.course_promo_page_button {
+    width: max-content;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 18px 48px;
+}
+
+.course_promo_page_image_center_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.course_promo_page_text_block {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    justify-content: center;
+    height: 100%;
+}
+
+.course_promo_page_course_list_item_title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 1rem;
+}
